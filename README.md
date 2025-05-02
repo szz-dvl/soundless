@@ -12,7 +12,7 @@ Este script se encargará de descargar todas las configuraciones que existen en 
 
 ### channels.py
 
-Este script se encarga de, dada la salida del script anterior (parser_channels), generar un estudio de la frequencia de los canales y de las diferentes configuraciones en el dataset. Dejará los resultados en el fichero "out/channel_freqs.txt". El script tiene varios parámetros de configuración:
+Este script se encarga de, dada la salida del script anterior (parser_channels), generar un estudio de la frequencia de los canales y de las diferentes configuraciones en el dataset. Dejará los resultados en el fichero "out/channel_freqs.txt". Adicionalmente es script escribirá un fichero "out/equivalences.json" con las equivalencias hayadas en el proceso. El script tiene varios parámetros de configuración:
 
 - CHANNEL_FREQUENCY_THRESHOLD: Este parámetro configurará que porcentage (entre 0 y 100) de apariciones en las diferentes configuraciones debe tener un canal para ser considerado relevante. Valor por defecto 70.
 
@@ -48,4 +48,4 @@ Para usar los scripts es necesario tener en el mismo path donde esté este repos
 - AWS_SECRET_KEY: Secret key asociada a la clave anterior.
 - AWS_BUCKET: Amazon bucket que contiene los datos, también facilitado por [The Human Sleep Project](https://bdsp.io/content/hsp/2.0/)
 - AWS_REGION: Región que aloja los datos en Amazon.
-- MODEL_CHECKPOINT_DIR: Directorio local donde se iran guardando los checkpoints de la red neuronal entrenada por el script nn.py
+- MODEL_CHECKPOINT_DIR: Directorio local donde se iran guardando los checkpoints de la red neuronal entrenada por el script nn.py.

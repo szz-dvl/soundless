@@ -236,7 +236,7 @@ with open("out/channel_freqs.txt", "w") as outfile:
     outfile.writelines([f'Representation ({count}): {(count / df.shape[0]) * 100}%'])
 
     # Dump equivalences to a json file
-    with open("equivalences.json", "w") as jsonFile: 
+    with open("out/equivalences.json", "w") as jsonFile: 
         jsonFile.writelines(json.dumps(equivalent_confs, indent=4))
 
     # Aggregate channel equivalences
