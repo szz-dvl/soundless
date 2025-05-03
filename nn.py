@@ -1,3 +1,5 @@
+import json
+import random
 import pandas as pd
 import os
 from botocore.exceptions import ClientError
@@ -13,10 +15,17 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+class TestReserve(Exception):
+    pass
+
 aws = AWS()
 utils = Utils()
+test_reserve = []
 
 CHUNK_SIZE = 2
+
+# Model save will store the test instances
+utils.createDirIfNotExists("out")
 
 def getInfoTask(row: pd.Series):
     folder = row["BidsFolder"]
@@ -26,7 +35,10 @@ def getInfoTask(row: pd.Series):
     channels = ChannSelector().select(aws.loadEegChannelsTsv(folder, session, site))
 
     if row['HasAnnotations'] == 'Y':
-    
+        
+        if random.randrange(100) <= 15:
+            raise TestReserve({ "folder": folder, "session": session, "site": site })
+
         parser = aws.loadEegEdf(folder, session, site)
         annotations = aws.loadEegAnnotationsCsv(folder, session, site)
         parser.setAnottations(annotations)
@@ -42,17 +54,14 @@ def getInfoTask(row: pd.Series):
 def recoverState():
     try:
         with open(os.getenv("MODEL_CHECKPOINT_DIR") + "eeg.chunks", "r") as chunksFile:
-            chunksInfo = chunksFile.read()
+            chunksInfo = chunksFile.readline()
             return int(chunksInfo.split("=")[-1])
 
     except FileNotFoundError:
         return 0
 
-ok = 0
-all = 0
-
-def parseMainTask():
-    global all, ok
+def trainNN():
+    global test_reserve
 
     model = EEGModel()
     getChunk = utils.chunkDataframe(pd.read_csv('bdsp_psg_master_20231101.csv'), CHUNK_SIZE)
@@ -68,13 +77,16 @@ def parseMainTask():
                 for future in as_completed(futureToRow):
                     row = futureToRow[future]
                     try:
-                        all += 1
+                        
                         data, tags = future.result()
                         
                         if data is not None:
                             model.feed(list(map(lambda x: x.get_data(), data)), tags)
-                            ok += 1
-        
+
+                    except TestReserve as instance:
+                        print(f"Reserved for test: {row["BidsFolder"]}, session: {row["SessionID"]}")
+                        test_reserve.append(instance)
+                        pass
                     except ClientError:
                         print(f"Missing data for sub: {row["BidsFolder"]}, session: {row["SessionID"]}")
                         pass
@@ -89,7 +101,8 @@ def parseMainTask():
                         pass
             
             if chunks % 5 == 0:
-                model.save(chunks)
+                model.save(chunks, test_reserve)
 
-parseMainTask()
-print(f"Representation: {(ok/all) * 100}%")
+    model.save(chunks, test_reserve, True)
+
+trainNN()

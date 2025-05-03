@@ -1,3 +1,4 @@
+import json
 import keras
 from keras import layers
 from dotenv import load_dotenv
@@ -8,8 +9,9 @@ load_dotenv()
 
 class EEGModel():
     
-    def __init__(self):
+    def __init__(self, outdir = "out/"):
 
+        self.outdir = outdir
         self.dir = os.getenv("MODEL_CHECKPOINT_DIR")
 
         if os.path.exists(self.dir + "eeg.keras"):
@@ -35,7 +37,12 @@ class EEGModel():
     def feed(self, chunk, tags):
         self.model.fit(tf.stack(chunk), tf.stack(tags))
 
-    def save(self, chunks):
+    def save(self, chunks, test_instances, done = False):
         self.model.save(self.dir + "eeg.keras")
         with open(self.dir + "eeg.chunks", "w") as chunksFile:
-            chunksFile.write(f"chunks = {chunks}")
+            chunksFile.write(f"chunks = {chunks}\n")
+            if done == True:
+                chunksFile.write(f"DONE")
+
+        with open(self.outdir + "test_instances.json", "w") as jsonFile:
+            jsonFile.writelines(json.dumps(test_instances, indent=4))
