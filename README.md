@@ -28,7 +28,7 @@ Este script generará un json que dejará en el fichero "out/annotations.json" c
 
 ### nn.py
 
-Este script está en progreso en el momento de escribir esta documentación, pretende entrenar una red neuronal con las conclusiones sacadas de las salidas de los scripts anteriores, se descargará los encefalogramas, seleccionará una lista de 18 canales (que deben estar presentes) y las anotaciones asociadas con estos, iremos partiendo los encefalogramas en los trozos asociados con las anotaciones, y entrenaremos la red neuronal con los "trozos" de encefalograma y la anotacion pertinente cómo etiqueta asociada a la lectura. Ahora por ahora no es todavia funcional y no se esta teniendo en cuenta reservar una parte de los encefalogramas para test. El parámetro habitual CHUNK_SIZE esta también disponible en este script, sin embargo se aconseja usarlo con cautela, ya que valores grandes pueden provocar que la memória del ordenador se agote dado el tamaño de los ficheros de los encefalogramas. Valor por defecto 2.
+Este script está en progreso en el momento de escribir esta documentación, pretende entrenar una red neuronal con las conclusiones sacadas de las salidas de los scripts anteriores, se descargará los encefalogramas, seleccionará una lista de 18 canales (que deben estar presentes) y las anotaciones asociadas con estos, iremos partiendo los encefalogramas en los trozos asociados con las anotaciones, y entrenaremos la red neuronal con los "trozos" de encefalograma y la anotacion pertinente cómo etiqueta asociada a la lectura. El parámetro habitual CHUNK_SIZE esta también disponible en este script, sin embargo se aconseja usarlo con cautela, ya que valores grandes pueden provocar que la memória del ordenador se agote dado el tamaño de los ficheros de los encefalogramas. Valor por defecto 2.
 
 ## Modulos
 
@@ -37,7 +37,7 @@ Los scripts anteriores dependen de una serie de modulos escritos para la ocasió
 - aws: Se encarga de toda la comunicación con amazon, donde estan alojados los datos.
 - chann_selector: La lógica de la selección de canales está implementada en este pequeño módulo, para hacerlo he usado las conclusiones que he sacado de la salida del script channels.py, de la que hay una cópia en "out/channel_freqs.txt".
 - edf: Este modulo encapsúla la lógica asociada con los ficheros de los encefalogramas (.edf). Usa la librería de python [mne](https://mne.tools/stable/index.html) para facilitar el trabajo.
-- model: Este modulo implementa la red neuronal con [keras](https://keras.io/). Todavia no es funcional.
+- model: Este modulo implementa la red neuronal con [keras](https://keras.io/).
 - utils: Un pequeño modulo para implementar lógica que reuso en varios scripts.
 
 ## Entorno
