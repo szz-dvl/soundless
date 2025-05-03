@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from modules.aws import AWS
 from modules.chann_selector import ChannSelector, MissingChannels
+from modules.edf import BadSamplingFreq
 from modules.model import EEGModel
 from modules.utils import Utils
 
@@ -80,11 +81,15 @@ def parseMainTask():
                     except MissingChannels as ex:
                         print(f"Missing channels: {row["BidsFolder"]}, session: {row["SessionID"]}", ex)
                         pass
+                    except BadSamplingFreq as ex:
+                        print(f"Bad sampling frequency ({ex}): {row["BidsFolder"]}, session: {row["SessionID"]}")
+                        pass
                     except Exception as exc:
                         print(f"Exception %s: %s"%(row["BidsFolder"], exc))
                         pass
-
-            model.save(chunks)
+            
+            if chunks % 5 == 0:
+                model.save(chunks)
 
 parseMainTask()
 print(f"Representation: {(ok/all) * 100}%")

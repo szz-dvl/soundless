@@ -4,12 +4,13 @@ import pandas as pd
 import tempfile
 import os
 
-class BadAnnotations(Exception):
+class BadSamplingFreq(Exception):
     pass
 
 class EdfParser:
 
     def __init__(self, file: BytesIO):
+        mne.set_log_level(verbose="CRITICAL")
         self.annotations = None
         self.stopEvent = "Stopped_Analyzer_-_Sleep_Events"
         self.annotationsTags = { 
@@ -19,6 +20,13 @@ class EdfParser:
             "Sleep_stage_N3": ["Sleep_stage_N3", "Sleep_stage_3"], 
             "Sleep_stage_R": ["Sleep_stage_REM", "Sleep_stage_R"] 
         }
+        self.tagsToClass = { 
+            "Sleep_stage_W" : 4, 
+            "Sleep_stage_N1": 1, 
+            "Sleep_stage_N2": 2, 
+            "Sleep_stage_N3": 3, 
+            "Sleep_stage_R": 0 
+        }
 
         # https://github.com/mne-tools/mne-python/pull/13156
         with tempfile.NamedTemporaryFile(suffix='.edf', delete_on_close=False, delete=False) as fp:
@@ -26,6 +34,8 @@ class EdfParser:
             fp.seek(0)
             self.filename = fp.name
             self.edf = mne.io.read_raw_edf(fp.name, preload=True)
+            if self.edf.info["sfreq"] != 200.0:
+                raise BadSamplingFreq(self.edf.info["sfreq"])
             # self.df = pd.DataFrame(self.edf.get_data().transpose(), columns=self.edf.ch_names)
 
     def getChannelTypes(self):
@@ -98,7 +108,7 @@ class EdfParser:
         return picks.crop_by_annotations()
     
     def getTags(self):
-        return self.tags
+        return list(map(lambda t: self.tagsToClass[t], self.tags))
 
     def getInfo(self):
         return self.edf.info
