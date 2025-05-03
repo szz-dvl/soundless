@@ -10,7 +10,7 @@ class Utils():
             os.makedirs(path) 
 
     # https://stackoverflow.com/questions/57198121/select-next-n-rows-in-pandas-dataframe-using-iterrows
-    def chunkDataframe(df: pd.DataFrame, chunkSize = 10):
+    def chunkDataframe(self, df: pd.DataFrame, chunkSize = 10):
         for startRow in range(0, df.shape[0], chunkSize):
             endRow  = min(startRow + chunkSize, df.shape[0])
             yield df.iloc[startRow:endRow, :]
