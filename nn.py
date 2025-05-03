@@ -37,7 +37,7 @@ def getInfoTask(row: pd.Series):
     if row['HasAnnotations'] == 'Y':
         
         if random.randrange(100) <= 15:
-            raise TestReserve({ "folder": folder, "session": session, "site": site })
+            raise TestReserve()
 
         parser = aws.loadEegEdf(folder, session, site)
         annotations = aws.loadEegAnnotationsCsv(folder, session, site)
@@ -85,7 +85,13 @@ def trainNN():
 
                     except TestReserve as instance:
                         print(f"Reserved for test: {row["BidsFolder"]}, session: {row["SessionID"]}")
-                        test_reserve.append(instance)
+
+                        test_reserve.append({
+                            "folder": row["BidsFolder"],
+                            "session": row["SessionID"],
+                            "site": row["SiteID"]
+                        })
+
                         pass
                     except ClientError:
                         print(f"Missing data for sub: {row["BidsFolder"]}, session: {row["SessionID"]}")

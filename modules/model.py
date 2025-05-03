@@ -29,7 +29,7 @@ class EEGModel():
                 metrics=[keras.metrics.Accuracy()]
             )
 
-            self.model.summary()
+        self.model.summary()
 
     def getModel(self):
         return self.model
