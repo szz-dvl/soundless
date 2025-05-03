@@ -38,7 +38,7 @@ Los scripts anteriores dependen de una serie de modulos escritos para la ocasió
 - chann_selector: La lógica de la selección de canales está implementada en este pequeño módulo, para hacerlo he usado las conclusiones que he sacado de la salida del script channels.py, de la que hay una cópia en "out/channel_freqs.txt".
 - edf: Este modulo encapsúla la lógica asociada con los ficheros de los encefalogramas (.edf). Usa la librería de python [mne](https://mne.tools/stable/index.html) para facilitar el trabajo.
 - model: Este modulo implementa la red neuronal con [keras](https://keras.io/). Todavia no es funcional.
--sys: Un pequeño modulo para implementar lógica asociada con el sistema, ahora mismo es solamente para crear el directório de los ficheros de salida.
+- utils: Un pequeño modulo para implementar lógica que reuso en varios scripts.
 
 ## Entorno
 

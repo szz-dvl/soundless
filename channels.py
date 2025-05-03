@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 import difflib
-from modules.sys import System
+from modules.utils import Utils
 
 """
     CHANNEL_FREQUENCY_THRESHOLD: This parameter configures the threshold for a channel to be considered relevant in the study, 
@@ -23,8 +23,8 @@ CONF_GROUP_SIMILARITY_THRESHOLD = 0.95
 CHANNEL_EQUIVALENCE_SIMILARITY_THRESHOLD = 0.6
 CONF_CONTRIBUTION_THRESHOLD = 0.05
 
-system = System()
-system.createDirIfNotExists("out")
+utils = Utils()
+utils.createDirIfNotExists("out")
 
 with open("out/channel_freqs.txt", "w") as outfile:    
     df = pd.read_csv("out/channels.csv", header=0, names=['sub', 'session', 'count', 'channels'])

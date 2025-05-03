@@ -6,20 +6,16 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from modules.aws import AWS
 from modules.chann_selector import ChannSelector, MissingChannels
 from modules.model import EEGModel
+from modules.utils import Utils
 
 from dotenv import load_dotenv
 
 load_dotenv()
 
 aws = AWS()
+utils = Utils()
 
 CHUNK_SIZE = 2
-
-# https://stackoverflow.com/questions/57198121/select-next-n-rows-in-pandas-dataframe-using-iterrows
-def chunkDataframe(df: pd.DataFrame, chunkSize = 10):
-    for startRow in range(0, df.shape[0], chunkSize):
-        endRow  = min(startRow + chunkSize, df.shape[0])
-        yield df.iloc[startRow:endRow, :]
 
 def getInfoTask(row: pd.Series):
     folder = row["BidsFolder"]
@@ -58,7 +54,7 @@ def parseMainTask():
     global all, ok
 
     model = EEGModel()
-    getChunk = chunkDataframe(pd.read_csv('bdsp_psg_master_20231101.csv'), CHUNK_SIZE)
+    getChunk = utils.chunkDataframe(pd.read_csv('bdsp_psg_master_20231101.csv'), CHUNK_SIZE)
     chunksToSkip = recoverState()
     chunks = 0
 

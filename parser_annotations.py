@@ -4,10 +4,10 @@ import json
 from botocore.exceptions import ClientError
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from modules.aws import AWS
-from modules.sys import System
+from modules.utils import Utils
 
 aws = AWS()
-system = System()
+utils = Utils()
 
 CHUNK_SIZE = 20
 annotationsSummary = {}
@@ -22,12 +22,6 @@ def aggregateAnnotations(rawAnnotations: pd.DataFrame) -> dict:
         aggregated[event] = durations
 
     return aggregated
-
-# https://stackoverflow.com/questions/57198121/select-next-n-rows-in-pandas-dataframe-using-iterrows
-def chunkDataframe(df: pd.DataFrame, chunkSize = 10):
-    for startRow in range(0, df.shape[0], chunkSize):
-        endRow  = min(startRow + chunkSize, df.shape[0])
-        yield df.iloc[startRow:endRow, :]
 
 def getInfoTask(row: pd.Series):
     folder = row["BidsFolder"]
@@ -72,7 +66,7 @@ def mergeAnnotations(aggregatedAnnotations: dict) -> None:
             }
 
 def parseMainTask():
-    getChunk = chunkDataframe(pd.read_csv('bdsp_psg_master_20231101.csv'), CHUNK_SIZE)
+    getChunk = utils.chunkDataframe(pd.read_csv('bdsp_psg_master_20231101.csv'), CHUNK_SIZE)
 
     for chunk in getChunk:
         with ThreadPoolExecutor(max_workers=CHUNK_SIZE) as executor:
@@ -93,7 +87,7 @@ def parseMainTask():
 
 parseMainTask()
 
-system.createDirIfNotExists("out")
+utils.createDirIfNotExists("out")
 with open("out/annotations.json", "w") as outfile:
     outfile.write(json.dumps(annotationsSummary, indent=4))
 
