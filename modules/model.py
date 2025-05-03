@@ -15,7 +15,7 @@ class EEGModel():
         self.dir = os.getenv("MODEL_CHECKPOINT_DIR")
 
         if os.path.exists(self.dir + "eeg.keras"):
-            self.model = keras.models.load_model(self.dir + "eeg.keras")
+            self.model = keras.models.load_model(self.dir + "eeg.keras", compile=True)
         else:
             input = keras.Input(shape=(18,6001), name="EGGInput")
             x = layers.Dense(768, activation="relu", name="EGGDense768")(input)
@@ -38,7 +38,7 @@ class EEGModel():
         self.model.fit(tf.stack(chunk), tf.stack(tags))
 
     def save(self, chunks, test_instances, done = False):
-        self.model.save(self.dir + "eeg.keras")
+        self.model.save(self.dir + "eeg.keras", include_optimizer=True)
         with open(self.dir + "eeg.chunks", "w") as chunksFile:
             chunksFile.write(f"chunks = {chunks}\n")
             if done == True:
