@@ -26,4 +26,4 @@ with open("out/test_instances.json", "r") as jsonFile:
 
     for tesInstance in testInstances[0:1]:
         chunks, tags = getTestData(tesInstance["folder"], tesInstance["session"], tesInstance["site"])
-        print(model.evaluate(list(map(lambda x: x.get_data(), chunks)), tags))
+        print(model.evaluate(list(map(lambda x: x.get_data(), chunks)), tags), model.getMetrics())

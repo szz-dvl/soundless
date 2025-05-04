@@ -39,6 +39,9 @@ class EEGModel():
 
     def evaluate(self, chunk, tags):
         return self.model.evaluate(tf.stack(chunk), tf.stack(tags))
+        
+    def getMetrics(self):
+        return self.model.metrics_names
 
     def save(self, chunks, test_instances, done = False):
         self.model.save(self.dir + "eeg.keras", include_optimizer=True)
