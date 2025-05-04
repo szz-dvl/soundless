@@ -86,13 +86,14 @@ def trainNN():
                         data, tags = future.result()
                         
                         if data is not None:
+                            
+                            Xtrain.extend(list(map(lambda x: x.get_data(), data)))
+                            ytrain.extend(tags)
+
                             if chunks % CHUNKS_TO_SAVE == 0:
                                 model.feed(shuffle(Xtrain, ytrain))
                                 Xtrain = []
                                 ytrain = []
-                            else:
-                                Xtrain.extend(list(map(lambda x: x.get_data(), data)))
-                                ytrain.extend(tags)
 
                     except TestReserve as instance:
                         print(f"Reserved for test: {row["BidsFolder"]}, session: {row["SessionID"]}")
