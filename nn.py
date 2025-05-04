@@ -70,6 +70,7 @@ def trainNN():
     getChunk = utils.chunkDataframe(pd.read_csv('bdsp_psg_master_20231101.csv'), CHUNK_SIZE)
     chunksToSkip = recoverState()
     chunks = 0
+    batches = 0
     Xtrain = []
     ytrain = []
 
@@ -85,13 +86,14 @@ def trainNN():
                     try:
                         
                         data, tags = future.result()
-                        
+                        batches += 1
+
                         if data is not None: 
                             
                             Xtrain.extend(list(map(lambda x: x.get_data(), data)))
                             ytrain.extend(tags)
 
-                        if chunks % CHUNKS_PER_TRAIN == 0:
+                        if batches % CHUNKS_PER_TRAIN == 0 and Xtrain:
                             x, y = shuffle(Xtrain, ytrain)
                             Xtrain.clear()
                             ytrain.clear()
@@ -115,11 +117,11 @@ def trainNN():
                     except MissingChannels as ex:
                         print(f"Missing channels: {row["BidsFolder"]}, session: {row["SessionID"]}", ex)
                         pass
-                    except BadSamplingFreq as ex:
+                    except BadSamplingFreq:
                         print(f"Bad sampling frequency ({ex}): {row["BidsFolder"]}, session: {row["SessionID"]}")
                         pass
-                    except Exception as exc:
-                        print(f"Exception %s: %s"%(row["BidsFolder"], exc))
+                    except Exception as ex:
+                        print(f"Exception %s: %s"%(row["BidsFolder"], ex))
                         pass
             
             if chunks % CHUNKS_TO_SAVE == 0:
