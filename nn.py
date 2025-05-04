@@ -1,9 +1,9 @@
-import json
 import random
 import pandas as pd
 import os
 from botocore.exceptions import ClientError
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from sklearn.utils import shuffle
 
 from modules.aws import AWS
 from modules.chann_selector import ChannSelector, MissingChannels
@@ -23,6 +23,8 @@ utils = Utils()
 test_reserve = []
 
 CHUNK_SIZE = 2
+CHUNKS_PER_TRAIN = 10
+CHUNKS_TO_SAVE = 10
 
 # Model save will store the test instances
 utils.createDirIfNotExists("out")
@@ -67,6 +69,9 @@ def trainNN():
     getChunk = utils.chunkDataframe(pd.read_csv('bdsp_psg_master_20231101.csv'), CHUNK_SIZE)
     chunksToSkip = recoverState()
     chunks = 0
+    Xtrain = []
+    ytrain = []
+
 
     for chunk in getChunk:
         chunks += 1
@@ -81,7 +86,13 @@ def trainNN():
                         data, tags = future.result()
                         
                         if data is not None:
-                            model.feed(list(map(lambda x: x.get_data(), data)), tags)
+                            if chunks % CHUNKS_TO_SAVE == 0:
+                                model.feed(shuffle(Xtrain, ytrain))
+                                Xtrain = []
+                                ytrain = []
+                            else:
+                                Xtrain.extend(list(map(lambda x: x.get_data(), data)))
+                                ytrain.extend(tags)
 
                     except TestReserve as instance:
                         print(f"Reserved for test: {row["BidsFolder"]}, session: {row["SessionID"]}")
@@ -106,7 +117,7 @@ def trainNN():
                         print(f"Exception %s: %s"%(row["BidsFolder"], exc))
                         pass
             
-            if chunks % 5 == 0:
+            if chunks % CHUNKS_TO_SAVE == 0:
                 model.save(chunks, test_reserve)
 
     model.save(chunks, test_reserve, True)
