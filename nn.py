@@ -1,4 +1,5 @@
 import random
+import numpy as np
 import pandas as pd
 import os
 from botocore.exceptions import ClientError
@@ -23,7 +24,7 @@ utils = Utils()
 test_reserve = []
 
 CHUNK_SIZE = 2
-CHUNKS_PER_TRAIN = 10
+CHUNKS_PER_TRAIN = 5
 CHUNKS_TO_SAVE = 10
 
 # Model save will store the test instances
@@ -85,13 +86,16 @@ def trainNN():
                         
                         data, tags = future.result()
                         
-                        if data is not None:
+                        if data is not None: 
                             
                             Xtrain.extend(list(map(lambda x: x.get_data(), data)))
                             ytrain.extend(tags)
 
-                            if chunks % CHUNKS_TO_SAVE == 0:
-                                model.feed(shuffle(Xtrain, ytrain))
+                            if chunks % CHUNKS_PER_TRAIN == 0:
+                                x, y = shuffle(Xtrain, ytrain)
+                                accuracy = model.feed(x, y)
+                                print(f"\033[1mAccuracy: {accuracy}\033[0m")
+                                
                                 Xtrain = []
                                 ytrain = []
 
