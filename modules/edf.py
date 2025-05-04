@@ -69,7 +69,9 @@ class EdfParser:
         else:
             stopIndex = rawAnnotations['event'].shape[0]
 
-        offsets = times + rawAnnotations['duration'].astype(float)
+        # Add one second offset trying to avoid truncation errors in crop()
+        paddedDurations = rawAnnotations['duration'].astype(float) + 1
+        offsets = times + paddedDurations
         offsetsIdxs = offsets.index[offsets > self.edf.duration].tolist()
 
         if len(offsetsIdxs) > 0:
