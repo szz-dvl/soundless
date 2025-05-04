@@ -37,6 +37,9 @@ class EEGModel():
     def feed(self, chunk, tags):
         self.model.fit(tf.stack(chunk), tf.stack(tags))
 
+    def evaluate(self, chunk, tags):
+        return self.model.evaluate(tf.stack(chunk), tf.stack(tags))
+
     def save(self, chunks, test_instances, done = False):
         self.model.save(self.dir + "eeg.keras", include_optimizer=True)
         with open(self.dir + "eeg.chunks", "w") as chunksFile:
