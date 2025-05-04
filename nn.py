@@ -91,15 +91,15 @@ def trainNN():
                             Xtrain.extend(list(map(lambda x: x.get_data(), data)))
                             ytrain.extend(tags)
 
-                            if chunks % CHUNKS_PER_TRAIN == 0:
-                                x, y = shuffle(Xtrain, ytrain)
-                                accuracy = model.feed(x, y)
-                                print(f"\033[1mAccuracy: {accuracy}\033[0m")
-                                
-                                Xtrain = []
-                                ytrain = []
+                        if chunks % CHUNKS_PER_TRAIN == 0:
+                            x, y = shuffle(Xtrain, ytrain)
+                            Xtrain = []
+                            ytrain = []
 
-                    except TestReserve as instance:
+                            accuracy = model.feed(x, y)
+                            print(f"\033[1mAccuracy: {accuracy}\033[0m")
+                            
+                    except TestReserve:
                         print(f"Reserved for test: {row["BidsFolder"]}, session: {row["SessionID"]}")
 
                         test_reserve.append({
