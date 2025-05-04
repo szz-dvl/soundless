@@ -93,8 +93,8 @@ def trainNN():
 
                         if chunks % CHUNKS_PER_TRAIN == 0:
                             x, y = shuffle(Xtrain, ytrain)
-                            Xtrain = []
-                            ytrain = []
+                            Xtrain.clear()
+                            ytrain.clear()
 
                             accuracy = model.feed(x, y)
                             print(f"\033[1mAccuracy: {accuracy}\033[0m")
