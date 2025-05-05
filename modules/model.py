@@ -1,4 +1,5 @@
 import json
+import math
 import keras
 from keras import layers
 from dotenv import load_dotenv
@@ -14,7 +15,10 @@ class EEGModel():
 
         tf.get_logger().setLevel('ERROR')
 
+        self.lr = 0.001
+        self.epochs = 5
         self.batch_size = 25
+        self.optimizer = keras.optimizers.Adam(learning_rate=self.lr)
         self.outdir = outdir
         self.dir = os.getenv("MODEL_CHECKPOINT_DIR")
 
@@ -22,17 +26,18 @@ class EEGModel():
             self.model = keras.models.load_model(self.dir + "eeg.keras", compile=True)
         else:
             input = keras.Input(shape=(18,6001), name="EGGInput")
-            x = layers.BatchNormalization(name="EGGScaler")(input)
-            x = layers.Flatten(name="EEGFlatten")(x)
-            x = layers.Dropout(0.2, name="EGGDropout1")(x)
-            x = layers.Dense(768, activation="relu", name="EGGDense768")(x)
-            x = layers.Dropout(0.2, name="EGGDropout2")(x)
-            x = layers.Dense(64, activation="relu", name="EGGDense64")(x)
+            x = layers.Conv1D(32, (3), strides=(2), use_bias=False, name="EEGConv")(input)
+            x = layers.BatchNormalization(scale=False, center=True, name="EGGScaler")(x)
+            x = layers.Activation(activation="relu", name="EGGReLU")(x)
+            x = layers.MaxPooling1D(pool_size=(2), name="EEGMaxPooling")(x)
+            x = layers.Dropout(0.3, name="EGGDropoutPre")(x)
+            x = layers.LSTM(50, name="EEGLstm")(x)
+            x = layers.Dropout(0.3, name="EGGDropoutPost")(x)
             outputs = layers.Dense(5, activation="softmax", name="EGGOutput")(x)
             self.model = keras.Model(inputs = input, outputs = outputs, name = "EEGModel")
             self.model.compile(
-                optimizer=keras.optimizers.Adam(),
-                loss=keras.losses.MeanAbsoluteError(),
+                optimizer=self.optimizer,
+                loss=keras.losses.CategoricalCrossentropy(),
                 metrics=[keras.metrics.CategoricalAccuracy()]
             )
 
@@ -41,17 +46,26 @@ class EEGModel():
     def getModel(self):
         return self.model
 
+    def __lrDecay(self, epoch):
+        self.optimizer.learning_rate.assign(self.lr * math.pow(0.6, epoch))
+
+    def __resetLr(self):
+        self.optimizer.learning_rate.assign(self.lr)
+
     def feed(self, chunk, tags) -> float:
         
         result = None
-        for slice in gen_batches(len(chunk), self.batch_size):
-            x, y = shuffle(chunk[slice], tags[slice])
-            result = self.model.train_on_batch(
-                tf.stack(x),
-                tf.stack(keras.utils.to_categorical(y, num_classes=5)),
-                return_dict=True
-            )
+        for epoch in range(self.epochs):
+            x, y = shuffle(chunk, tags)
+            self.__lrDecay(epoch)
+            for slice in gen_batches(len(x), self.batch_size):
+                result = self.model.train_on_batch(
+                    tf.stack(x[slice]),
+                    tf.stack(keras.utils.to_categorical(y[slice], num_classes=5)),
+                    return_dict=True
+                )
 
+        self.__resetLr()
         return result['categorical_accuracy']
 
     def evaluate(self, chunk, tags):

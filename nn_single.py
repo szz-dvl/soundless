@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 import os
 from botocore.exceptions import ClientError
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from sklearn.utils import shuffle
 
 from modules.aws import AWS
@@ -41,11 +40,12 @@ def getInfoTask(row: pd.Series):
 
     if row['HasAnnotations'] == 'Y':
         
-        if random.randrange(100) <= 15:
-            raise TestReserve()
+        # if random.randrange(100) <= 15:
+        #     raise TestReserve()
 
         parser = aws.loadEegEdf(folder, session, site)
         annotations = aws.loadEegAnnotationsCsv(folder, session, site)
+
         parser.setAnottations(annotations)
         chunks = parser.crop(channels["name"].to_list())
         tags = parser.getTags()
@@ -84,9 +84,8 @@ def trainNN():
         rows += 1
 
         if rowsToSkip < rows:
-        
             try:
-                
+
                 data, tags = getInfoTask(row)
 
                 if data is not None: 
