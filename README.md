@@ -30,6 +30,10 @@ Este script generará un json que dejará en el fichero "out/annotations.json" c
 
 Este script está en progreso en el momento de escribir esta documentación, pretende entrenar una red neuronal con las conclusiones sacadas de las salidas de los scripts anteriores, se descargará los encefalogramas, seleccionará una lista de 18 canales (que deben estar presentes) y las anotaciones asociadas con estos, iremos partiendo los encefalogramas en los trozos asociados con las anotaciones, y entrenaremos la red neuronal con los "trozos" de encefalograma y la anotacion pertinente cómo etiqueta asociada a la lectura. El parámetro habitual CHUNK_SIZE esta también disponible en este script, sin embargo se aconseja usarlo con cautela, ya que valores grandes pueden provocar que la memória del ordenador se agote dado el tamaño de los ficheros de los encefalogramas. Valor por defecto 2. Adicionalmente se ofrece el parámetro CHUNKS_TO_SAVE, que configura cada cuantos chunks volcamos el modelo a disco (10 por defecto).
 
+### nn_single.py
+
+Este script implementa una lógica muy parecida a nn.py, pero sin multithreading. Se ha implementado para mitigar problemas de falta de memória en el entrenamiento. Añade un parametro más CHUNKS_PER_TRAIN que configura cada cuantos chunks de datos entrenaremos la red neuronal, este se ha añadido para intentar mitigar el sesgo de los datos cuando estan asociados a un mismo paciente.
+
 ## Modulos
 
 Los scripts anteriores dependen de una serie de modulos escritos para la ocasión. Estos estan localizados en el directório "modules" de este repositório. A groso modo, son los siguientes:
