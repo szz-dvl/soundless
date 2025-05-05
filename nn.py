@@ -24,7 +24,6 @@ utils = Utils()
 test_reserve = []
 
 CHUNK_SIZE = 2
-CHUNKS_PER_TRAIN = 5
 CHUNKS_TO_SAVE = 10
 
 # Model save will store the test instances
@@ -70,10 +69,6 @@ def trainNN():
     getChunk = utils.chunkDataframe(pd.read_csv('bdsp_psg_master_20231101.csv'), CHUNK_SIZE)
     chunksToSkip = recoverState()
     chunks = 0
-    batches = 0
-    Xtrain = []
-    ytrain = []
-
 
     for chunk in getChunk:
         chunks += 1
@@ -86,18 +81,9 @@ def trainNN():
                     try:
                         
                         data, tags = future.result()
-                        batches += 1
 
                         if data is not None: 
-                            
-                            Xtrain.extend(list(map(lambda x: x.get_data(), data)))
-                            ytrain.extend(tags)
-
-                        if batches % CHUNKS_PER_TRAIN == 0 and Xtrain:
-                            x, y = shuffle(Xtrain, ytrain)
-                            Xtrain.clear()
-                            ytrain.clear()
-
+                            x, y = shuffle(list(map(lambda x: x.get_data(), data)), tags)
                             accuracy = model.feed(x, y)
                             print(f"\033[1mAccuracy: {accuracy}\033[0m")
                             

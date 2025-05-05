@@ -13,7 +13,7 @@ class EEGModel():
     def __init__(self, outdir = "out/"):
 
         tf.get_logger().setLevel('ERROR')
-        
+
         self.batch_size = 25
         self.outdir = outdir
         self.dir = os.getenv("MODEL_CHECKPOINT_DIR")
@@ -55,7 +55,7 @@ class EEGModel():
         return result['categorical_accuracy']
 
     def evaluate(self, chunk, tags):
-        return self.model.evaluate(tf.stack(chunk), tf.stack(tags))
+        return self.model.evaluate(tf.stack(chunk), tf.stack(keras.utils.to_categorical(tags, num_classes=5)))
         
     def getMetrics(self):
         return self.model.metrics_names
