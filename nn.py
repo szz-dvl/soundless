@@ -19,6 +19,9 @@ load_dotenv()
 class TestReserve(Exception):
     pass
 
+class IncompatibleCheckpoint(Exception):
+    pass
+
 aws = AWS()
 utils = Utils()
 test_reserve = []
@@ -57,6 +60,10 @@ def recoverState():
     try:
         with open(os.getenv("MODEL_CHECKPOINT_DIR") + "eeg.chunks", "r") as chunksFile:
             chunksInfo = chunksFile.readline()
+            parts = chunksInfo.split("=")
+            if parts[0] != "CHUNKS":
+                raise IncompatibleCheckpoint()
+            
             return int(chunksInfo.split("=")[-1])
 
     except FileNotFoundError:
@@ -111,8 +118,8 @@ def trainNN():
                         pass
             
             if chunks % CHUNKS_TO_SAVE == 0:
-                model.save(chunks, test_reserve)
+                model.save(chunks, test_reserve, "CHUNKS")
 
-    model.save(chunks, test_reserve, True)
+    model.save(chunks, test_reserve, "CHUNKS", True)
 
 trainNN()

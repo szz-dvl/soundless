@@ -19,12 +19,14 @@ load_dotenv()
 class TestReserve(Exception):
     pass
 
+class IncompatibleCheckpoint(Exception):
+    pass
+
 aws = AWS()
 utils = Utils()
 test_reserve = []
 
-CHUNK_SIZE = 2
-CHUNKS_TO_SAVE = 10
+ROWS_TO_SAVE = 10
 CHUNKS_PER_TRAIN = 3
 
 # Model save will store the test instances
@@ -58,7 +60,11 @@ def recoverState():
     try:
         with open(os.getenv("MODEL_CHECKPOINT_DIR") + "eeg.chunks", "r") as chunksFile:
             chunksInfo = chunksFile.readline()
-            return int(chunksInfo.split("=")[-1])
+            parts = chunksInfo.split("=")
+            if parts[0] != "ROWS":
+                raise IncompatibleCheckpoint()
+            
+            return int(parts[-1])
 
     except FileNotFoundError:
         return 0
@@ -67,62 +73,62 @@ def trainNN():
     global test_reserve
 
     model = EEGModel()
-    getChunk = utils.chunkDataframe(pd.read_csv('bdsp_psg_master_20231101.csv'), CHUNK_SIZE)
-    chunksToSkip = recoverState()
+    df = pd.read_csv('bdsp_psg_master_20231101.csv')
+    rowsToSkip = recoverState()
+    rows = 0
     chunks = 0
-    batches = 0
     Xtrain = []
     ytrain = []
 
-    for chunk in getChunk:
-        chunks += 1
+    for _, row in df.iterrows():
+        rows += 1
 
-        if chunksToSkip < chunks:
-            for _, row in chunk.iterrows():
-                try:
+        if rowsToSkip < rows:
+        
+            try:
+                
+                data, tags = getInfoTask(row)
+
+                if data is not None: 
+                    chunks += 1
+                    Xtrain.extend(list(map(lambda x: x.get_data(), data)))
+                    ytrain.extend(tags)
+
+                if chunks % CHUNKS_PER_TRAIN == 0 and Xtrain:
+
+                    x, y = shuffle(Xtrain, ytrain)
+                    Xtrain.clear()
+                    ytrain.clear()
+
+                    accuracy = model.feed(x, y)
+                    print(f"\033[1mAccuracy: {accuracy}\033[0m")
                     
-                    data, tags = getInfoTask(row)
+            except TestReserve:
+                print(f"Reserved for test: {row["BidsFolder"]}, session: {row["SessionID"]}")
 
-                    if data is not None: 
-                        batches += 1
-                        Xtrain.extend(list(map(lambda x: x.get_data(), data)))
-                        ytrain.extend(tags)
+                test_reserve.append({
+                    "folder": row["BidsFolder"],
+                    "session": row["SessionID"],
+                    "site": row["SiteID"]
+                })
 
-                    if batches % CHUNKS_PER_TRAIN == 0 and Xtrain:
+                pass
+            except ClientError:
+                print(f"Missing data for sub: {row["BidsFolder"]}, session: {row["SessionID"]}")
+                pass
+            except MissingChannels as ex:
+                print(f"Missing channels: {row["BidsFolder"]}, session: {row["SessionID"]}", ex)
+                pass
+            except BadSamplingFreq:
+                print(f"Bad sampling frequency ({ex}): {row["BidsFolder"]}, session: {row["SessionID"]}")
+                pass
+            except Exception as ex:
+                print(f"Exception %s: %s"%(row["BidsFolder"], ex))
+                pass
+        
+        if rows % ROWS_TO_SAVE == 0:
+            model.save(rows, test_reserve)
 
-                        x, y = shuffle(Xtrain, ytrain)
-                        Xtrain.clear()
-                        ytrain.clear()
-
-                        accuracy = model.feed(x, y)
-                        print(f"\033[1mAccuracy: {accuracy}\033[0m")
-                        
-                except TestReserve:
-                    print(f"Reserved for test: {row["BidsFolder"]}, session: {row["SessionID"]}")
-
-                    test_reserve.append({
-                        "folder": row["BidsFolder"],
-                        "session": row["SessionID"],
-                        "site": row["SiteID"]
-                    })
-
-                    pass
-                except ClientError:
-                    print(f"Missing data for sub: {row["BidsFolder"]}, session: {row["SessionID"]}")
-                    pass
-                except MissingChannels as ex:
-                    print(f"Missing channels: {row["BidsFolder"]}, session: {row["SessionID"]}", ex)
-                    pass
-                except BadSamplingFreq:
-                    print(f"Bad sampling frequency ({ex}): {row["BidsFolder"]}, session: {row["SessionID"]}")
-                    pass
-                except Exception as ex:
-                    print(f"Exception %s: %s"%(row["BidsFolder"], ex))
-                    pass
-            
-            if chunks % CHUNKS_TO_SAVE == 0:
-                model.save(chunks, test_reserve)
-
-    model.save(chunks, test_reserve, True)
+    model.save(rows, test_reserve, "ROWS", True)
 
 trainNN()

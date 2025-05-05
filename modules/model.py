@@ -60,10 +60,10 @@ class EEGModel():
     def getMetrics(self):
         return self.model.metrics_names
 
-    def save(self, chunks, test_instances, done = False):
+    def save(self, chunks, test_instances, mode = "ROWS", done = False):
         self.model.save(self.dir + "eeg.keras", include_optimizer=True)
         with open(self.dir + "eeg.chunks", "w") as chunksFile:
-            chunksFile.write(f"chunks = {chunks}\n")
+            chunksFile.write(f"{mode}={chunks}\n")
             if done == True:
                 chunksFile.write(f"DONE")
 
