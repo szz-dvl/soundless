@@ -11,6 +11,7 @@ from modules.chann_selector import ChannSelector, MissingChannels
 from modules.edf import BadSamplingFreq
 from modules.model import EEGModel
 from modules.utils import Utils
+from modules.db import Db
 
 from dotenv import load_dotenv
 
@@ -24,10 +25,11 @@ class IncompatibleCheckpoint(Exception):
 
 aws = AWS()
 utils = Utils()
-test_reserve = []
+db = Db()
 
 CHUNK_SIZE = 2
 CHUNKS_TO_SAVE = 10
+CHUNKS_PER_TRAIN = 5
 
 # Model save will store the test instances
 utils.createDirIfNotExists("out")
@@ -46,6 +48,7 @@ def getInfoTask(row: pd.Series):
 
         parser = aws.loadEegEdf(folder, session, site)
         annotations = aws.loadEegAnnotationsCsv(folder, session, site)
+
         parser.setAnottations(annotations)
         chunks = parser.crop(channels["name"].to_list())
         tags = parser.getTags()
@@ -70,8 +73,6 @@ def recoverState():
         return 0
 
 def trainNN():
-    global test_reserve
-
     model = EEGModel()
     getChunk = utils.chunkDataframe(pd.read_csv('bdsp_psg_master_20231101.csv'), CHUNK_SIZE)
     chunksToSkip = recoverState()
@@ -89,20 +90,19 @@ def trainNN():
                         
                         data, tags = future.result()
 
-                        if data is not None: 
-                            x, y = shuffle(list(map(lambda x: x.get_data(), data)), tags)
-                            accuracy = model.feed(x, y)
+                        if data is not None:
+                            db.insertChunks(data, tags)
+                            chunks += 1
+
+                        if chunks % CHUNKS_PER_TRAIN == 0:
+                            accuracy = model.fit()
                             print(f"\033[1mAccuracy: {accuracy}\033[0m")
+
+                            db.flushData()
                             
                     except TestReserve:
                         print(f"Reserved for test: {row["BidsFolder"]}, session: {row["SessionID"]}")
-
-                        test_reserve.append({
-                            "folder": row["BidsFolder"],
-                            "session": row["SessionID"],
-                            "site": row["SiteID"]
-                        })
-
+                        db.insertTest(row["BidsFolder"], row["SessionID"], row["SiteID"])
                         pass
                     except ClientError:
                         print(f"Missing data for sub: {row["BidsFolder"]}, session: {row["SessionID"]}")
@@ -118,8 +118,9 @@ def trainNN():
                         pass
             
             if chunks % CHUNKS_TO_SAVE == 0:
-                model.save(chunks, test_reserve, "CHUNKS")
+                model.save(chunks, "CHUNKS")
 
-    model.save(chunks, test_reserve, "CHUNKS", True)
+    model.save(chunks, "CHUNKS", True)
 
 trainNN()
+db.close()

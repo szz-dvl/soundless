@@ -43,6 +43,7 @@ Los scripts anteriores dependen de una serie de modulos escritos para la ocasió
 - edf: Este modulo encapsúla la lógica asociada con los ficheros de los encefalogramas (.edf). Usa la librería de python [mne](https://mne.tools/stable/index.html) para facilitar el trabajo.
 - model: Este modulo implementa la red neuronal con [keras](https://keras.io/).
 - utils: Un pequeño modulo para implementar lógica que reuso en varios scripts.
+- db: Modulo que se encarga de interactuar con una BBDD PostgreSQL.
 
 ## Entorno
 
@@ -53,3 +54,7 @@ Para usar los scripts es necesario tener en el mismo path donde esté este repos
 - AWS_BUCKET: Amazon bucket que contiene los datos, también facilitado por [The Human Sleep Project](https://bdsp.io/content/hsp/2.0/)
 - AWS_REGION: Región que aloja los datos en Amazon.
 - MODEL_CHECKPOINT_DIR: Directorio local donde se iran guardando los checkpoints de la red neuronal entrenada por el script nn.py.
+- DB_NAME: Nombre de la BBDD a la que se conectará el script
+- DB_HOST: Host que aloja la BBDD
+- DB_USER: Usuario para la BBDD
+- DB_PASS: Password para la BBDD
