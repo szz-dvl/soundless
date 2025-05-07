@@ -1,6 +1,5 @@
 from io import StringIO
 import keras
-import numpy as np
 import pandas as pd
 import psycopg2
 import os

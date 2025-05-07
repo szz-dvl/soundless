@@ -1,10 +1,8 @@
 import random
-import numpy as np
 import pandas as pd
 import os
 from botocore.exceptions import ClientError
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from sklearn.utils import shuffle
 
 from modules.aws import AWS
 from modules.chann_selector import ChannSelector, MissingChannels

@@ -1,5 +1,3 @@
-import json
-
 from modules.aws import AWS
 from modules.chann_selector import ChannSelector
 from modules.model import EEGModel
