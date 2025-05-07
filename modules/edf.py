@@ -103,10 +103,10 @@ class EdfParser:
         self.annotations = annotations
         self.tags = events
 
-    def crop(self, channel_picks: list):
+    def crop(self, channelPicks: list):
         if self.annotations is None:
             raise Exception("Trying to crop a not annotated document")
-        picks = self.edf.pick(channel_picks).reorder_channels(sorted(channel_picks))
+        picks = self.edf.pick(channelPicks).reorder_channels(channelPicks)
         return picks.crop_by_annotations()
     
     def getTags(self):
