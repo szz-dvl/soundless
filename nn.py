@@ -77,6 +77,7 @@ def trainNN():
     getChunk = utils.chunkDataframe(pd.read_csv('bdsp_psg_master_20231101.csv'), CHUNK_SIZE)
     chunksToSkip = recoverState()
     chunks = 0
+    inserted = 0
 
     for chunk in getChunk:
         chunks += 1
@@ -92,9 +93,9 @@ def trainNN():
 
                         if data is not None:
                             db.insertChunks(data, tags)
-                            chunks += 1
+                            inserted += 1
 
-                        if chunks % CHUNKS_PER_TRAIN == 0:
+                        if inserted % CHUNKS_PER_TRAIN == 0:
                             accuracy = model.fit()
                             print(f"\033[1mAccuracy: {accuracy}\033[0m")
 
