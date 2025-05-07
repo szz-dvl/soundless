@@ -107,6 +107,7 @@ class Db():
             cursor.execute("SELECT * FROM test;")
             return cursor.fetchall()
 
+    # https://medium.com/@askintamanli/fastest-methods-to-bulk-insert-a-pandas-dataframe-into-postgresql-2aa2ab6d2b24
     def __insertChunk(self, chunk: pd.DataFrame, tag: int, chunkId: int):
         chunk = chunk.drop(columns = "time")
         chunk["chunkid"] = chunkId
