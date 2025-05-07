@@ -102,6 +102,11 @@ class Db():
             [folder, session, site])
         self.conn.commit()
 
+    def getTest(self):
+        with self.conn.cursor() as cursor:
+            cursor.execute("SELECT * FROM test;")
+            return cursor.fetchall()
+
     def __insertChunk(self, chunk: pd.DataFrame, tag: int, chunkId: int):
         chunk = chunk.drop(columns = "time")
         chunk["chunkid"] = chunkId
