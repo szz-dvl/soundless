@@ -74,6 +74,18 @@ class ChannSelector():
             ]
         ]
 
+    def __getOrderedChannels(self, channels: list) -> list:
+        ordered = []
+        for mandatory in self.mandatory:
+            ordered.append(mandatory)
+
+        for equivalence in self.equivalences:
+            for chann in equivalence:
+                if chann in channels:
+                    ordered.append(chann)
+
+        return ordered
+
     def select(self, rawChannels: pd.DataFrame) -> pd.DataFrame:
         mandatory = rawChannels[rawChannels["name"].isin(self.mandatory)]
 
@@ -86,7 +98,11 @@ class ChannSelector():
                 raise MissingChannels(f"Equivalence = {len(equivalent)}")
             
             mandatory = pd.concat([mandatory, equivalent], sort = False)
-            
-        mandatory = mandatory.reindex(sorted(mandatory.columns), axis=1)
 
-        return mandatory
+        orderedIdx = []
+        for chann in self.__getOrderedChannels(mandatory["name"].to_list()):
+            orderedIdx.append(mandatory[mandatory["name"] == chann].index.values[0])
+        
+        return mandatory.reindex(orderedIdx)
+    
+    
