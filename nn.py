@@ -93,10 +93,11 @@ def trainNN():
                             db.insertChunks(data, tags)
                             inserted += 1
 
-                        if inserted % CHUNKS_PER_TRAIN == 0:
+                        if inserted == CHUNKS_PER_TRAIN:
                             accuracy = model.fit()
                             print(f"\033[1mAccuracy: {accuracy}\033[0m")
 
+                            inserted = 0
                             db.flushData()
                             
                     except TestReserve:
