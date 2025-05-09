@@ -18,10 +18,16 @@ class EEGModel():
         tf.get_logger().setLevel('ERROR')
 
         self.db = Db()
-        self.lr = 0.001
+        self.lr = 0.0001
+        self.lr_schedule = keras.optimizers.schedules.ExponentialDecay(
+            initial_learning_rate=0.0001,
+            decay_steps=1000,
+            decay_rate=0.6,
+            staircase=True
+        )
+        self.optimizer = keras.optimizers.Adam(learning_rate=self.lr_schedule)
         self.epochs = 5
-        self.batch_size = 25
-        self.optimizer = keras.optimizers.Adam(learning_rate=self.lr)
+        self.batch_size = 64
         self.outdir = outdir
         self.dir = os.getenv("MODEL_CHECKPOINT_DIR")
         self.lr_cb = keras.callbacks.LearningRateScheduler(self.__lrDecayCb, verbose=False)
@@ -32,12 +38,12 @@ class EEGModel():
         else:
             input = keras.Input(shape=(6001, 18), name="EGGInput")
             x = layers.Conv1D(64, (3), strides=(2), use_bias=False, name="EEGConv")(input)
-            x = layers.BatchNormalization(scale=False, center=True, name="EGGScaler")(x)
+            x = layers.LayerNormalization(scale=False, center=True, name="EGGScaler")(x)
             x = layers.Activation(activation="relu", name="EGGReLU")(x)
             x = layers.MaxPooling1D(pool_size=(2), name="EEGMaxPooling")(x)
-            x = layers.Dropout(0.3, name="EGGDropoutPre")(x)
+            x = layers.Dropout(0.2, name="EGGDropoutPre")(x)
             x = layers.LSTM(100, name="EEGLstm")(x)
-            x = layers.Dropout(0.3, name="EGGDropoutPost")(x)
+            x = layers.Dropout(0.2, name="EGGDropoutPost")(x)
             outputs = layers.Dense(5, activation="softmax", name="EGGOutput")(x)
             self.model = keras.Model(inputs = input, outputs = outputs, name = "EEGModel")
             self.model.compile(
@@ -83,7 +89,6 @@ class EEGModel():
             self.db.readChunks(self.batch_size, self.epochs),
             epochs=self.epochs,
             steps_per_epoch=math.ceil(self.db.sampleNum() / self.batch_size),
-            callbacks=[self.lr_cb],
             verbose=0
         )
 
