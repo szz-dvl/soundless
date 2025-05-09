@@ -60,6 +60,35 @@ class Db():
                     site varchar NOT NULL,
                     CONSTRAINT test_pk PRIMARY KEY (folder,ses)
                 );
+                           
+                CREATE TABLE IF NOT EXISTS public.validation_tags (
+	                chunk_id int4 NOT NULL,
+	                tag int2 NOT NULL,
+	                CONSTRAINT tags_validation_pk PRIMARY KEY (chunk_id)
+                );
+                           
+                CREATE TABLE IF NOT EXISTS public.validation (
+	                abd float8 NOT NULL,
+	                c3_m2 float8 NOT NULL,
+	                chest float8 NOT NULL,
+	                o1_m2 float8 NOT NULL,
+	                ic float8 NOT NULL,
+	                e1_m2 float8 NOT NULL,
+	                snore float8 NOT NULL,
+	                ekg float8 NOT NULL,
+	                airflow float8 NOT NULL,
+	                hr float8 NOT NULL,
+	                lat float8 NOT NULL,
+	                rat float8 NOT NULL,
+	                sao2 float8 NOT NULL,
+	                c4_m1 float8 NOT NULL,
+	                chin1_chin2 float8 NOT NULL,
+	                e2_m1 float8 NOT NULL,
+	                f4_m1 float8 NOT NULL,
+	                o1_m1 float8 NOT NULL,
+	                chunk_id int4 NOT NULL,
+                    CONSTRAINT validation_tags_fk FOREIGN KEY (chunk_id) REFERENCES public.validation_tags(chunk_id) ON DELETE CASCADE
+                );
             """)
 
         self.conn.commit()
@@ -73,9 +102,9 @@ class Db():
             password=self.pwd
         )
 
-    def __getMaxChunk(self):
+    def __getMaxChunk(self, mode = "samples"):
         with self.conn.cursor() as cursor:
-            cursor.execute("SELECT MAX(chunk_id) FROM samples;")
+            cursor.execute(f"SELECT MAX(chunk_id) FROM {mode};")
             result = cursor.fetchone()
             return 0 if result[0] is None else result[0]
 
@@ -107,7 +136,7 @@ class Db():
             return cursor.fetchall()
 
     # https://medium.com/@askintamanli/fastest-methods-to-bulk-insert-a-pandas-dataframe-into-postgresql-2aa2ab6d2b24
-    def __insertChunk(self, chunk: pd.DataFrame, tag: int, chunkId: int):
+    def __insertChunk(self, chunk: pd.DataFrame, tag: int, chunkId: int, mode = "samples"):
         chunk = chunk.drop(columns = "time")
         chunk["chunkid"] = chunkId
 
@@ -116,15 +145,15 @@ class Db():
         sio.seek(0)
 
         with self.conn.cursor() as cursor:
-            cursor.execute("""
-                INSERT INTO tags (tag, chunk_id)
+            cursor.execute(f"""
+                INSERT INTO {"tags" if mode == "samples" else "validation_tags"} (tag, chunk_id)
                 VALUES (%s, %s);
             """, 
             [tag, chunkId])
 
             cursor.copy_expert(
-                sql = """
-                    COPY samples (
+                sql = f"""
+                    COPY {mode} (
                         abd,  
                         c3_m2,  
                         chest, 
@@ -151,37 +180,47 @@ class Db():
 
         self.conn.commit()
         
-    def insertChunks(self, chunks: list, tags: list):
-        maxChunk = self.__getMaxChunk()
+    def insertChunks(self, chunks: list, tags: list, mode = "samples"):
+        maxChunk = self.__getMaxChunk(mode)
 
         offset = 1
         for chunk, tag in zip(list(map(lambda x: x.to_data_frame(), chunks)), tags):
-            self.__insertChunk(chunk, tag, maxChunk + offset)
+            self.__insertChunk(chunk, tag, maxChunk + offset, mode)
             offset += 1
 
     def __shuffleChunks(self):
         with self.conn.cursor() as cursor:
-            cursor.execute("SELECT DISTINCT chunk_id FROM tags;")
+            cursor.execute(f"SELECT DISTINCT chunk_id FROM tags;")
             return shuffle(list(map(lambda x: x[0], cursor.fetchall())))
-    
-    def sampleNum(self):
+        
+    def __validationChunks(self):
         with self.conn.cursor() as cursor:
-            cursor.execute("SELECT count(*) FROM tags;")
+            cursor.execute(f"SELECT DISTINCT chunk_id FROM validation_tags;")
+            return list(map(lambda x: x[0], cursor.fetchall()))
+    
+    def sampleNum(self, mode = "tags"):
+        with self.conn.cursor() as cursor:
+            cursor.execute(f"SELECT count(*) FROM {mode};")
             result = cursor.fetchone()
             return result[0]
 
-    def readChunks(self, batchSize: int, epochs: int):
+    def readChunks(self, batchSize: int, epochs: int, mode = "samples"):
             
             with self.conn.cursor() as cursor:
                 for _ in range(epochs):
-                    available = self.__shuffleChunks()    
+
+                    available = None
+                    if mode == "samples":
+                        available = self.__shuffleChunks()    
+                    else:
+                        available = self.__validationChunks()
 
                     for slice in gen_batches(len(available), batchSize):
                         batch = available[slice]
                         
-                        cursor.execute("""
+                        cursor.execute(f"""
                             SELECT abd, c3_m2, chest, o1_m2, ic, e1_m2, snore, ekg, airflow, hr, lat, rat, sao2, c4_m1, chin1_chin2, e2_m1, f4_m1, o1_m1, t.chunk_id, tag 
-                            FROM samples AS s LEFT JOIN tags AS t ON t.chunk_id = s.chunk_id 
+                            FROM {mode} AS s LEFT JOIN {"tags" if mode == "samples" else "validation_tags"} AS t ON t.chunk_id = s.chunk_id 
                             WHERE s.chunk_id IN %s;   
                         """,
                         (tuple(batch),))

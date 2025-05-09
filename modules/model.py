@@ -89,13 +89,20 @@ class EEGModel():
             self.db.readChunks(self.batch_size, self.epochs),
             epochs=self.epochs,
             steps_per_epoch=math.ceil(self.db.sampleNum() / self.batch_size),
+            validation_data=self.db.readChunks(self.batch_size, self.epochs, "validation"),
+            validation_steps=math.ceil(self.db.sampleNum("validation_tags") / self.batch_size),
             verbose=0
         )
+
+        cat_acc = np.mean(history.history['categorical_accuracy'])
+        val_cat_acc = np.mean(history.history['val_categorical_accuracy'])
+        loss = np.mean(history.history['loss'])
+        val_loss = np.mean(history.history['val_loss'])
 
         # For some reason DDBB gets stuck after training T_T
         self.db.reconnect()
 
-        return np.mean(history.history['categorical_accuracy'])
+        return cat_acc, val_cat_acc, loss, val_loss
 
     def evaluate(self, chunk, tags):
         return self.model.evaluate(tf.stack(chunk), tf.stack(keras.utils.to_categorical(tags, num_classes=5)))
