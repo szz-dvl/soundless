@@ -18,14 +18,14 @@ class EEGModel():
         tf.get_logger().setLevel('ERROR')
 
         self.db = Db()
-        self.lr = 0.0001
+        self.lr = 0.001
         self.lr_schedule = keras.optimizers.schedules.ExponentialDecay(
-            initial_learning_rate=0.0001,
+            initial_learning_rate=self.lr,
             decay_steps=1000,
             decay_rate=0.6,
             staircase=True
         )
-        self.optimizer = keras.optimizers.Adam(learning_rate=self.lr_schedule)
+        self.optimizer = keras.optimizers.AdamW(learning_rate=self.lr_schedule)
         self.epochs = 5
         self.batch_size = 64
         self.outdir = outdir
