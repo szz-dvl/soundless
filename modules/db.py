@@ -1,8 +1,10 @@
 from io import StringIO
 import keras
+import numpy as np
 import pandas as pd
 import psycopg2
 import os
+from sklearn.preprocessing import MinMaxScaler
 
 from sklearn.utils import gen_batches, shuffle
 import tensorflow as tf
@@ -10,6 +12,8 @@ import tensorflow as tf
 class Db():
 
     def __init__(self):
+
+        self.num_classes = 5
 
         self.db = os.getenv("DB_NAME")
         self.host = os.getenv("DB_HOST")
@@ -120,7 +124,7 @@ class Db():
             cursor.execute("TRUNCATE TABLE tags CASCADE;")
             cursor.execute("TRUNCATE TABLE test;")
         self.conn.commit()
-
+    
     def insertTest(self, folder, session, site):
         with self.conn.cursor() as cursor:
             cursor.execute("""
@@ -206,6 +210,8 @@ class Db():
 
     def readChunks(self, batchSize: int, epochs: int, mode = "samples"):
             
+            classWeights = self.__classWeights("tags" if mode == "samples" else "validation_tags")
+            
             with self.conn.cursor() as cursor:
                 for _ in range(epochs):
 
@@ -255,12 +261,118 @@ class Db():
                             chunk = df.loc[df["chunk_id"] == chunkId]
                             tag = chunk.loc[:, "tag"].iloc[0]
                             chunk = chunk.drop(columns=["chunk_id", "tag"])
+                            
+                            # MinMaxScaler
+                            chunk[[
+                                "abd", 
+                                "c3_m2", 
+                                "chest", 
+                                "o1_m2", 
+                                "ic", 
+                                "e1_m2", 
+                                "snore", 
+                                "ekg", 
+                                "airflow", 
+                                "hr", 
+                                "lat", 
+                                "rat", 
+                                "sao2", 
+                                "c4_m1", 
+                                "chin1_chin2", 
+                                "e2_m1", 
+                                "f4_m1", 
+                                "o1_m1"
+                            ]] = MinMaxScaler().fit_transform(chunk[[
+                                "abd", 
+                                "c3_m2", 
+                                "chest", 
+                                "o1_m2", 
+                                "ic", 
+                                "e1_m2", 
+                                "snore", 
+                                "ekg", 
+                                "airflow", 
+                                "hr", 
+                                "lat", 
+                                "rat", 
+                                "sao2", 
+                                "c4_m1", 
+                                "chin1_chin2", 
+                                "e2_m1", 
+                                "f4_m1", 
+                                "o1_m1"
+                            ]])
 
                             chunks.append(chunk)
                             tags.append(tag)
 
-                        yield tf.stack(chunks), tf.stack(keras.utils.to_categorical(tags, num_classes=5))
-                
+                        yield tf.stack(chunks), tf.stack(keras.utils.to_categorical(tags, num_classes=self.num_classes)), np.vectorize(lambda x: classWeights[x])(tags)
+
+    def __classWeights(self, mode = "tags"):
+        weights = {}
+
+        with self.conn.cursor() as cursor:
+
+            cursor.execute(f"SELECT count(*) FROM {mode};")
+            result = cursor.fetchone()
+            total = result[0]
+
+            for label in range(self.num_classes):
+                cursor.execute(f"SELECT count(*) FROM {mode} WHERE tag = {label};")
+                result = cursor.fetchone()
+                freq = result[0]
+
+                weights[label] =  1 - (freq/total)
+
+        return weights
+
+
+    def readChannel(self, batchSize: int, epochs: int, channel: str, mode = "samples"):
+            
+            classWeights = self.__classWeights("tags" if mode == "samples" else "validation_tags")
+            
+            with self.conn.cursor() as cursor:
+                for _ in range(epochs):
+
+                    available = None
+                    if mode == "samples":
+                        available = self.__shuffleChunks()    
+                    else:
+                        available = self.__validationChunks()
+
+                    for slice in gen_batches(len(available), batchSize):
+                        batch = available[slice]
+                        
+                        cursor.execute(f"""
+                            SELECT {channel}, t.chunk_id, tag 
+                            FROM {mode} AS s LEFT JOIN {"tags" if mode == "samples" else "validation_tags"} AS t ON t.chunk_id = s.chunk_id 
+                            WHERE s.chunk_id IN %s;   
+                        """,
+                        (tuple(batch),))
+
+                        df = pd.DataFrame(cursor.fetchall(), columns=[
+                            channel, 
+                            "chunk_id", 
+                            "tag"
+                        ])
+                        
+                        tags = []
+                        chunks = []
+
+                        for chunkId in batch:
+                            chunk = df.loc[df["chunk_id"] == chunkId]
+                            tag = chunk.loc[:, "tag"].iloc[0]
+                            chunk = chunk.drop(columns=["chunk_id", "tag"])
+
+                            # MinMaxScaler
+                            chunk[[channel]] = MinMaxScaler().fit_transform(chunk[[channel]])
+
+                            chunks.append(chunk)
+                            tags.append(tag)
+
+                        
+                        yield tf.stack(chunks), tf.stack(keras.utils.to_categorical(tags, num_classes=self.num_classes)), np.vectorize(lambda x: classWeights[x])(tags)
+                        
     def close(self):
         self.conn.close()
                     

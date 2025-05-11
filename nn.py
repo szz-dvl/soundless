@@ -39,30 +39,27 @@ validation_set = [
         "session": 1,
         "site": "S0001"
     },
-    {
-        "folder": "sub-S0001111192986",
-        "session": 1,
-        "site": "S0001"
-    },
-    {
-        "folder": "sub-S0001111201541",
-        "session": 1,
-        "site": "S0001"
-    },
-    {
-        "folder": "sub-S0001111212020",
-        "session": 1,
-        "site": "S0001"
-    },
-    {
-        "folder": "sub-S0001111214824",
-        "session": 1,
-        "site": "S0001"
-    }
+    # {
+    #     "folder": "sub-S0001111192986",
+    #     "session": 1,
+    #     "site": "S0001"
+    # },
+    # {
+    #     "folder": "sub-S0001111201541",
+    #     "session": 1,
+    #     "site": "S0001"
+    # },
+    # {
+    #     "folder": "sub-S0001111212020",
+    #     "session": 1,
+    #     "site": "S0001"
+    # },
+    # {
+    #     "folder": "sub-S0001111214824",
+    #     "session": 1,
+    #     "site": "S0001"
+    # }
 ]
-
-# Model save will store the test instances
-utils.createDirIfNotExists("out")
 
 def isValidation(folder, session, site):
     for validation in validation_set:
@@ -95,7 +92,7 @@ def getInfoTask(row: pd.Series):
 
     if row['HasAnnotations'] == 'Y':
         
-        if random.randrange(100) <= 15:
+        if random.randrange(100) <= 10:
             raise TestReserve()
         
         return parseData(folder, session, site, channels)
@@ -164,8 +161,8 @@ def trainNN():
                             inserted += 1
 
                         if inserted == CHUNKS_PER_TRAIN:
-                            accuracy, val_accuracy, loss, val_loss = model.fit()
-                            print(f"\033[1mAccuracy: {accuracy}, Validation accuracy: {val_accuracy}, Loss: {loss}, Validation loss: {val_loss} \033[0m")
+                            cat_acc, val_cat_acc, loss, val_loss = model.fit()
+                            print(f"\033[1mAccuracy: {cat_acc}, Validation accuracy: {val_cat_acc}, Loss: {loss}, Validation loss: {val_loss}\033[0m")
 
                             inserted = 0
                             db.flushData()
