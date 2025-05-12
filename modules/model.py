@@ -13,24 +13,26 @@ load_dotenv()
 
 class EEGModel():
     
-    def __init__(self, outdir = "out/"):
+    def __init__(self):
 
         tf.get_logger().setLevel('ERROR')
 
         self.db = Db()
-        self.lr = 0.001
-        self.lr_schedule = keras.optimizers.schedules.ExponentialDecay(
-            initial_learning_rate=self.lr,
-            decay_steps=1000,
-            decay_rate=0.6,
-            staircase=True
-        )
-        self.optimizer = keras.optimizers.AdamW(learning_rate=self.lr_schedule)
+        self.lr = 0.01
+        self.optimizer = keras.optimizers.SGD(learning_rate=self.lr, momentum=0.9, nesterov=True)
+        self.callbacks = [
+            keras.callbacks.ReduceLROnPlateau(
+                monitor="val_loss",
+                factor=0.1,
+                patience=2,
+                min_lr=1e-5,
+                mode="min"
+            )
+        ]
+        
         self.epochs = 5
         self.batch_size = 64
-        self.outdir = outdir
         self.dir = os.getenv("MODEL_CHECKPOINT_DIR")
-        self.lr_cb = keras.callbacks.LearningRateScheduler(self.__lrDecayCb, verbose=False)
 
         if os.path.exists(self.dir + "eeg.keras"):
             self.model = keras.models.load_model(self.dir + "eeg.keras", compile=True)
@@ -58,31 +60,6 @@ class EEGModel():
     def getModel(self):
         return self.model
 
-    def __lrDecayCb(self, epoch):
-        return self.lr * math.pow(0.6, epoch)
-
-    def __lrDecay(self, epoch):
-        self.optimizer.learning_rate.assign(self.lr * math.pow(0.6, epoch))
-
-    def __resetLr(self):
-        self.optimizer.learning_rate.assign(self.lr)
-
-    def feed(self, chunk, tags) -> float:
-        
-        result = None
-        for epoch in range(self.epochs):
-            x, y = shuffle(chunk, tags)
-            self.__lrDecay(epoch)
-            for slice in gen_batches(len(x), self.batch_size):
-                result = self.model.train_on_batch(
-                    tf.stack(x[slice]),
-                    tf.stack(keras.utils.to_categorical(y[slice], num_classes=5)),
-                    return_dict=True
-                )
-
-        self.__resetLr()
-        return result['categorical_accuracy']
-
     def fit(self):
         
         history = self.model.fit(
@@ -91,6 +68,7 @@ class EEGModel():
             steps_per_epoch=math.ceil(self.db.sampleNum() / self.batch_size),
             validation_data=self.db.readChunks(self.batch_size, self.epochs, "validation"),
             validation_steps=math.ceil(self.db.sampleNum("validation_tags") / self.batch_size),
+            callbacks=[self.callbacks],
             verbose=0
         )
 
