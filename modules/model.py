@@ -18,8 +18,8 @@ class EEGModel():
         tf.get_logger().setLevel('ERROR')
 
         self.db = Db()
-        self.lr = 0.01
-        self.optimizer = keras.optimizers.SGD(learning_rate=self.lr, momentum=0.9, nesterov=True)
+        self.lr = 0.001
+        self.optimizer = keras.optimizers.AdamW(learning_rate=self.lr, weight_decay=1e-4)
         self.callbacks = [
             keras.callbacks.ReduceLROnPlateau(
                 monitor="val_loss",
@@ -29,7 +29,7 @@ class EEGModel():
                 mode="min"
             )
         ]
-        
+
         self.epochs = 5
         self.batch_size = 64
         self.dir = os.getenv("MODEL_CHECKPOINT_DIR")
@@ -46,6 +46,8 @@ class EEGModel():
             x = layers.Dropout(0.2, name="EGGDropoutPre")(x)
             x = layers.LSTM(100, name="EEGLstm")(x)
             x = layers.Dropout(0.2, name="EGGDropoutPost")(x)
+            x = layers.Dense(128, activation="relu", name="EEGDense")(x)
+            x = layers.Dropout(0.2, name="EGGDropoutDense")(x)
             outputs = layers.Dense(5, activation="softmax", name="EGGOutput")(x)
             self.model = keras.Model(inputs = input, outputs = outputs, name = "EEGModel")
             self.model.compile(
