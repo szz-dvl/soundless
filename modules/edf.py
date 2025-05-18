@@ -1,8 +1,10 @@
 from io import BytesIO
 import mne
+import numpy as np
 import pandas as pd
 import tempfile
 import os
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 class BadSamplingFreq(Exception):
     pass
@@ -12,6 +14,7 @@ class EdfParser:
     def __init__(self, file: BytesIO):
         mne.set_log_level(verbose="CRITICAL")
         self.annotations = None
+        self.picks = None
         self.stopEvent = "Stopped_Analyzer_-_Sleep_Events"
         self.annotationsTags = { 
             "Sleep_stage_W" : ["Sleep_stage_4" ,"Sleep_stage_W"], 
@@ -28,12 +31,20 @@ class EdfParser:
             "Sleep_stage_R": 0 
         }
 
+        self.freqBands = {
+            "delta": [0.5, 4.5],
+            "theta": [4.5, 8.5],
+            "alpha": [8.5, 11.5],
+            "sigma": [11.5, 15.5],
+            "beta": [15.5, 30],
+        }
+
         # https://github.com/mne-tools/mne-python/pull/13156
         with tempfile.NamedTemporaryFile(suffix='.edf', delete_on_close=False, delete=False) as fp:
             fp.write(file.getbuffer())
             fp.seek(0)
             self.filename = fp.name
-            self.edf = mne.io.read_raw_edf(fp.name, preload=True)
+            self.edf = mne.io.read_raw_edf(fp.name, preload=True, infer_types=True, verbose="error")
             if self.edf.info["sfreq"] != 200.0:
                 raise BadSamplingFreq(self.edf.info["sfreq"])
             # self.df = pd.DataFrame(self.edf.get_data().transpose(), columns=self.edf.ch_names)
@@ -99,13 +110,61 @@ class EdfParser:
             description=events
         )
 
-        self.edf.set_annotations(annotations)
+        self.edf.set_annotations(annotations, emit_warning=False)
         self.annotations = annotations
         self.tags = events
+    
+    def __getEventIds(self, present): 
+        eventId = {}
+
+        for event, label in self.tagsToClass.items():
+            if label in present:
+                eventId[event] = label
+
+        return eventId
+
+    def __getEpochs(self):
+        events, _ = mne.events_from_annotations(self.edf, event_id=self.tagsToClass, chunk_duration=30.0)
+        
+        return mne.Epochs(
+            raw=self.edf,
+            events=events,
+            event_id=self.__getEventIds(np.unique(events[:, -1])),
+            tmin=0.0,
+            tmax=30.0 - 1.0 / self.edf.info["sfreq"],
+            baseline=None,
+            on_missing="raise",
+            preload=True
+        )
+
+    def featuresPerEvent(self, picks: pd.DataFrame):
+        # https://mne.tools/stable/auto_tutorials/clinical/60_sleep.html
+
+        chann_names = picks["name"].to_list()
+        epochs = self.__getEpochs().reorder_channels(chann_names)
+        
+        spectrum = epochs.compute_psd(picks=chann_names, fmin=0.5, fmax=30.0, method="multitaper")
+        psds, freqs = spectrum.get_data(return_freqs=True)
+
+        # Delete events where no presence/power is found in the given frequencies
+        purged_psds = np.delete(psds, np.where(np.sum(psds, axis=-1) == 0)[0], axis=0)
+
+        # Remove useless labels
+        labels = np.delete(epochs.events[:, 2], np.where(np.sum(psds, axis=-1) == 0)[0])
+
+        # Normalize the PSDs
+        purged_psds /= np.sum(purged_psds, axis=-1, keepdims=True)
+
+        X = []
+        for fmin, fmax in self.freqBands.values():
+            psds_band = purged_psds[:, :, (freqs >= fmin) & (freqs < fmax)].mean(axis=-1)
+            X.append(psds_band.reshape(len(purged_psds), -1))
+
+        return np.concatenate(X, axis=1), labels
 
     def crop(self, channelPicks: list):
         if self.annotations is None:
-            raise Exception("Trying to crop a not annotated document")
+            raise Exception("Trying to crop a not annotated document") 
         picks = self.edf.pick(channelPicks).reorder_channels(channelPicks)
         return picks.crop_by_annotations()
     
