@@ -36,7 +36,7 @@ class MLPEegModel():
         ]
 
         if os.path.exists(self.dir + "mlp_eeg.keras"):
-            self.model = keras.models.load_model(self.dir + "eeg.keras", compile=True)
+            self.model = keras.models.load_model(self.dir + "mlp_eeg.keras", compile=True)
             self.db.flushData()
         else:
             
@@ -115,7 +115,7 @@ class MLPEegModel():
             steps_per_epoch=math.ceil(self.db.sampleNum() / self.batch_size),
             validation_data=self.db.readChunks(self.batch_size, self.epochs, "validation"),
             validation_steps=math.ceil(self.db.sampleNum("validation") / self.batch_size),
-            verbose=1,
+            verbose=0,
             callbacks=[self.callbacks]
         )
 

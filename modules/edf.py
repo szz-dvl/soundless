@@ -1,4 +1,5 @@
 from io import BytesIO
+from warnings import warn
 import mne
 import numpy as np
 import pandas as pd
@@ -46,7 +47,8 @@ class EdfParser:
             self.filename = fp.name
             self.edf = mne.io.read_raw_edf(fp.name, preload=True, infer_types=True, verbose="error")
             if self.edf.info["sfreq"] != 200.0:
-                raise BadSamplingFreq(self.edf.info["sfreq"])
+                warn(f"Bad sampling frequency: {self.edf.info["sfreq"]}")
+                #raise BadSamplingFreq(self.edf.info["sfreq"])
             # self.df = pd.DataFrame(self.edf.get_data().transpose(), columns=self.edf.ch_names)
 
     def getChannelTypes(self):

@@ -29,7 +29,7 @@ aws = AWS()
 utils = Utils()
 db = Db()
 
-CHUNK_SIZE = 3
+CHUNK_SIZE = 2
 CHUNKS_TO_SAVE = 10
 CHUNKS_PER_TRAIN = 5
 
