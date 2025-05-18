@@ -1,36 +1,87 @@
 import math
 import keras
-from keras import layers
 from dotenv import load_dotenv
 import os
 import numpy as np
 import tensorflow as tf
 from sklearn.utils import gen_batches, shuffle
-
+import keras_tuner as kt
 from modules.db import Db
 
 load_dotenv()
+
+# class CustomCallback(keras.callbacks.Callback):
+#     def on_train_begin(self, logs=None):
+#         keys = list(logs.keys())
+#         print("Starting training; got log keys: {}".format(keys))
+
+#     def on_train_end(self, logs=None):
+#         keys = list(logs.keys())
+#         print("Stop training; got log keys: {}".format(keys))
+
+#     def on_epoch_begin(self, epoch, logs=None):
+#         keys = list(logs.keys())
+#         print("Start epoch {} of training; got log keys: {}".format(epoch, keys))
+
+#     def on_epoch_end(self, epoch, logs=None):
+#         keys = list(logs.keys())
+#         print("End epoch {} of training; got log keys: {}".format(epoch, keys))
+
+#     def on_test_begin(self, logs=None):
+#         keys = list(logs.keys())
+#         print("Start testing; got log keys: {}".format(keys))
+
+#     def on_test_end(self, logs=None):
+#         keys = list(logs.keys())
+#         print("Stop testing; got log keys: {}".format(keys))
+
+#     def on_predict_begin(self, logs=None):
+#         keys = list(logs.keys())
+#         print("Start predicting; got log keys: {}".format(keys))
+
+#     def on_predict_end(self, logs=None):
+#         keys = list(logs.keys())
+#         print("Stop predicting; got log keys: {}".format(keys))
+
+#     def on_train_batch_begin(self, batch, logs=None):
+#         keys = list(logs.keys())
+#         print("...Training: start of batch {}; got log keys: {}".format(batch, keys))
+
+#     def on_train_batch_end(self, batch, logs=None):
+#         keys = list(logs.keys())
+#         print("...Training: end of batch {}; got log keys: {}".format(batch, keys))
+
+#     def on_test_batch_begin(self, batch, logs=None):
+#         keys = list(logs.keys())
+#         print("...Evaluating: start of batch {}; got log keys: {}".format(batch, keys))
+
+#     def on_test_batch_end(self, batch, logs=None):
+#         keys = list(logs.keys())
+#         print("...Evaluating: end of batch {}; got log keys: {}".format(batch, keys))
+
+#     def on_predict_batch_begin(self, batch, logs=None):
+#         keys = list(logs.keys())
+#         print("...Predicting: start of batch {}; got log keys: {}".format(batch, keys))
+
+#     def on_predict_batch_end(self, batch, logs=None):
+#         keys = list(logs.keys())
+#         print("...Predicting: end of batch {}; got log keys: {}".format(batch, keys))
+
 
 class EEGModel():
     
     def __init__(self):
 
+        # https://arxiv.org/abs/1611.06455
+        # https://keras.io/examples/timeseries/timeseries_classification_from_scratch/
+
         tf.get_logger().setLevel('ERROR')
+        self.num_classes = 5
 
         self.db = Db()
-        self.lr = 0.001
-        self.optimizer = keras.optimizers.AdamW(learning_rate=self.lr, weight_decay=1e-4)
-        self.callbacks = [
-            keras.callbacks.ReduceLROnPlateau(
-                monitor="val_loss",
-                factor=0.1,
-                patience=2,
-                min_lr=1e-5,
-                mode="min"
-            )
-        ]
 
         self.epochs = 5
+        self.tuner_epochs = 2
         self.batch_size = 64
         self.dir = os.getenv("MODEL_CHECKPOINT_DIR")
 
@@ -38,26 +89,99 @@ class EEGModel():
             self.model = keras.models.load_model(self.dir + "eeg.keras", compile=True)
             self.db.flushData()
         else:
+            
             input = keras.Input(shape=(6001, 18), name="EGGInput")
-            x = layers.Conv1D(64, (3), strides=(2), use_bias=False, name="EEGConv")(input)
-            x = layers.LayerNormalization(scale=False, center=True, name="EGGScaler")(x)
-            x = layers.Activation(activation="relu", name="EGGReLU")(x)
-            x = layers.MaxPooling1D(pool_size=(2), name="EEGMaxPooling")(x)
-            x = layers.Dropout(0.2, name="EGGDropoutPre")(x)
-            x = layers.LSTM(100, name="EEGLstm")(x)
-            x = layers.Dropout(0.2, name="EGGDropoutPost")(x)
-            x = layers.Dense(128, activation="relu", name="EEGDense")(x)
-            x = layers.Dropout(0.2, name="EGGDropoutDense")(x)
-            outputs = layers.Dense(5, activation="softmax", name="EGGOutput")(x)
-            self.model = keras.Model(inputs = input, outputs = outputs, name = "EEGModel")
+
+            conv1 = keras.layers.Conv1D(filters=32, kernel_size=3, padding="same")(input)
+            conv1 = keras.layers.BatchNormalization()(conv1)
+            conv1 = keras.layers.ReLU()(conv1)
+
+            conv2 = keras.layers.Conv1D(filters=32, kernel_size=5, padding="same")(conv1)
+            conv2 = keras.layers.BatchNormalization()(conv2)
+            conv2 = keras.layers.ReLU()(conv2)
+
+            conv3 = keras.layers.Conv1D(filters=64, kernel_size=5, padding="same")(conv2)
+            conv3 = keras.layers.BatchNormalization()(conv3)
+            conv3 = keras.layers.ReLU()(conv3)
+
+            gap = keras.layers.GlobalAveragePooling1D()(conv3)
+
+            output = keras.layers.Dense(self.num_classes, activation="softmax")(gap)
+
+            self.model =  keras.models.Model(inputs=input, outputs=output)
+
             self.model.compile(
-                optimizer=self.optimizer,
+                optimizer=keras.optimizers.Adam(learning_rate=1e-5),
                 loss=keras.losses.CategoricalCrossentropy(),
                 metrics=[keras.metrics.CategoricalAccuracy()]
             )
             self.db.restart()
 
         self.model.summary()
+
+    def __tuneModel(self, hp):
+
+        input = keras.Input(shape=(6001, 18))
+
+        conv1 = keras.layers.Conv1D(filters=hp.Choice('filters_1', [32, 64, 128, 256]), kernel_size=hp.Choice('kernel_size_1', [3,5,7]), padding="same")(input)
+        conv1 = keras.layers.BatchNormalization()(conv1)
+        conv1 = keras.layers.ReLU()(conv1)
+
+        conv2 = keras.layers.Conv1D(filters=hp.Choice('filters_2', [32, 64, 128, 256]), kernel_size=hp.Choice('kernel_size_2', [3,5,7]), padding="same")(conv1)
+        conv2 = keras.layers.BatchNormalization()(conv2)
+        conv2 = keras.layers.ReLU()(conv2)
+
+        conv3 = keras.layers.Conv1D(filters=hp.Choice('filters_3', [32, 64, 128, 256]), kernel_size=hp.Choice('kernel_size_3', [3,5,7]), padding="same")(conv2)
+        conv3 = keras.layers.BatchNormalization()(conv3)
+        conv3 = keras.layers.ReLU()(conv3)
+
+        gap = keras.layers.GlobalAveragePooling1D()(conv3)
+
+        output = keras.layers.Dense(self.num_classes, activation="softmax")(gap)
+
+        model =  keras.models.Model(inputs=input, outputs=output, name = "EEGModel")
+        learning_rate = hp.Choice('learning_rate', [1e-2, 1e-3, 1e-4, 1e-5])
+
+        model.compile(
+                optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
+                loss=keras.losses.CategoricalCrossentropy(),
+                metrics=[keras.metrics.CategoricalAccuracy()]
+        )
+
+        return model
+
+    def tuneModel(self):
+        tuner = kt.GridSearch(
+            hypermodel=self.__tuneModel,
+            objective="val_categorical_accuracy",
+            executions_per_trial=1,
+            overwrite=True,
+            directory="out",
+            project_name="eeg_tune",
+        )
+
+        def dataGen():
+            while True:
+                for x, y, w in self.db.readChunks(self.batch_size, self.tuner_epochs):
+                    yield x, y, w
+
+        def valGen():
+            while True:
+                for x, y, w in self.db.readChunks(self.batch_size, self.tuner_epochs, "validation"):
+                    yield x, y, w
+
+        print(type(dataGen), type(valGen))
+
+        tuner.search(
+            dataGen(),
+            steps_per_epoch=math.ceil(self.db.sampleNum() / self.batch_size),
+            epochs=self.tuner_epochs,
+            validation_data=valGen(),
+            validation_steps=math.ceil(self.db.sampleNum("validation_tags") / self.batch_size),
+            # callbacks=[DbRestart()]
+        )
+
+        tuner.results_summary()
 
     def getModel(self):
         return self.model
@@ -70,7 +194,6 @@ class EEGModel():
             steps_per_epoch=math.ceil(self.db.sampleNum() / self.batch_size),
             validation_data=self.db.readChunks(self.batch_size, self.epochs, "validation"),
             validation_steps=math.ceil(self.db.sampleNum("validation_tags") / self.batch_size),
-            callbacks=[self.callbacks],
             verbose=0
         )
 
