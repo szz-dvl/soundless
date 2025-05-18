@@ -133,17 +133,16 @@ class EdfParser:
             tmin=0.0,
             tmax=30.0 - 1.0 / self.edf.info["sfreq"],
             baseline=None,
-            on_missing="raise",
-            preload=True
+            on_missing="raise"
         )
 
     def featuresPerEvent(self, picks: pd.DataFrame):
         # https://mne.tools/stable/auto_tutorials/clinical/60_sleep.html
 
         chann_names = picks["name"].to_list()
-        epochs = self.__getEpochs().reorder_channels(chann_names)
+        epochs = self.__getEpochs()
         
-        spectrum = epochs.compute_psd(picks=chann_names, fmin=0.5, fmax=30.0, method="multitaper")
+        spectrum = epochs.compute_psd(picks=chann_names, fmin=0.5, fmax=30.0, method="multitaper").reorder_channels(chann_names)
         psds, freqs = spectrum.get_data(return_freqs=True)
 
         # Delete events where no presence/power is found in the given frequencies
