@@ -311,6 +311,11 @@ class Db():
                         labels = df["label"]
                         chunks = df.drop(columns=["label"])
 
+                        scaler = MinMaxScaler()
+                        scaled = scaler.fit_transform(chunks.transpose())
+                        
+                        chunks = pd.DataFrame(scaled.T, columns=chunks.columns)
+                        
                         yield tf.stack(chunks), tf.stack(keras.utils.to_categorical(labels, num_classes=self.num_classes)), np.vectorize(lambda x: classWeights[x])(labels)
                         
     def close(self):
