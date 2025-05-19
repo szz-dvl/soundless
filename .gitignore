@@ -7,3 +7,4 @@ model_per_channel.py
 random_forest.py
 model_tunner.py
 out/eeg_tune
+out/mlp_tune
