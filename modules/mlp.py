@@ -12,7 +12,7 @@ load_dotenv()
 
 class MLPEegModel():
     
-    def __init__(self):
+    def __init__(self, tune = False):
 
         tf.get_logger().setLevel('ERROR')
 
@@ -35,77 +35,77 @@ class MLPEegModel():
             )
         ]
 
-        if os.path.exists(self.dir + "mlp_eeg.keras"):
-            self.model = keras.models.load_model(self.dir + "mlp_eeg.keras", compile=True)
-            self.db.flushData()
-        else:
-            
-            input = keras.Input(shape=(35,), name="EGGInput")
-            x = keras.layers.Dense(100, activation="relu")(input)
-            x = keras.layers.Dense(50, activation="relu")(x)
-            output = keras.layers.Dense(self.num_classes, activation="softmax")(x)
+        if not tune:
+            if os.path.exists(self.dir + "mlp_eeg.keras"):
+                self.model = keras.models.load_model(self.dir + "mlp_eeg.keras", compile=True)
+                self.db.flushData()
+            else:
+                
+                input = keras.Input(shape=(35,), name="EGGInput")
+                hidden1 = keras.layers.Dense(100, activation="relu")(input)
+                hidden2 = keras.layers.Dense(100, activation="relu")(hidden1)
+                concat = keras.layers.Concatenate()([input,hidden2])         
+                output = keras.layers.Dense(self.num_classes, activation="softmax")(concat)
 
-            self.model =  keras.models.Model(inputs=input, outputs=output)
+                self.model =  keras.models.Model(inputs=input, outputs=output)
 
-            self.model.compile(
-                optimizer=keras.optimizers.Adam(learning_rate=1e-3),
+                self.model.compile(
+                    optimizer=keras.optimizers.Adam(learning_rate=1e-3),
+                    loss=keras.losses.CategoricalCrossentropy(),
+                    metrics=[keras.metrics.CategoricalAccuracy()]
+                )
+                self.db.restart()
+
+            self.model.summary()
+
+    def __tuneModel(self, hp):
+
+        input = keras.Input(shape=(35,), name="EGGInput")
+        hidden1 = keras.layers.Dense(hp.Choice('layer_1', [20,50,100]), activation="relu")(input)
+        hidden2 = keras.layers.Dense(hp.Choice('layer_2', [20,50,100]), activation="relu")(hidden1)
+        concat = keras.layers.Concatenate()([input,hidden2]) 
+        output = keras.layers.Dense(self.num_classes, activation="softmax")(concat)
+
+        model =  keras.models.Model(inputs=input, outputs=output, name = "EEGModel")
+        learning_rate = hp.Choice('learning_rate', [1e-2, 1e-3, 1e-4])
+
+        model.compile(
+                optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
                 loss=keras.losses.CategoricalCrossentropy(),
                 metrics=[keras.metrics.CategoricalAccuracy()]
-            )
-            self.db.restart()
+        )
 
-        self.model.summary()
+        return model
 
-    # def __tuneModel(self, hp):
+    def tuneModel(self):
+        tuner = kt.GridSearch(
+            hypermodel=self.__tuneModel,
+            objective="val_categorical_accuracy",
+            executions_per_trial=1,
+            overwrite=True,
+            directory="out",
+            project_name="mlp_tune",
+        )
 
-    #     input = keras.Input(shape=(35,), name="EGGInput")
-    #     x = keras.layers.Dense(hp.Choice('dense_1', [20, 50, 100]), activation="relu")(input)
-    #     x = keras.layers.Dense(hp.Choice('dense_2', [10, 30, 50]), activation="relu")(x)
-    #     output = keras.layers.Dense(self.num_classes, activation="softmax")(x)
+        def dataGen():
+            while True:
+                for x, y, w in self.db.readChunks(self.batch_size, self.tuner_epochs):
+                    yield x, y, w
 
-    #     model =  keras.models.Model(inputs=input, outputs=output, name = "EEGModel")
-    #     learning_rate = hp.Choice('learning_rate', [1e-2, 1e-3, 1e-4])
+        def valGen():
+            while True:
+                for x, y, w in self.db.readChunks(self.batch_size, self.tuner_epochs, "validation"):
+                    yield x, y, w
 
-    #     model.compile(
-    #             optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
-    #             loss=keras.losses.CategoricalCrossentropy(),
-    #             metrics=[keras.metrics.CategoricalAccuracy()]
-    #     )
+        tuner.search(
+            dataGen(),
+            steps_per_epoch=math.ceil(self.db.sampleNum() / self.batch_size),
+            epochs=self.tuner_epochs,
+            validation_data=valGen(),
+            validation_steps=math.ceil(self.db.sampleNum("validation") / self.batch_size),
+        )
 
-    #     return model
-
-    # def tuneModel(self):
-    #     tuner = kt.GridSearch(
-    #         hypermodel=self.__tuneModel,
-    #         objective="val_categorical_accuracy",
-    #         executions_per_trial=1,
-    #         overwrite=True,
-    #         directory="out",
-    #         project_name="eeg_tune",
-    #     )
-
-    #     def dataGen():
-    #         while True:
-    #             for x, y, w in self.db.readChunks(self.batch_size, self.tuner_epochs):
-    #                 yield x, y, w
-
-    #     def valGen():
-    #         while True:
-    #             for x, y, w in self.db.readChunks(self.batch_size, self.tuner_epochs, "validation"):
-    #                 yield x, y, w
-
-    #     print(type(dataGen), type(valGen))
-
-    #     tuner.search(
-    #         dataGen(),
-    #         steps_per_epoch=math.ceil(self.db.sampleNum() / self.batch_size),
-    #         epochs=self.tuner_epochs,
-    #         validation_data=valGen(),
-    #         validation_steps=math.ceil(self.db.sampleNum("validation_tags") / self.batch_size),
-    #         # callbacks=[DbRestart()]
-    #     )
-
-    #     tuner.results_summary()
+        tuner.results_summary()
 
     def fit(self):
 
