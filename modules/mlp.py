@@ -19,7 +19,7 @@ class MLPEegModel():
         self.aws = AWS()
 
         self.num_classes = 5
-        self.epochs = 5
+        self.epochs = 100
         self.tuner_epochs = 2
         self.batch_size = 64
         self.dir = os.getenv("MODEL_CHECKPOINT_DIR")
@@ -28,10 +28,11 @@ class MLPEegModel():
         self.callbacks = [
             keras.callbacks.ReduceLROnPlateau(
                 monitor="val_loss",
-                factor=0.1,
-                patience=2,
+                factor=0.3,
+                patience=5,
                 min_lr=1e-5,
-                mode="min"
+                mode="min",
+                verbose=1
             )
         ]
 
@@ -115,7 +116,7 @@ class MLPEegModel():
             steps_per_epoch=math.ceil(self.db.sampleNum() / self.batch_size),
             validation_data=self.db.readChunks(self.batch_size, self.epochs, "validation"),
             validation_steps=math.ceil(self.db.sampleNum("validation") / self.batch_size),
-            verbose=0,
+            verbose=1,
             callbacks=[self.callbacks]
         )
 

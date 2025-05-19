@@ -29,9 +29,8 @@ aws = AWS()
 utils = Utils()
 db = Db()
 
-CHUNK_SIZE = 2
-CHUNKS_TO_SAVE = 10
-CHUNKS_PER_TRAIN = 5
+CHUNK_SIZE = 3
+CHUNKS_PER_TRAIN = 200
 
 validation_set = [
     {
@@ -39,27 +38,103 @@ validation_set = [
         "session": 1,
         "site": "S0001"
     },
-    # {
-    #     "folder": "sub-S0001111192986",
-    #     "session": 1,
-    #     "site": "S0001"
-    # },
-    # {
-    #     "folder": "sub-S0001111201541",
-    #     "session": 1,
-    #     "site": "S0001"
-    # },
-    # {
-    #     "folder": "sub-S0001111212020",
-    #     "session": 1,
-    #     "site": "S0001"
-    # },
-    # {
-    #     "folder": "sub-S0001111214824",
-    #     "session": 1,
-    #     "site": "S0001"
-    # }
+    {
+        "folder": "sub-S0001111192986",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111201541",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111212020",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111214824",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111193967",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111198326",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111200447",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111204219",
+        "session": 2,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111229530",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111231120",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111232048",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111238264",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111241357",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111250016",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111256738",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111260624",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111265591",
+        "session": 1,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111266484",
+        "session": 2,
+        "site": "S0001"
+    },
+    {
+        "folder": "sub-S0001111267505",
+        "session": 2,
+        "site": "S0001"
+    },
 ]
+
 def isValidation(folder, session, site):
     for validation in validation_set:
         if validation["folder"] == folder and validation["session"] == session and validation["site"] == site:
@@ -161,6 +236,7 @@ def trainMLP():
                         if inserted == CHUNKS_PER_TRAIN:
                             cat_acc, val_cat_acc, loss, val_loss = model.fit()
                             print(f"\033[1mAccuracy: {cat_acc}, Validation accuracy: {val_cat_acc}, Loss: {loss}, Validation loss: {val_loss}\033[0m")
+                            model.save(chunks, "CHUNKS")
 
                             inserted = 0
                             db.flushData()
@@ -185,8 +261,8 @@ def trainMLP():
                         print(f"Exception %s: %s"%(row["BidsFolder"], ex))
                         pass
             
-            if chunks % CHUNKS_TO_SAVE == 0:
-                model.save(chunks, "CHUNKS")
+            # if chunks % CHUNKS_TO_SAVE == 0:
+            #     model.save(chunks, "CHUNKS")
 
     model.save(chunks, "CHUNKS", True)
 
