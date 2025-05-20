@@ -430,64 +430,64 @@ COUNT: 18
 
 CONFIGURATION 103 CHANNELS:
 Configurations for 103 channels (59), common_channels (58): [
-    "DC16",
-    "PTT",
-    "F8",
-    "Pleth",
-    "DC8",
-    "XFlow",
-    "Pz",
-    "DIF8-",
-    "DIF4+",
-    "DIF4-",
-    "DIF8+",
-    "ECG-V2",
-    "DIF5-",
-    "F7",
-    "DIF2+",
-    "DIF1-",
-    "ECG-V1",
-    "Position",
-    "Activity",
-    "DIF5+",
-    "DIF3-",
-    "T7",
-    "RMI",
-    "DIF2-",
-    "P7",
-    "TRIG",
-    "XSum",
-    "T8",
-    "X32",
-    "P4",
-    "DIF1+",
-    "Phase",
-    "DIF6-",
-    "DC14",
-    "DC10",
     "Cz",
-    "M2",
-    "DC9",
-    "PPG",
-    "XVolume",
-    "DC15",
-    "Fp1",
-    "M1",
+    "DC16",
     "PR",
-    "DIF6+",
-    "DIF3+",
-    "DIF7+",
-    "DIF7-",
-    "Oz",
-    "Fpz",
-    "DC11",
-    "P3",
     "Pressure",
+    "XFlow",
+    "DIF7-",
+    "F8",
+    "Position",
+    "Oz",
+    "DIF2+",
+    "Fpz",
+    "M2",
+    "P3",
+    "T7",
+    "DIF3-",
+    "Activity",
+    "ECG-V1",
+    "DIF5+",
+    "DIF7+",
+    "P8",
+    "DC9",
+    "XSum",
+    "Fp1",
+    "DIF6-",
+    "DIF8-",
+    "DIF6+",
+    "PPG",
+    "DIF4-",
+    "DIF5-",
+    "P7",
+    "F7",
+    "DC8",
+    "P4",
+    "T8",
+    "DIF3+",
+    "DIF4+",
+    "Pz",
+    "TRIG",
+    "DC11",
+    "PTT",
+    "DIF1-",
+    "DC15",
+    "DC14",
+    "RMI",
     "RR",
+    "M1",
+    "ECG-V2",
     "Fp2",
-    "Elevation",
     "Fz",
-    "P8"
+    "Pleth",
+    "X32",
+    "Phase",
+    "Elevation",
+    "DIF8+",
+    "DIF2-",
+    "DC10",
+    "DIF1+",
+    "XVolume"
 ]
 Frequency for channel "ABD" for configuration 103: 25.423728813559322%
 Frequency for channel "Activity" for configuration 103: 100.0%
@@ -781,8 +781,8 @@ COUNT: 86
 
 CONFIGURATION 25 CHANNELS:
 Configurations for 25 channels (43), common_channels (3): [
-    "E1-M2",
     "HR",
+    "E1-M2",
     "SaO2"
 ]
 Frequency for channel "ABD" for configuration 25: 97.67441860465115%
@@ -1006,38 +1006,38 @@ COUNT: 18
 
 CONFIGURATION 47 CHANNELS:
 Configurations for 47 channels (3), common_channels (32): [
+    "PR",
     "F8",
-    "Pleth",
-    "DC8",
-    "F7",
-    "Chin3",
-    "T6",
-    "RAT",
-    "CFlow",
-    "P4",
-    "Leak",
-    "CPAP",
     "DC7",
+    "T5",
+    "M2",
+    "P3",
+    "EKG",
+    "EtCO2",
+    "T4",
+    "DC9",
+    "Snore",
+    "RAT",
+    "F7",
     "SpO2",
+    "DC8",
+    "CPAP",
+    "P4",
+    "DC11",
+    "CFlow",
+    "IC",
+    "Leak",
+    "M1",
+    "T6",
+    "LAT",
+    "CO2 Wave",
+    "Pleth",
+    "PTAF",
+    "AirFlow",
     "DC10",
     "T3",
-    "T5",
-    "IC",
-    "LAT",
-    "M2",
-    "DC9",
-    "EtCO2",
-    "Snore",
     "DC6",
-    "M1",
-    "CO2 Wave",
-    "PR",
-    "T4",
-    "AirFlow",
-    "P3",
-    "DC11",
-    "EKG",
-    "PTAF"
+    "Chin3"
 ]
 Frequency for channel "Abdomen" for configuration 47: 33.33333333333333%
 Frequency for channel "AirFlow" for configuration 47: 100.0%
@@ -1138,15 +1138,15 @@ COUNT: 32
 
 CONFIGURATION 26 CHANNELS:
 Configurations for 26 channels (23), common_channels (9): [
-    "SaO2",
-    "IC",
     "LAT",
-    "ABD",
-    "RAT",
+    "HR",
+    "SaO2",
     "SNORE",
+    "RAT",
+    "ABD",
+    "IC",
     "EKG",
-    "CHEST",
-    "HR"
+    "CHEST"
 ]
 Frequency for channel "ABD" for configuration 26: 100.0%
 Frequency for channel "AIRFLOW" for configuration 26: 86.95652173913044%
@@ -1424,12 +1424,12 @@ COUNT: 16
 
 CONFIGURATION 27 CHANNELS:
 Configurations for 27 channels (24), common_channels (6): [
-    "SaO2",
     "LAT",
-    "ABD",
+    "HR",
+    "SaO2",
     "SNORE",
-    "CHEST",
-    "HR"
+    "ABD",
+    "CHEST"
 ]
 Frequency for channel "ABD" for configuration 27: 100.0%
 Frequency for channel "AIRFLOW" for configuration 27: 91.66666666666666%
@@ -1587,9 +1587,9 @@ COUNT: 12
 
 CONFIGURATION 28 CHANNELS:
 Configurations for 28 channels (12), common_channels (3): [
-    "E2-M2",
+    "SaO2",
     "E1-M2",
-    "SaO2"
+    "E2-M2"
 ]
 Frequency for channel "ABD" for configuration 28: 58.333333333333336%
 Frequency for channel "AIRFLOW" for configuration 28: 58.333333333333336%
@@ -1689,20 +1689,20 @@ COUNT: 6
 
 CONFIGURATION 29 CHANNELS:
 Configurations for 29 channels (17), common_channels (14): [
-    "T4-M2",
-    "T6-M2",
-    "SaO2",
-    "IC",
     "LAT",
-    "ABD",
-    "SNORE",
-    "EKG",
-    "AIRFLOW",
-    "F4-M2",
-    "O2-M2",
     "HR",
+    "T4-M2",
     "E1-M2",
-    "CHEST"
+    "SaO2",
+    "AIRFLOW",
+    "SNORE",
+    "ABD",
+    "O2-M2",
+    "IC",
+    "T6-M2",
+    "EKG",
+    "CHEST",
+    "F4-M2"
 ]
 Frequency for channel "ABD" for configuration 29: 100.0%
 Frequency for channel "AIRFLOW" for configuration 29: 100.0%
@@ -1823,9 +1823,9 @@ COUNT: 2
 CONFIGURATION 10 CHANNELS:
 Configurations for 10 channels (2), common_channels (4): [
     "HR",
-    "SaO2",
+    "ABD",
     "AIRFLOW",
-    "ABD"
+    "SaO2"
 ]
 Frequency for channel "ABD" for configuration 10: 100.0%
 Frequency for channel "AIRFLOW" for configuration 10: 100.0%
@@ -1978,18 +1978,18 @@ COUNT: 30
 
 CONFIGURATION 15 CHANNELS:
 Configurations for 15 channels (2), common_channels (12): [
-    "O1-M2",
-    "Fp1-M2",
+    "C3-M2",
+    "HR",
+    "C4-M1",
+    "E1-M2",
     "Fp2-M1",
     "SaO2",
+    "CZ-M1",
     "SNORE",
+    "O1-M2",
     "O2-M1",
     "EKG",
-    "C3-M2",
-    "C4-M1",
-    "CZ-M1",
-    "E1-M2",
-    "HR"
+    "Fp1-M2"
 ]
 Frequency for channel "ABD" for configuration 15: 50.0%
 Frequency for channel "C3-M2" for configuration 15: 100.0%
@@ -2059,13 +2059,13 @@ COUNT: 9
 
 CONFIGURATION 41 CHANNELS:
 Configurations for 41 channels (2), common_channels (8): [
-    "IC",
     "LAT",
-    "ABD",
-    "RAT",
-    "SNORE",
-    "EKG",
     "AIRFLOW",
+    "SNORE",
+    "RAT",
+    "ABD",
+    "IC",
+    "EKG",
     "CHEST"
 ]
 Frequency for channel "-2-REF" for configuration 41: 50.0%
@@ -2155,34 +2155,34 @@ COUNT: 8
 
 CONFIGURATION 31 CHANNELS:
 Configurations for 31 channels (2), common_channels (28): [
-    "O1-M1",
-    "C3-M1",
-    "CFLOW",
-    "T5-M1",
+    "T4-M2",
     "T3-M1",
-    "T6-M2",
-    "SaO2",
-    "EPAP",
-    "ABD",
-    "RAT",
-    "HR",
-    "Leak",
-    "IPAP",
-    "IC",
-    "LAT",
-    "F3-M1",
+    "T5-M1",
+    "EKG",
     "F8-M2",
+    "CHEST",
+    "T6-M2",
+    "Chin1-Chin2",
     "SNORE",
+    "RAT",
+    "ABD",
+    "CFLOW",
+    "HR",
+    "C3-M1",
+    "EPAP",
+    "IC",
+    "Leak",
+    "O1-M1",
+    "O2-M2",
+    "LAT",
+    "IPAP",
     "E1-M2",
     "C4-M2",
-    "CHEST",
-    "T4-M2",
-    "Chin1-Chin2",
-    "EKG",
     "E2-M2",
-    "F4-M2",
-    "O2-M2",
-    "CZ-M1"
+    "SaO2",
+    "CZ-M1",
+    "F3-M1",
+    "F4-M2"
 ]
 Frequency for channel "ABD" for configuration 31: 100.0%
 Frequency for channel "C3-M1" for configuration 31: 100.0%
@@ -2325,11 +2325,11 @@ Configuration (23!) ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|
 Configuration (103!) ABD|Activity|AirFlow|Airflow2|Arm1|Arm2|C3-M2|C4-M1|CFlow|CHEST|CHIN1-CHIN2|CHIN2|CHIN3|CO2 Wave|CPAP|Cz|DC1|DC10|DC11|DC12|DC14|DC15|DC16|DC7|DC8|DC9|DIF1+|DIF1-|DIF10+|DIF10-|DIF2+|DIF2-|DIF3+|DIF3-|DIF4+|DIF4-|DIF5+|DIF5-|DIF6+|DIF6-|DIF7+|DIF7-|DIF8+|DIF8-|DIF9+|DIF9-|E1-M2|E2-M1|ECG-LA|ECG-LL|ECG-RA|ECG-V1|ECG-V2|Elevation|EtCO2|Eye Down|Eye Up|F3-M2|F4-M1|F7|F8|Fp1|Fp2|Fpz|Fz|IC1|IC2|LLEG+|LLEG-|Leak|M1|M2|O1-M2|O2-M1|Oz|P3|P4|P7|P8|PPG|PR|PTAF|PTT|Phase|Pleth|Position|Pressure|PulseQuality|Pz|RLEG+|RLEG-|RMI|RR|Snore|Snore_DR|SpO2|T7|T8|TRIG|X32|XFlow|XSum|XVolume                       : 3887 (85.99557522123894%)
 Configuration (25) ABD|AIRFLOW|ASVFL|C3-M2|C4-M1|CFLOW|CHEST|CPRES|Chin1-Chin2|E1-M2|E2-M2|EKG|EtCO2|F3-M2|F4-M1|HR|IC|LAT|LEAK|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2                                                                                                                                                                                                                                                                                                                                                                                                                                                                            : 928 (18.368962787015043%)
 Configuration (25) ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|Chin1-Chin2|E1-M2|E2-M1|EKG|EPAP|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2|Tidal                                                                                                                                                                                                                                                                                                                                                                                                                                                                              : 3456 (68.40855106888361%)
-Configuration (22) ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             : 402 (16.904962153069807%)
+Configuration (22) ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             : 384 (16.14802354920101%)
 Configuration (22) ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|RAT|SNORE|SaO2|leak                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             : 122 (5.130361648444071%)
 Configuration (22!) ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|Leak|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              : 1542 (64.8444070647603%)
 Configuration (47!) 30|ABD|AirFlow|C3-M2|C4-M1|CFlow|CHEST|CHIN1-CHIN2|CO2 Wave|CPAP|Chin2|Chin3|DC10|DC11|DC6|DC7|DC8|DC9|E1-M2|E2-M1|EKG|EtCO2|F3-M2|F4-M1|F7|F8|Fp1|Fp2|IC|LAT|Leak|M1|M2|O1-M2|O2-M1|P3|P4|PR|PTAF|Pleth|RAT|Snore|SpO2|T3|T4|T5|T6                                                                                                                                                                                                                                                                                                                                                                                     : 773 (95.31442663378546%)
-Configuration (26) ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CHIN1-CHIN2|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2                                                                                                                                                                                                                                                                                                                                                                                                                                                                     : 56 (63.63636363636363%)
+Configuration (26) ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CHIN1-CHIN2|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2                                                                                                                                                                                                                                                                                                                                                                                                                                                                     : 55 (62.5%)
 Configuration (24) ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CPAP|Chin1-Chin2|E1-M2|E2-M2|EKG|EPAP|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    : 82 (28.975265017667844%)
 Configuration (24) ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CZ-M2|Chin1-Chin2|E1-M2|E2-M1|EKG|EPAP|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   : 57 (20.141342756183743%)
 Configuration (24) ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|EPAP|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    : 36 (12.7208480565371%)
@@ -2360,7 +2360,7 @@ Configuration (41!) -2-2|2-E1|2-LexDIG1|2-RexDIG1|ABD|AIRFLOW|C3-AVG|C4-AVG|CFLO
 Configuration (31!) ABD|C3-M1|C4-M2|CFLOW|CHEST|CZ-M1|Chin1-Chin2|Chin2-E1|Chin3-E1|E1-M2|E2-M2|EKG|EPAP|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|IPAP|LAT|Leak|O1-M1|O2-M2|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2                                                                                                                                                                                                                                                                                                                                                                                                                                     : 1 (50.0%)
 Configuration (31!) 2--2|ABD|C3-M1|C4-M2|CFLOW|CHEST|CZ-M1|Chin1-Chin2|E1-M2|E2-M2|EKG|EPAP|F3-M1|F4-M2|F8-M2|HR|IC|IPAP|LAT|Leak|LexDIG1--2|O1-M1|O2-M2|RAT|RexDIG1--2|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2                                                                                                                                                                                                                                                                                                                                                                                                                                  : 1 (50.0%)
 Configuration (19!) ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CHIN1-CHIN2|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|RAT|SNORE|SaO2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              : 1 (100.0%)
-Representation (22315): 86.53920732180252%
+Representation (22296): 86.46552392771272%
 
 AGGREGATED FREQUENCIES:
 
@@ -2869,56 +2869,59 @@ AGGREGATED FREQUENCIES WITH EQUIVALENCES:
 
 
 Channels (484)
-         channel   frequency
-0           ABD   88.719512
-1       AIRFLOW   75.304878
-2         C3-M2   72.256098
-3       C3-M2-0   72.256098
-4       C3-M2-1   76.676829
-5         C4-M1   76.676829
-6         C4-M2   76.676829
-7         CHEST   87.042683
-8   CHIN1-CHIN2   91.310976
-9   CHIN1-CHIN3   91.310976
-10  CHIN2-CHIN3   91.310976
-11  CHIN3-CHIN1   91.310976
-12  CHIN3-CHIN2   91.310976
-13     Chin1-31   91.310976
-14  Chin1-Chin2   91.310976
-15  Chin1-Chin3   91.310976
-16     Chin1-P3   91.310976
-17     Chin1-P4   91.310976
-18  Chin2-Chin3   91.310976
-19  Chin3-Chin2   91.310976
-22        E1-M1  172.713415
-23        E1-M2  172.713415
-24        E2-M1  172.713415
-25        E2-M2  172.713415
-26          EKG   90.396341
-27       EKG-E1   90.396341
-30      F3-M2-1   86.737805
-31        F4-M1   86.737805
-32        F4-M2   86.737805
-33        F8-M1   86.737805
-34       Fp1-M2   86.737805
-35       Fp2-M1   86.737805
-36       Fp2-M2   86.737805
-37           HR   89.786585
-38           IC   89.329268
-39          LAT   84.451220
-40       LAT-E1   84.451220
-41        O1-M2   70.731707
-42        O1-M1   85.975610
-43        O2-M1   85.975610
-44        O2-M2   85.975610
-46          RAT   82.164634
-47       RAT-E1   82.164634
-48        SNORE   91.920732
-49         SaO2   90.396341
+         channel  frequency
+0           ABD  88.719512
+1       AIRFLOW  75.304878
+2         C3-M2  71.951220
+3         C4-M1  76.371951
+4         C4-M2  76.371951
+5         CHEST  87.042683
+6   CHIN1-CHIN2  91.310976
+7   CHIN1-CHIN3  91.310976
+8   CHIN2-CHIN3  91.310976
+9   CHIN3-CHIN1  91.310976
+10  CHIN3-CHIN2  91.310976
+11     Chin1-31  91.310976
+12  Chin1-Chin2  91.310976
+13  Chin1-Chin3  91.310976
+14     Chin1-P3  91.310976
+15     Chin1-P4  91.310976
+16  Chin2-Chin3  91.310976
+17  Chin3-Chin2  91.310976
+20        E1-M1  85.365854
+21        E1-M2  85.365854
+22        E2-M1  87.347561
+23        E2-M2  87.347561
+24          EKG  90.396341
+25       EKG-E1  90.396341
+28      F3-M2-1  81.402439
+29        F4-M1  81.402439
+30        F4-M2  81.402439
+31        F8-M1  81.402439
+32       Fp2-M1  81.402439
+33       Fp2-M2  81.402439
+34           HR  89.786585
+35           IC  89.329268
+36          LAT  84.451220
+37       LAT-E1  84.451220
+38        O1-M2  71.036585
+39      O1-M2-0  71.036585
+40        O1-M1  86.280488
+41      O1-M2-1  86.280488
+42        O2-M1  86.280488
+43        O2-M2  86.280488
+45          RAT  82.164634
+46       RAT-E1  82.164634
+47        SNORE  91.920732
+48         SaO2  90.396341
 
 EQUIVALENCES:
 
 [
+    [
+        "CZ-M1",
+        "CZ-M2"
+    ],
     [
         "CHIN1-CHIN2",
         "CHIN1-CHIN3",
@@ -2934,35 +2937,30 @@ EQUIVALENCES:
         "Chin3-Chin2"
     ],
     [
-        "CZ-M1",
-        "CZ-M2"
-    ],
-    [
-        "E1-M1",
-        "E1-M2",
         "E2-M1",
         "E2-M2"
     ],
     [
-        "C3-M2",
-        "C3-M2-0"
+        "O1-M2",
+        "O1-M2-0"
     ],
     [
-        "C3-M2-1",
-        "C4-M1",
-        "C4-M2"
+        "O1-M1",
+        "O1-M2-1",
+        "O2-M1",
+        "O2-M2"
     ],
     [
         "F4-T3",
         "F4-T5"
     ],
     [
-        "C4-T3",
-        "C4-T5"
-    ],
-    [
         "O2-T3",
         "O2-T5"
+    ],
+    [
+        "C4-T3",
+        "C4-T5"
     ],
     [
         "F3-M2",
@@ -2973,18 +2971,12 @@ EQUIVALENCES:
         "F4-M1",
         "F4-M2",
         "F8-M1",
-        "Fp1-M2",
         "Fp2-M1",
         "Fp2-M2"
     ],
     [
         "P3-M1",
         "P4-M1"
-    ],
-    [
-        "T3-M1",
-        "T4-M1",
-        "T6-M1"
     ],
     [
         "31-31",
@@ -2997,9 +2989,12 @@ EQUIVALENCES:
         "Leak"
     ],
     [
-        "O1-M1",
-        "O2-M1",
-        "O2-M2"
+        "C4-M1",
+        "C4-M2"
+    ],
+    [
+        "SNORE-DR",
+        "SNORE.DR"
     ],
     [
         "SPO2",
@@ -3010,12 +3005,16 @@ EQUIVALENCES:
         "THERMISTOR"
     ],
     [
-        "SNORE-DR",
-        "SNORE.DR"
-    ],
-    [
         "ETC02",
         "EtCO2"
+    ],
+    [
+        "E1-M1",
+        "E1-M2"
+    ],
+    [
+        "LAT",
+        "LAT-E1"
     ],
     [
         "RAT",
@@ -3026,23 +3025,18 @@ EQUIVALENCES:
         "EKG-E1"
     ],
     [
-        "LAT",
-        "LAT-E1"
-    ],
-    [
         "LexDIG1--2",
         "LexDIG1-2"
+    ],
+    [
+        "T3-M1",
+        "T4-M1"
     ]
 ]
 USED EQUIVALENCES:
 
 [
     [
-        "C3-M2",
-        "C3-M2-0"
-    ],
-    [
-        "C3-M2-1",
         "C4-M1",
         "C4-M2"
     ],
@@ -3062,7 +3056,9 @@ USED EQUIVALENCES:
     ],
     [
         "E1-M1",
-        "E1-M2",
+        "E1-M2"
+    ],
+    [
         "E2-M1",
         "E2-M2"
     ],
@@ -3075,7 +3071,6 @@ USED EQUIVALENCES:
         "F4-M1",
         "F4-M2",
         "F8-M1",
-        "Fp1-M2",
         "Fp2-M1",
         "Fp2-M2"
     ],
@@ -3084,7 +3079,12 @@ USED EQUIVALENCES:
         "LAT-E1"
     ],
     [
+        "O1-M2",
+        "O1-M2-0"
+    ],
+    [
         "O1-M1",
+        "O1-M2-1",
         "O2-M1",
         "O2-M2"
     ],

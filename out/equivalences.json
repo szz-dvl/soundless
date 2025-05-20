@@ -3,10 +3,10 @@
         [
             "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CHIN1-CHIN3|CZ-M1|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CHIN1-CHIN2|CZ-M1|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CHIN1-CHIN3|CZ-M2|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
-                        "CHIN1-CHIN3": "CHIN1-CHIN2"
+                        "CZ-M1": "CZ-M2"
                     }
                 ]
             },
@@ -19,10 +19,10 @@
                 ]
             },
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CHIN1-CHIN3|CZ-M2|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CHIN1-CHIN2|CZ-M1|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
-                        "CZ-M1": "CZ-M2"
+                        "CHIN1-CHIN3": "CHIN1-CHIN2"
                     }
                 ]
             }
@@ -65,21 +65,21 @@
                 ]
             },
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|Chin3-Chin2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
-                        "Chin1-Chin2": "Chin3-Chin2"
+                        "Chin1-Chin2": "CHIN1-CHIN2"
+                    },
+                    {
+                        "E2-M2": "E2-M1"
                     }
                 ]
             },
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|Chin3-Chin2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
-                        "E2-M2": "E2-M1"
-                    },
-                    {
-                        "Chin1-Chin2": "CHIN1-CHIN2"
+                        "Chin1-Chin2": "Chin3-Chin2"
                     }
                 ]
             }
@@ -87,35 +87,24 @@
         [
             "31-32|ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|EtCO2|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|SNORE|SaO2",
             {
-                "eq": "31-32|ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin3-Chin2|E1-M2|E2-M2|EKG|EtCO2|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "Chin1-Chin2": "Chin3-Chin2"
-                    }
-                ]
-            },
-            {
                 "eq": "31-32|ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin2|E1-M2|E2-M1|EKG|EtCO2|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|SNORE|SaO2",
                 "replacements": [
                     {
                         "E2-M2": "E2-M1"
                     }
                 ]
+            },
+            {
+                "eq": "31-32|ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin3-Chin2|E1-M2|E2-M2|EKG|EtCO2|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "Chin1-Chin2": "Chin3-Chin2"
+                    }
+                ]
             }
         ],
         [
             "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CZ-M2|Chin1-Chin2|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
-            {
-                "eq": "ABD|AIRFLOW|C3-M2-0|C3-M2-1|CHEST|CZ-M2|Chin1-Chin2|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "C3-M2": "C3-M2-0"
-                    },
-                    {
-                        "C4-M1": "C3-M2-1"
-                    }
-                ]
-            },
             {
                 "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CZ-M2|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
@@ -125,10 +114,21 @@
                 ]
             },
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CZ-M2|Chin1-Chin3|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CZ-M1|Chin1-Chin2|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
-                        "Chin1-Chin2": "Chin1-Chin3"
+                        "CZ-M2": "CZ-M1"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CZ-M2|Chin1-Chin2|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2-0|O1-M2-1|PTAF|RAT|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "O1-M2": "O1-M2-0"
+                    },
+                    {
+                        "O2-M1": "O1-M2-1"
                     }
                 ]
             },
@@ -141,16 +141,30 @@
                 ]
             },
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CZ-M1|Chin1-Chin2|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CZ-M2|Chin1-Chin3|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
-                        "CZ-M2": "CZ-M1"
+                        "Chin1-Chin2": "Chin1-Chin3"
                     }
                 ]
             }
         ],
         [
             "ABD|AIRFLOW|C3-M2|C4-T3|CHEST|Chin1-Chin3|E1-M2|E2-M2|EKG|F3-M2|F4-T3|HR|IC|LAT|O1-M2|O2-E1|O2-T3|PTAF|RAT|SNORE|SaO2",
+            {
+                "eq": "ABD|AIRFLOW|C3-M2|C4-T5|CHEST|Chin1-Chin3|E1-M2|E2-M2|EKG|F3-M2|F4-T5|HR|IC|LAT|O1-M2|O2-E1|O2-T5|PTAF|RAT|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "F4-T3": "F4-T5"
+                    },
+                    {
+                        "O2-T3": "O2-T5"
+                    },
+                    {
+                        "C4-T3": "C4-T5"
+                    }
+                ]
+            },
             {
                 "eq": "ABD|AIRFLOW|C3-M2|C4-T3|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M2|F4-T3|HR|IC|LAT|O1-M2|O2-E1|O2-T3|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
@@ -166,32 +180,10 @@
                         "Chin1-Chin3": "Chin1-31"
                     }
                 ]
-            },
-            {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-T5|CHEST|Chin1-Chin3|E1-M2|E2-M2|EKG|F3-M2|F4-T5|HR|IC|LAT|O1-M2|O2-E1|O2-T5|PTAF|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "F4-T3": "F4-T5"
-                    },
-                    {
-                        "C4-T3": "C4-T5"
-                    },
-                    {
-                        "O2-T3": "O2-T5"
-                    }
-                ]
             }
         ],
         [
             "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-E1|O2-M1|PTAF|RAT|SNORE|SaO2",
-            {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin3|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-E1|O2-M1|PTAF|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "Chin1-Chin2": "Chin1-Chin3"
-                    }
-                ]
-            },
             {
                 "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M2-0|F3-M2-1|HR|IC|LAT|O1-M2|O2-E1|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
@@ -200,6 +192,14 @@
                     },
                     {
                         "F4-M1": "F3-M2-1"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin3|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-E1|O2-M1|PTAF|RAT|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "Chin1-Chin2": "Chin1-Chin3"
                     }
                 ]
             }
@@ -234,18 +234,18 @@
                 ]
             },
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CHIN1-CHIN2|E1-M2|E2-M2|EKG|F3-M2|F8-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "F4-M1": "F8-M1"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
                         "CHIN1-CHIN2": "Chin1-Chin2"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CHIN1-CHIN2|E1-M2|E2-M2|EKG|F3-M2|F8-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "F4-M1": "F8-M1"
                     }
                 ]
             }
@@ -294,18 +294,18 @@
         [
             "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|P4-M1|PTAF|RAT|SNORE|SaO2",
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|P3-M1|PTAF|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "P4-M1": "P3-M1"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin3|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|P4-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
                         "Chin1-Chin2": "Chin1-Chin3"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|P3-M1|PTAF|RAT|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "P4-M1": "P3-M1"
                     }
                 ]
             },
@@ -379,29 +379,18 @@
         [
             "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CHIN1-CHIN2|E2-M2|EKG|F3-M2|F4-M1|Fp1-M2|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin3|E2-M2|EKG|F3-M2|F4-M1|Fp1-M2|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "CHIN1-CHIN2": "Chin1-Chin3"
-                    }
-                ]
-            },
-            {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CHIN1-CHIN2|E1-M2|EKG|F3-M2|F4-M1|Fp2-M2|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "E2-M2": "E1-M2"
-                    },
-                    {
-                        "Fp1-M2": "Fp2-M2"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin2|E2-M2|EKG|F3-M2|F4-M1|Fp1-M2|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
                         "CHIN1-CHIN2": "Chin1-Chin2"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin3|E2-M2|EKG|F3-M2|F4-M1|Fp1-M2|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "CHIN1-CHIN2": "Chin1-Chin3"
                     }
                 ]
             }
@@ -412,18 +401,18 @@
         [
             "ABD|AIRFLOW|C3-AVG|C4-AVG|CHEST|Chin1-Chin2|E1-M2|E2-M1|EKG|F3-AVG|F4-AVG|HR|IC|LAT|O1-AVG|O2-AVG|PTAF|RAT|SNORE|SaO2",
             {
-                "eq": "ABD|AIRFLOW|C3-AVG|C4-AVG|CHEST|CHIN1-CHIN3|E1-M2|E2-M1|EKG|F3-AVG|F4-AVG|HR|IC|LAT|O1-AVG|O2-AVG|PTAF|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "Chin1-Chin2": "CHIN1-CHIN3"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-AVG|C4-AVG|CHEST|CHIN1-CHIN2|E1-M2|E2-M1|EKG|F3-AVG|F4-AVG|HR|IC|LAT|O1-AVG|O2-AVG|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
                         "Chin1-Chin2": "CHIN1-CHIN2"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-AVG|C4-AVG|CHEST|CHIN1-CHIN3|E1-M2|E2-M1|EKG|F3-AVG|F4-AVG|HR|IC|LAT|O1-AVG|O2-AVG|PTAF|RAT|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "Chin1-Chin2": "CHIN1-CHIN3"
                     }
                 ]
             }
@@ -439,20 +428,6 @@
                 ]
             },
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-T5|CHEST|Chin1-Chin3|E1-M2|E2-M2|EKG|F3-M2|F4-T5|HR|IC|LAT|O1-M2|O2-T5|PTAF|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "F4-T3": "F4-T5"
-                    },
-                    {
-                        "C4-T3": "C4-T5"
-                    },
-                    {
-                        "O2-T3": "O2-T5"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M2|C4-T3|CHEST|Chin2-Chin3|E1-M2|E2-M2|EKG|F3-M2|F4-T3|HR|IC|LAT|O1-M2|O2-T3|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
@@ -464,29 +439,18 @@
         [
             "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|CHIN1-CHIN2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|PTAF|RAT|SNORE|SaO2|T6-M1",
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|PTAF|RAT|SNORE|SaO2|T6-M1",
-                "replacements": [
-                    {
-                        "CHIN1-CHIN2": "Chin1-Chin2"
-                    }
-                ]
-            },
-            {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|PTAF|RAT|SNORE|SaO2|T4-M1",
-                "replacements": [
-                    {
-                        "T6-M1": "T4-M1"
-                    },
-                    {
-                        "CHIN1-CHIN2": "Chin1-Chin2"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin3|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|PTAF|RAT|SNORE|SaO2|T6-M1",
                 "replacements": [
                     {
                         "CHIN1-CHIN2": "Chin1-Chin3"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|PTAF|RAT|SNORE|SaO2|T6-M1",
+                "replacements": [
+                    {
+                        "CHIN1-CHIN2": "Chin1-Chin2"
                     }
                 ]
             }
@@ -581,18 +545,18 @@
         [
             "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|E2-M2|EKG|EtCO2|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN3-CHIN2|CPRES|E1-M2|E2-M2|EKG|EtCO2|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "CHIN1-CHIN2": "CHIN3-CHIN2"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN3|CPRES|E1-M2|E2-M2|EKG|EtCO2|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
                         "CHIN1-CHIN2": "CHIN1-CHIN3"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN3-CHIN2|CPRES|E1-M2|E2-M2|EKG|EtCO2|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "CHIN1-CHIN2": "CHIN3-CHIN2"
                     }
                 ]
             }
@@ -604,17 +568,6 @@
                 "replacements": [
                     {
                         "Leak": "LEAK"
-                    }
-                ]
-            },
-            {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN3|CPRES|E1-M2|E2-M2|EKG|EtCO2|F3-M2|F4-M1|HR|IC|LAT|LEAK|O1-M2|O2-M1|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "Leak": "LEAK"
-                    },
-                    {
-                        "CHIN1-CHIN2": "CHIN1-CHIN3"
                     }
                 ]
             }
@@ -633,18 +586,18 @@
         [
             "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|CZ-M2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|LEAK|O1-M2|O2-M1|RAT|SNORE|SaO2",
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|CZ-M2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|LEA|O1-M2|O2-M1|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "LEAK": "LEA"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN3|CPRES|CZ-M2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|LEAK|O1-M2|O2-M1|RAT|SNORE|SaO2",
                 "replacements": [
                     {
                         "CHIN1-CHIN2": "CHIN1-CHIN3"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|CZ-M2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|LEA|O1-M2|O2-M1|RAT|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "LEAK": "LEA"
                     }
                 ]
             },
@@ -662,20 +615,6 @@
         ],
         [
             "ABD|C3-M2|C4-M1|CFLOW|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|EPAP|EtCO2|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2",
-            {
-                "eq": "ABD|C3-M2|C4-M2|CFLOW|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|EPAP|EtCO2|F3-M2|F4-M2|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M2|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "C4-M1": "C4-M2"
-                    },
-                    {
-                        "F4-M1": "F4-M2"
-                    },
-                    {
-                        "O2-M1": "O2-M2"
-                    }
-                ]
-            },
             {
                 "eq": "ABD|C3-M2|C4-M1|CFLOW|CHEST|Chin3-Chin2|E1-M2|E2-M2|EKG|EPAP|EtCO2|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2",
                 "replacements": [
@@ -697,6 +636,20 @@
                 "replacements": [
                     {
                         "Chin1-Chin2": "Chin1-Chin3"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|C3-M2|C4-M2|CFLOW|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|EPAP|EtCO2|F3-M2|F4-M2|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M2|RAT|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "C4-M1": "C4-M2"
+                    },
+                    {
+                        "F4-M1": "F4-M2"
+                    },
+                    {
+                        "O2-M1": "O2-M2"
                     }
                 ]
             }
@@ -750,6 +703,14 @@
         [
             ",|,,|.|..|ABDOMEN|Activity|AirFlow|Arm1|Arm2|C3|C4|CFLOW|CHIN|CHIN3|CLEAK|CO2 Wave|CPRES|Cz|DC1|DC10|DC11|DC12|DC14|DC15|DC16|DC7|DC8|DC9|DIF1+|DIF1-|DIF10+|DIF10-|DIF2+|DIF2-|DIF3+|DIF3-|DIF4+|DIF4-|DIF5+|DIF5-|DIF6+|DIF6-|DIF7+|DIF7-|DIF8+|DIF8-|DIF9+|DIF9-|E1|E2|ECG|ECG-LL|ECG-V1|ECG-V2|EMG|Elevation|EtCO2|Eye Down|Eye Up|F3|F4|F7|F8|Fp1|Fp2|Fpz|Fz|IC|L LEG|M1|M2|O1|O2|Oz|P3|P4|P7|P8|PPG|PR|PTAF|PTT|Phase|Pleth|Position|Pressure|PulseQuality|Pz|R LEG|RMI|RR|SNORE|SNORE.DR|SPO2|T7|T8|THERMISTOR|THORAX|TRIG|X32|XFlow|XSum|XVolume",
             {
+                "eq": ",|,,|.|..|ABDOMEN|Activity|AirFlow|Arm1|Arm2|C3|C4|CFLOW|CHIN|CHIN3|CLEAK|CO2 Wave|CPRES|Cz|DC1|DC10|DC11|DC12|DC14|DC15|DC16|DC7|DC8|DC9|DIF1+|DIF1-|DIF10+|DIF10-|DIF2+|DIF2-|DIF3+|DIF3-|DIF4+|DIF4-|DIF5+|DIF5-|DIF6+|DIF6-|DIF7+|DIF7-|DIF8+|DIF8-|DIF9+|DIF9-|E1|E2|ECG|ECG-LL|ECG-V1|ECG-V2|EMG|Elevation|EtCO2|Eye Down|Eye Up|F3|F4|F7|F8|Fp1|Fp2|Fpz|Fz|IC|L LEG|M1|M2|O1|O2|Oz|P3|P4|P7|P8|PPG|PR|PTAF|PTT|Phase|Pleth|Position|Pressure|PulseQuality|Pz|R LEG|RMI|RR|SNORE|SNORE-DR|SPO2|T7|T8|THERMISTOR|THORAX|TRIG|X32|XFlow|XSum|XVolume",
+                "replacements": [
+                    {
+                        "SNORE.DR": "SNORE-DR"
+                    }
+                ]
+            },
+            {
                 "eq": ",|,,|.|..|ABDOMEN|Activity|AirFlow|Arm1|Arm2|C3|C4|CFLOW|CHIN|CHIN3|CLEAK|CO2 Wave|CPRES|Cz|DC1|DC10|DC11|DC12|DC14|DC15|DC16|DC7|DC8|DC9|DIF1+|DIF1-|DIF10+|DIF10-|DIF2+|DIF2-|DIF3+|DIF3-|DIF4+|DIF4-|DIF5+|DIF5-|DIF6+|DIF6-|DIF7+|DIF7-|DIF8+|DIF8-|DIF9+|DIF9-|E1|E2|ECG|ECG-LL|ECG-V1|ECG-V2|EMG|Elevation|EtCO2|Eye Down|Eye Up|F3|F4|F7|F8|Fp1|Fp2|Fpz|Fz|IC|L LEG|M1|M2|O1|O2|Oz|P3|P4|P7|P8|PPG|PR|PTAF|PTT|Phase|Pleth|Position|Pressure|PulseQuality|Pz|R LEG|RMI|RR|SNORE|SNORE.DR|SpO2|T7|T8|THERMISTOR|THORAX|TRIG|X32|XFlow|XSum|XVolume",
                 "replacements": [
                     {
@@ -762,14 +723,6 @@
                 "replacements": [
                     {
                         "THERMISTOR": "THERMISTER"
-                    }
-                ]
-            },
-            {
-                "eq": ",|,,|.|..|ABDOMEN|Activity|AirFlow|Arm1|Arm2|C3|C4|CFLOW|CHIN|CHIN3|CLEAK|CO2 Wave|CPRES|Cz|DC1|DC10|DC11|DC12|DC14|DC15|DC16|DC7|DC8|DC9|DIF1+|DIF1-|DIF10+|DIF10-|DIF2+|DIF2-|DIF3+|DIF3-|DIF4+|DIF4-|DIF5+|DIF5-|DIF6+|DIF6-|DIF7+|DIF7-|DIF8+|DIF8-|DIF9+|DIF9-|E1|E2|ECG|ECG-LL|ECG-V1|ECG-V2|EMG|Elevation|EtCO2|Eye Down|Eye Up|F3|F4|F7|F8|Fp1|Fp2|Fpz|Fz|IC|L LEG|M1|M2|O1|O2|Oz|P3|P4|P7|P8|PPG|PR|PTAF|PTT|Phase|Pleth|Position|Pressure|PulseQuality|Pz|R LEG|RMI|RR|SNORE|SNORE-DR|SPO2|T7|T8|THERMISTOR|THORAX|TRIG|X32|XFlow|XSum|XVolume",
-                "replacements": [
-                    {
-                        "SNORE.DR": "SNORE-DR"
                     }
                 ]
             }
@@ -859,10 +812,10 @@
                 "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CAPNO|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|E2-M1|EKG|EtCO2|F3-M2|F4-M1|HR|IC|LAT|LEAK|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
-                        "E2-M2": "E2-M1"
+                        "Leak": "LEAK"
                     },
                     {
-                        "Leak": "LEAK"
+                        "E2-M2": "E2-M1"
                     }
                 ]
             }
@@ -877,23 +830,6 @@
                 "replacements": [
                     {
                         "E2-M2": "E2-M1"
-                    }
-                ]
-            },
-            {
-                "eq": "ABD|C3-M2|C4-M2|CFLOW|CHEST|CPAP|Chin1-Chin3|E1-M2|E2-M2|EKG|EPAP|EtCO2|F3-M2|F4-M2|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M2|RAT|SNORE|SaO2|Tidal",
-                "replacements": [
-                    {
-                        "C4-M1": "C4-M2"
-                    },
-                    {
-                        "F4-M1": "F4-M2"
-                    },
-                    {
-                        "O2-M1": "O2-M2"
-                    },
-                    {
-                        "Chin1-Chin2": "Chin1-Chin3"
                     }
                 ]
             }
@@ -933,17 +869,6 @@
                 ]
             },
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|LEAK|O1-M2|O2-M1|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "E2-M2": "E2-M1"
-                    },
-                    {
-                        "Leak": "LEAK"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|LEAK|O1-M2|O2-M1|RAT|SNORE|SaO2",
                 "replacements": [
                     {
@@ -977,18 +902,18 @@
         [
             "31-32|ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|LEAK|O1-M2|O2-M1|SNORE|SaO2",
             {
-                "eq": "32-32|ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|LEAK|O1-M2|O2-M1|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "31-32": "32-32"
-                    }
-                ]
-            },
-            {
                 "eq": "31-32|ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|LEAK|O1-M2|O2-M1|SNORE|SaO2",
                 "replacements": [
                     {
                         "E2-M2": "E2-M1"
+                    }
+                ]
+            },
+            {
+                "eq": "32-32|ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|LEAK|O1-M2|O2-M1|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "31-32": "32-32"
                     }
                 ]
             }
@@ -996,13 +921,10 @@
         [
             "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M1|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN3|CPRES|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
-                        "E2-M2": "E2-M1"
-                    },
-                    {
-                        "E1-M2": "E1-M1"
+                        "CHIN1-CHIN2": "CHIN1-CHIN3"
                     }
                 ]
             },
@@ -1015,10 +937,13 @@
                 ]
             },
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN3|CPRES|E1-M2|E2-M2|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CHIN1-CHIN2|CPRES|E1-M1|E2-M1|EKG|F3-M2|F4-M1|HR|IC|LAT|O1-M2|O2-M1|PTAF|RAT|SNORE|SaO2",
                 "replacements": [
                     {
-                        "CHIN1-CHIN2": "CHIN1-CHIN3"
+                        "E1-M2": "E1-M1"
+                    },
+                    {
+                        "E2-M2": "E2-M1"
                     }
                 ]
             }
@@ -1130,17 +1055,6 @@
                 ]
             },
             {
-                "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|Chin1-Chin2|E1-M2|E2-M1|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
-                "replacements": [
-                    {
-                        "E2-M2": "E2-M1"
-                    },
-                    {
-                        "CHIN1-CHIN2": "Chin1-Chin2"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CHIN3-CHIN2|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
                 "replacements": [
                     {
@@ -1157,14 +1071,6 @@
         [
             "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CPAP|Chin1-Chin2|E1-M2|E2-M2|EKG|EPAP|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2",
             {
-                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CPAP|Chin3-Chin2|E1-M2|E2-M2|EKG|EPAP|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2",
-                "replacements": [
-                    {
-                        "Chin1-Chin2": "Chin3-Chin2"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CPAP|Chin1-Chin3|E1-M2|E2-M2|EKG|EPAP|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2",
                 "replacements": [
                     {
@@ -1177,6 +1083,14 @@
                 "replacements": [
                     {
                         "E2-M2": "E2-M1"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M2|C4-M1|CFLOW|CHEST|CPAP|Chin3-Chin2|E1-M2|E2-M2|EKG|EPAP|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2",
+                "replacements": [
+                    {
+                        "Chin1-Chin2": "Chin3-Chin2"
                     }
                 ]
             }
@@ -1258,10 +1172,10 @@
                         "F4-T3": "F4-T5"
                     },
                     {
-                        "C4-T3": "C4-T5"
+                        "O2-T3": "O2-T5"
                     },
                     {
-                        "O2-T3": "O2-T5"
+                        "C4-T3": "C4-T5"
                     }
                 ]
             },
@@ -1285,18 +1199,18 @@
         [
             "ABD|C3-M2|C4-M1|CFLOW|CHEST|Chin1-Chin2|E1-M2|E2-M2|EKG|EPAP|EtCO2|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2|Tidal",
             {
-                "eq": "ABD|C3-M2|C4-M1|CFLOW|CHEST|Chin3-Chin2|E1-M2|E2-M2|EKG|EPAP|EtCO2|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2|Tidal",
-                "replacements": [
-                    {
-                        "Chin1-Chin2": "Chin3-Chin2"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|C3-M2|C4-M1|CFLOW|CHEST|Chin1-Chin3|E1-M2|E2-M2|EKG|EPAP|EtCO2|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2|Tidal",
                 "replacements": [
                     {
                         "Chin1-Chin2": "Chin1-Chin3"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|C3-M2|C4-M1|CFLOW|CHEST|Chin3-Chin2|E1-M2|E2-M2|EKG|EPAP|EtCO2|F3-M2|F4-M1|HR|IC|IPAP|LAT|Leak|O1-M2|O2-M1|RAT|SNORE|SaO2|Tidal",
+                "replacements": [
+                    {
+                        "Chin1-Chin2": "Chin3-Chin2"
                     }
                 ]
             }
@@ -1318,22 +1232,6 @@
         [
             "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CHIN1-CHIN2|CZ-M1|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
             {
-                "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CHIN1-CHIN3|CZ-M1|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
-                "replacements": [
-                    {
-                        "CHIN1-CHIN2": "CHIN1-CHIN3"
-                    }
-                ]
-            },
-            {
-                "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CHIN3-CHIN2|CZ-M1|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
-                "replacements": [
-                    {
-                        "CHIN1-CHIN2": "CHIN3-CHIN2"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CHIN1-CHIN2|CZ-M1|E1-M2|E2-M1|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
                 "replacements": [
                     {
@@ -1348,23 +1246,39 @@
                         "O2-M2": "O2-M1"
                     }
                 ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CHIN3-CHIN2|CZ-M1|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
+                "replacements": [
+                    {
+                        "CHIN1-CHIN2": "CHIN3-CHIN2"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CHIN1-CHIN3|CZ-M1|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
+                "replacements": [
+                    {
+                        "CHIN1-CHIN2": "CHIN1-CHIN3"
+                    }
+                ]
             }
         ],
         [
             "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CZ-M1|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
             {
-                "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CZ-M1|Chin1-Chin3|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
-                "replacements": [
-                    {
-                        "Chin1-Chin2": "Chin1-Chin3"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CZ-M1|Chin1-Chin2|E1-M2|E2-M1|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
                 "replacements": [
                     {
                         "E2-M2": "E2-M1"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CZ-M1|Chin1-Chin3|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
+                "replacements": [
+                    {
+                        "Chin1-Chin2": "Chin1-Chin3"
                     }
                 ]
             }
@@ -1374,10 +1288,10 @@
         [
             "ABD|C3-M2|C4-M1|Chin1-Chin2|E1-M2|E2-M2|EKG|Fp1-M2|Fp2-M1|HR|O1-M2|O2-M1|SNORE|SaO2",
             {
-                "eq": "ABD|C3-M2|C4-M1|Chin1-Chin3|E1-M2|E2-M2|EKG|Fp1-M2|Fp2-M1|HR|O1-M2|O2-M1|SNORE|SaO2",
+                "eq": "ABD|C3-M2|C4-M1|Chin1-Chin2|E1-M2|E2-M2|EKG|Fp1-M2|Fp2-M2|HR|O1-M2|O2-M1|SNORE|SaO2",
                 "replacements": [
                     {
-                        "Chin1-Chin2": "Chin1-Chin3"
+                        "Fp2-M1": "Fp2-M2"
                     }
                 ]
             },
@@ -1390,10 +1304,10 @@
                 ]
             },
             {
-                "eq": "ABD|C3-M2|C4-M1|Chin1-Chin2|E1-M2|E2-M2|EKG|Fp1-M2|Fp2-M2|HR|O1-M2|O2-M1|SNORE|SaO2",
+                "eq": "ABD|C3-M2|C4-M1|Chin1-Chin3|E1-M2|E2-M2|EKG|Fp1-M2|Fp2-M1|HR|O1-M2|O2-M1|SNORE|SaO2",
                 "replacements": [
                     {
-                        "Fp2-M1": "Fp2-M2"
+                        "Chin1-Chin2": "Chin1-Chin3"
                     }
                 ]
             }
@@ -1403,6 +1317,20 @@
         [
             "C3-CZ|C3-M2|C4-M1|CHIN1-CHIN2|CZ-C4|CZ-M2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|F7-M2|F8-M1|FZ-M2|Fp1-M2|Fp2-M1|LAT|O1-M2|O2-M1|P3-M2|P4-M1|PZ-M2|RAT|SaO2|T3-M2|T4-M1|T5-M2|T6-M1",
             {
+                "eq": "C3-CZ|C3-M2|C4-M1|CHIN1-CHIN2|CZ-C4|CZ-M2|E1-M2|E2-M2|EKG-E1|F3-M2|F4-M1|F7-M2|F8-M1|FZ-M2|Fp1-M2|Fp2-M1|LAT-E1|O1-M2|O2-M1|P3-M2|P4-M1|PZ-M2|RAT-E1|SaO2|T3-M2|T4-M1|T5-M2|T6-M1",
+                "replacements": [
+                    {
+                        "LAT": "LAT-E1"
+                    },
+                    {
+                        "RAT": "RAT-E1"
+                    },
+                    {
+                        "EKG": "EKG-E1"
+                    }
+                ]
+            },
+            {
                 "eq": "C3-CZ|C3-M2|C4-M1|CHIN3-CHIN1|CZ-C4|CZ-M2|E1-M2|E2-M2|EKG|F3-M2|F4-M1|F7-M2|F8-M1|FZ-M2|Fp1-M2|Fp2-M1|LAT|O1-M2|O2-M1|P3-M2|P4-M1|PZ-M2|RAT|SaO2|T3-M2|T4-M1|T5-M2|T6-M1",
                 "replacements": [
                     {
@@ -1411,30 +1339,16 @@
                 ]
             },
             {
-                "eq": "C3-CZ|C3-M2|C4-M1|CHIN1-CHIN2|CZ-C4|CZ-M2|E1-M2|E2-M2|EKG-E1|F3-M2|F4-M1|F7-M2|F8-M1|FZ-M2|Fp1-M2|Fp2-M1|LAT-E1|O1-M2|O2-M1|P3-M2|P4-M1|PZ-M2|RAT-E1|SaO2|T3-M2|T4-M1|T5-M2|T6-M1",
-                "replacements": [
-                    {
-                        "RAT": "RAT-E1"
-                    },
-                    {
-                        "EKG": "EKG-E1"
-                    },
-                    {
-                        "LAT": "LAT-E1"
-                    }
-                ]
-            },
-            {
                 "eq": "C3-CZ|C3-M2|C4-M2|CHIN1-CHIN2|CZ-C4|CZ-M2|E1-M2|E2-M2|EKG|F3-M2|F4-M2|F7-M2|F8-M1|FZ-M2|Fp1-M2|Fp2-M2|LAT|O1-M2|O2-M1|P3-M2|P4-M1|PZ-M2|RAT|SaO2|T3-M2|T4-M1|T5-M2|T6-M1",
                 "replacements": [
+                    {
+                        "Fp2-M1": "Fp2-M2"
+                    },
                     {
                         "C4-M1": "C4-M2"
                     },
                     {
                         "F4-M1": "F4-M2"
-                    },
-                    {
-                        "Fp2-M1": "Fp2-M2"
                     }
                 ]
             }
@@ -1444,18 +1358,18 @@
         [
             "ABD|AIRFLOW|C3-M1|C4-M2|CAPNO|CHEST|CHIN1-CHIN2|CZ-M2|E1-M2|E2-M2|EKG|EtCO2|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
             {
-                "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CAPNO|CHEST|CHIN1-CHIN2|CZ-M2|E1-M2|E2-M2|EKG|EtCO2|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O2-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
-                "replacements": [
-                    {
-                        "O1-M1": "O2-M1"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CAPNO|CHEST|CHIN1-CHIN2|CZ-M1|E1-M2|E2-M2|EKG|EtCO2|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O1-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
                 "replacements": [
                     {
                         "CZ-M2": "CZ-M1"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CAPNO|CHEST|CHIN1-CHIN2|CZ-M2|E1-M2|E2-M2|EKG|EtCO2|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|O2-M1|O2-M2|PTAF|RAT|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
+                "replacements": [
+                    {
+                        "O1-M1": "O2-M1"
                     }
                 ]
             }
@@ -1466,18 +1380,18 @@
         [
             "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CZ-M1|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|LexDIG1-2|O1-M1|O2-M2|PTAF|RAT|RexDIG1--2|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
             {
-                "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CZ-M1|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|LexDIG1-2|O1-M1|O2-M2|PTAF|RAT|RexDIG1--2|SNORE|SaO2|T4-M1|T4-M2|T5-M1|T6-M2",
-                "replacements": [
-                    {
-                        "T3-M1": "T4-M1"
-                    }
-                ]
-            },
-            {
                 "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CZ-M1|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|LexDIG1--2|O1-M1|O2-M2|PTAF|RAT|RexDIG1--2|SNORE|SaO2|T3-M1|T4-M2|T5-M1|T6-M2",
                 "replacements": [
                     {
                         "LexDIG1-2": "LexDIG1--2"
+                    }
+                ]
+            },
+            {
+                "eq": "ABD|AIRFLOW|C3-M1|C4-M2|CHEST|CZ-M1|Chin1-Chin2|E1-M2|E2-M2|EKG|F3-M1|F4-M2|F7-M1|F8-M2|HR|IC|LAT|LexDIG1-2|O1-M1|O2-M2|PTAF|RAT|RexDIG1--2|SNORE|SaO2|T4-M1|T4-M2|T5-M1|T6-M2",
+                "replacements": [
+                    {
+                        "T3-M1": "T4-M1"
                     }
                 ]
             }
