@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import psycopg2
 import os
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 from sklearn.utils import gen_batches, shuffle
 import tensorflow as tf
@@ -311,12 +311,11 @@ class Db():
                         labels = df["label"]
                         chunks = df.drop(columns=["label"])
 
+                        # Data is already normalized in featuresPerEvent (modules/edf.py), previously to data insertion.
                         scaler = MinMaxScaler()
                         scaled = scaler.fit_transform(chunks.transpose())
-                        
-                        chunks = pd.DataFrame(scaled.T, columns=chunks.columns)
-                        
-                        yield tf.stack(chunks), tf.stack(keras.utils.to_categorical(labels, num_classes=self.num_classes)), np.vectorize(lambda x: classWeights[x])(labels)
+                            
+                        yield tf.stack(scaled.T), tf.stack(keras.utils.to_categorical(labels, num_classes=self.num_classes)), np.vectorize(lambda x: classWeights[x])(labels)
                         
     def close(self):
         self.conn.close()

@@ -10,6 +10,21 @@ from modules.db_mlp import Db
 
 load_dotenv()
 
+class ResetLR(keras.callbacks.Callback):
+    """ 
+        This callback will reset the learning rate at each .fit call,
+        Is meant to be used with ReduceLROnPlateau that will reduce the 
+        learning rate if our val_loss is not improving but won't reset 
+        the learning rate between .fit calls.
+    """
+    def __init__(self, lr = 1e-3):
+        self.default_lr = lr
+
+    def on_train_begin(self, logs=None):
+        current_lr = self.model.optimizer.learning_rate
+        if current_lr != self.default_lr:
+            self.model.optimizer.learning_rate = self.default_lr
+
 class MLPEegModel():
     
     def __init__(self, tune = False):
@@ -18,6 +33,7 @@ class MLPEegModel():
 
         self.aws = AWS()
 
+        self.lr = 1e-3
         self.num_classes = 5
         self.epochs = 100
         self.tuner_epochs = 2
@@ -32,14 +48,18 @@ class MLPEegModel():
                 patience=5,
                 min_lr=1e-5,
                 mode="min",
-                verbose=1
+                verbose=1,
+                cooldown=1
+            ),
+            ResetLR(
+                lr=self.lr
             )
         ]
 
         if not tune:
             if os.path.exists(self.dir + "mlp_eeg.keras"):
                 self.model = keras.models.load_model(self.dir + "mlp_eeg.keras", compile=True)
-                self.db.flushData()
+                # self.db.flushData()
             else:
                 
                 input = keras.Input(shape=(35,), name="EGGInput")
@@ -51,11 +71,11 @@ class MLPEegModel():
                 self.model =  keras.models.Model(inputs=input, outputs=output)
 
                 self.model.compile(
-                    optimizer=keras.optimizers.Adam(learning_rate=1e-3),
+                    optimizer=keras.optimizers.Adam(learning_rate=self.lr),
                     loss=keras.losses.CategoricalCrossentropy(),
                     metrics=[keras.metrics.CategoricalAccuracy()]
                 )
-                self.db.restart()
+                # self.db.restart()
 
             self.model.summary()
 
@@ -135,9 +155,13 @@ class MLPEegModel():
     def getMetrics(self):
         return self.model.metrics_names
 
-    def save(self, chunks, mode = "ROWS", done = False):
-        self.model.save(self.dir + "mlp_eeg.keras", include_optimizer=True)
+    def save(self, chunks, inserted, mode = "ROWS", done = False, onlyChunks = False):
+
+        if not onlyChunks:
+            self.model.save(self.dir + "mlp_eeg.keras", include_optimizer=True)
+
         with open(self.dir + "mlp_eeg.chunks", "w") as chunksFile:
             chunksFile.write(f"{mode}={chunks}\n")
+            chunksFile.write(f"INSERTED={inserted}\n")
             if done == True:
                 chunksFile.write(f"DONE")

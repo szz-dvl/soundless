@@ -129,8 +129,8 @@ validation_set = [
         "site": "S0001"
     },
     {
-        "folder": "sub-S0001111267505",
-        "session": 2,
+        "folder": "sub-S0001111191757",
+        "session": 1,
         "site": "S0001"
     },
 ]
@@ -201,21 +201,27 @@ def recoverState():
     try:
         with open(os.getenv("MODEL_CHECKPOINT_DIR") + "mlp_eeg.chunks", "r") as chunksFile:
             chunksInfo = chunksFile.readline()
-            parts = chunksInfo.split("=")
-            if parts[0] != "CHUNKS":
+            chunkParts = chunksInfo.split("=")
+            if chunkParts[0] != "CHUNKS":
                 raise IncompatibleCheckpoint()
             
-            return int(chunksInfo.split("=")[-1])
+            insertedInfo = chunksFile.readline()
+            insertedParts = insertedInfo.split("=")
+            inserted = int(insertedParts[-1])
+
+            if inserted == 0:
+                db.flushData()
+            
+            return int(chunkParts[-1]), inserted
 
     except FileNotFoundError:
-        return 0
+        return 0, 0
 
 def trainMLP():
     model = MLPEegModel()
     getChunk = utils.chunkDataframe(pd.read_csv('bdsp_psg_master_20231101.csv'), CHUNK_SIZE)
-    chunksToSkip = recoverState()
+    chunksToSkip, inserted = recoverState()
     chunks = 0
-    inserted = 0
 
     for chunk in getChunk:
         chunks += 1
@@ -236,7 +242,7 @@ def trainMLP():
                         if inserted == CHUNKS_PER_TRAIN:
                             cat_acc, val_cat_acc, loss, val_loss = model.fit()
                             print(f"\033[1mAccuracy: {cat_acc}, Validation accuracy: {val_cat_acc}, Loss: {loss}, Validation loss: {val_loss}\033[0m")
-                            model.save(chunks, "CHUNKS")
+                            model.save(chunks, 0, "CHUNKS")
 
                             inserted = 0
                             db.flushData()
@@ -261,10 +267,9 @@ def trainMLP():
                         print(f"Exception %s: %s"%(row["BidsFolder"], ex))
                         pass
             
-            # if chunks % CHUNKS_TO_SAVE == 0:
-            #     model.save(chunks, "CHUNKS")
+            model.save(chunks, inserted, "CHUNKS", False, True)
 
-    model.save(chunks, "CHUNKS", True)
+    model.save(chunks, inserted, "CHUNKS", True)
 
 populateValidation()
 trainMLP()
