@@ -29,7 +29,7 @@ class EEGModel():
         if not tune:
             if os.path.exists(self.dir + "eeg.keras"):
                 self.model = keras.models.load_model(self.dir + "eeg.keras", compile=True)
-                self.db.flushData()
+                # self.db.flushData()
             else:
                 
                 input = keras.Input(shape=(6001, 18), name="EGGInput")
@@ -57,7 +57,7 @@ class EEGModel():
                     loss=keras.losses.CategoricalCrossentropy(),
                     metrics=[keras.metrics.CategoricalAccuracy()]
                 )
-                self.db.restart()
+                #self.db.restart()
 
             self.model.summary()
 
@@ -160,3 +160,6 @@ class EEGModel():
             chunksFile.write(f"{mode}={chunks}\n")
             if done == True:
                 chunksFile.write(f"DONE")
+
+    def plot(self):
+        keras.utils.plot_model(self.model, to_file="memoria/figs/fcn.png", show_shapes=True)
