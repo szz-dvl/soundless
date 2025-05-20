@@ -42,6 +42,10 @@
 \usepackage{mathpazo} % Palatino font
 \usepackage{hyperref}
 \usepackage[parfill]{parskip}
+\usepackage{adjustbox}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{graphicx}
 
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
@@ -72,10 +76,6 @@
 \newcommand{\addsubsection}[1]{
 	\addcontentsline{toc}{subsubsection}{#1}
 	\subsection*{#1}
-}
-
-\newcommand{\textblock}[1]{
-	\noindent #1
 }
 
 %%%%%%%%%%%%%%%%%%%%% END COMMANDS %%%%%%%%%%%%%%%%%%%%%
@@ -193,24 +193,176 @@ To aggregate the data a \href{https://www.postgresql.org/}{postgreSQL} DDBB have
 Finally to create the neural networks proposed here \href{https://keras.io/}{keras} is used. This is a great library abstracting the tough part of neural networks and allowing for quick prototipe a neural network. 
 
 \addsection{Feature engineering}
-\blindtext
+The vast amount of data comming from encephalogram files must be treated before we can feed this data to a neural network.
+First of all we need to get a glimpse at the channels used for the encephalogram recording, with some examples we realize that there are several kinds of configurations for encephalograms, a neural network won't work if we do not standardize the data between the different encephalograms. Once we select a set of channels representing the majority of our data set, we need to obtain the different epochs of the encephalograms associated to the annotations. 
 
 \addsubsection{Channel selection}
-\blindtext
+To select the representative channels of our dataset, we first traverse all our documents looking for the different channels configurations, this process will generate a CSV file with a fingerprint of the channels for each encephalogram, here a fingerprint means nothing but to concatenate all the channel names separated by a "|" character for each encephalogram. This \href{https://github.com/szz-dvl/soundless/blob/main/parser_channels.py}{file} is the responsible for this data gathering process.
 
-\addsubsection{Data scalation}
-\blindtext
+Once we have generated the CSV file with one fingerprint per row, we can start analysing the different channel configurations to get a set of desired channels to study. The process is coded in this \href{https://github.com/szz-dvl/soundless/blob/main/channels.py}{file}. Roughly, this file will make an study of the frequency of each channel present in the dataset, and will try to llok for equivalent channels, two channels are considered equivalent when two different configurations are equal by exchanging this channels. The results obtained in this process are as follows:
+
+\begin{table}[!h]
+\begin{center}
+\begin{tabular}{ |p{3cm}||p{3cm}| }
+ \hline
+ Channel & Frequency (\%)\\
+ \hline
+ ABD & 88.719512 \\ 
+ AIRFLOW & 75.304878 \\  
+ C3-M2 & 71.951220 \\
+ CHEST & 87.042683 \\
+ E1-M2 & 84.451220 \\
+ EKG & 87.957317 \\
+ HR & 89.786585 \\
+ IC & 89.329268 \\
+ LAT & 82.164634 \\
+ O1-M2 & 70.731707 \\
+ RAT & 79.878049 \\
+ SNORE & 91.920732 \\
+ SaO2 & 90.396341 \\
+ \hline
+\end{tabular}
+\end{center}
+\caption{Channel frequencies}
+\label{tab1}
+\end{table}
+
+So, demanding that our encephalograms have, at least, this channels we must get a representation of around a 71\% of our dataset, which must be more than enough to train our neural network. Following with the obtained results, the meaningful equivalences found are as follows:
+
+\newgeometry{left=1.5cm,bottom=1.5cm,top=0.5cm}
+\begin{minipage}{0.45\textwidth}
+\begin{adjustbox}{angle=90}
+\begin{tabular}{ |p{2cm}||p{3cm}||p{2cm}||p{2cm}||p{2cm}||p{2cm}||p{2cm}||p{2cm}||p{2cm}| }
+ \hline
+ \multicolumn{9}{|c|}{Channel equivalences} \\
+ \hline
+ C4-M1 \newline C4-M2 & CHIN1-CHIN2 \newline CHIN1-CHIN3 \newline CHIN2-CHIN3 \newline CHIN3-CHIN1 \newline CHIN3-CHIN2 \newline Chin1-31 \newline Chin1-Chin2 \newline Chin1-Chin3 \newline Chin1-P3 \newline Chin1-P4 \newline Chin2-Chin3 \newline Chin3-Chin2 & E1-M1 \newline E1-M2 & E2-M1 \newline E2-M2 & EKG \newline EKG-E1 & F4-M1 \newline F4-M2 \newline F8-M1 \newline Fp2-M1 \newline Fp2-M2 & O2-M2 \newline O1-M1 \newline O2-M1 & LAT \newline LAT-E1 & RAT \newline RAT-E1 \\ 
+ \hline
+\end{tabular}
+\end{adjustbox}
+\end{minipage}%
+\hfill
+\begin{minipage}{0.45\textwidth}
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{ |p{3cm}||p{3cm}||p{3cm}| }
+ \hline
+ Channel & Frequency (\%) & Equivalence\\
+ \hline
+ ABD & 88.719512 & No \\ 
+ AIRFLOW & 75.304878 & No \\  
+ C3-M2 & 71.951220 & No \\
+ C4-M1 & 76.371951 & Yes \\
+ CHEST & 87.042683 & No \\
+ CHIN1-CHIN2 & 91.310976 & Yes \\
+ E1-M1 & 85.365854 & Yes \\
+ E2-M1 & 87.347561 & Yes \\
+ EKG & 90.396341 & Yes \\
+ F4-M1 & 81.402439 & Yes \\
+ HR & 89.786585 & No \\
+ IC & 89.329268 & No \\
+ LAT & 84.451220 & Yes \\
+ O1-M2 & 70.731707 & No \\
+ O2-M2 & 86.280488 & Yes \\
+ RAT & 82.164634 & Yes \\
+ SNORE & 91.920732 & No \\
+ SaO2 & 90.396341 & No \\
+ \hline
+\end{tabular}
+\end{center}
+\caption{Frequencies with equivalences aggregated}
+\label{tab2}
+\end{table}
+\end{minipage}%
+\restoregeometry
+
+In table \autoref{tab2} I sumarize the frequencies obtained when aggregating the equivalences found by the code, after all we have 18 meaningful channels to play with, however we need to take into account that most of them are not electroencephalogram channels, so looking for brain activity on those channels will make no sense, we will review this part later on. However we can try to use the 18 channels to feed a neural network as they are, as a sequence of voltages per channel over time. 
+
+\addsubsection{Classes}
+If we take a look at the annotation documents associated to each encephalogram there is a huge number of distinct annotations for the whole set, however if we look carefully, we realise that the most prevalent annotations in all the encephalograms are the sleeping stages. It makes sense to try to classify the sleeping stages of a subject, the sleeping stages are:
+
+\begin{itemize}
+  \item \textbf{Sleep\_stage\_W:} This stage indicates that the subject is awake.
+  \item \textbf{Sleep\_stage\_N1:} This stage indicates that the subject is in the first sleep stage.
+  \item \textbf{Sleep\_stage\_N2:} This stage indicates that the subject is in the second sleep stage.
+  \item \textbf{Sleep\_stage\_N3:} This stage indicates that the subject is in the third sleep stage.
+  \item \textbf{Sleep\_stage\_R:} This stage indicates that the subject is in REM (Rapid Eye Movement) stage.
+\end{itemize} 
+
+So these will be our class set, lets try to classify our encephalogram events into one of these stages. We can try to use a similar method to look for diferent kind of arousals in the encephalograms and, later on, try to associate those arousals to noise in the ambient.
 
 \addsection{Fully Convolutional neural network (FCN)}
-\blindtext
+Based on \href{https://arxiv.org/abs/1611.06455}{this} paper and the related work found \href{https://keras.io/examples/timeseries/eeg_signal_classification/}{here} I tried to build a fully convolutional network for timeseries classification, the architecture is as follows:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.1, angle=90]{figs/fcn.png}
+\caption{FCN architecture}
+\label{fig1}
+\end{figure}
+
+The input shape is (6001, 18) given that we have 18 channels and that we are annalising cropped segments of the encephalogram 30 seconds long. The sample frequency of the encephalograms is 200 Hz, so we have 6000 samples per event. Any encephalogram found with a different sample frequency will be discarted in this approach. Then we have a convolutional layer of 32 filters with a kernel size of 3. After that another convolutional layer with again 32 filters and a kernel size of 5. Finally we use a last convolutional layer with 64 filters and a kernel size of 5. Then we use an average pooling layer to downsample the results of convulational layers. Finally a dense layer with 5 neurons, the number of classes we would like to classificate.
+
+The activation function I'm using for the hidden layers of the network is \href{https://en.wikipedia.org/wiki/Rectifier_(neural_networks)}{ReLU}(rectified linear unit) since is very efficient and mitigates the \href{https://en.wikipedia.org/wiki/Vanishing_gradient_problem}{vanishing gradient} problem. For the output layer softmax is used, since we have a multiclass classification problem.
+
+The parameters of this neural network have been optimized by using \href{https://keras.io/keras_tuner/}{keras tuner} a tool to automate the process of selecting the hyperparameters of our network. It is not perfect for us since we are dealing with a huge dataset hosted elsewhere, so we need to tune the model with a few samples of the dataset, but is a helping tool anyway.
+
+Several options have been tried for the optimizer with this architecture. In particular Adam, SGD (Stochastic gradient descen) and AdamW with a weight decay of 1e-4. At the same time several learning rate values ranging from 1e-3 to 1e-5 have been tried and a \href{https://keras.io/api/callbacks/learning_rate_scheduler/}{LearningRateScheduler} have been applied too.
+
+After one day of training this approach could not overcome a 20\% of validation accuracy, which is not better than a random choice of one of our classes. We need to take into account that we are feeding the network with a very different selection of channels what will probably lead to a very noisy data set. After applying data scalation with MinMax scaler the accuracy improved a bit, but still not enough to make it a useful tool.
 
 \addsubsection{LSTM}
-\blindtext
+\href{https://en.wikipedia.org/wiki/Long_short-term_memory}{LSTM} (Long short-term memory) neural networks are a kind of recurrent neural network that are very well suited for time series classification, by using an LSTM layer instead of our 2 last convolutional layers we may get better results. The architecture proposed is as follows:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.1, angle=90]{figs/fcn-lstm.png}
+\caption{CN-LSTM architecture}
+\label{fig1}
+\end{figure}
+
+We keep the same input layer, with shape (6001, 18). After that we use an initial convolutional layer with 64 filters and a kernel size of 3, which is good at learning general patterns in our data after that we use a normalization layer that we connect with a ReLU activation layer, finally we use a pooling layer to downsample the results obtained in this first step. After that we connect a droput layer to avoid overfiting, this layer will "deactivate" a percentage of the neurons of the interconnected layers to trying to avoid that the weights of our gradient are too much affected by noisy data. After that we plug the LSTM layer with 100 neurons and the default tanh activation function, a dropout layer is added after this one and finally we have the output layer, with 5 neurons, again the number of classes we would like to classify.
+
+For this architecture several optimizers has been tried too, particullarly Adam with learning rates ranging from 1e-3 to 1e-5 and AdamW with a weight decay of 1e-4.
+
+After several days training this architecture was not able to overcome 45\% in validation accuracy, an improvement over fully convolutional neural networks, not enough however.
+
+\addsection{Band power aggregation}
+Until now I did not have too much success, a 45\% on validation accuracy is still not a good result. Most probably we are dealing with very noisy data not representative of the sleep stage in the subjects, as an instance ABD or IC channels does not seem a good choice to study the sleep stages of a subject. In top of that try to feed a neural network with the raw readings of an encephalogram seems a pretty poor choice, since there may be a lot of artifacts messing our data.
+
+We can think in an encephalogram as a bunch of signals, but, the brain activity is characterized by particular frequencies appearing or desapearing at different moments in the brain activity if we were able to study the influence of those frequencies en each of our events we will have a much more cleaner dataset.
+
+\addsubsection{Delta activity}
+Delta brainwaves, also known as delta activity, are the slowest brainwaves, typically between 0.5 and 4.5 Hz. They are primarily associated with deep, dreamless sleep, where the body is in a state of complete relaxation and the mind is minimally active. Delta waves are also observed in newborns, and can be induced in a waking state by experienced meditators.
+
+They usually show a high amplitude and are most prevalent during deep sleep stages (3), where the brain is essentially shut down for repair and regeneration. Delta waves are linked to various restorative processes, including tissue repair, muscle growth, and hormone release.They are also involved in transferring information from the hippocampus to the neocortex, aiding in long-term memory storage.
+
+\addsubsection{Theta activity}
+Theta brainwaves, characterized by frequencies between 4.5-8.5 Hz, are associated with states of relaxation, deep meditation, and creativity. They are often observed during sleep, particularly during dream sleep, and are also linked to states of daydreaming and focused attention. Theta activity is thought to play a role in processing information, making memories, and facilitating intuitive insights. 
+
+Disrupted or divergent theta activity has been linked to various mental health conditions.
+
+\addsubsection{Alpha activity}
+Alpha brainwaves, with a frequency of 8.5-11.5 Hz, are associated with a relaxed, awake state, often observed during activities like daydreaming or meditation. They indicate the brain is active but not overly focused, promoting feelings of calmness and ease. 
+
+Alpha activity is typically strongest over the posterior areas of the head, particularly the occipital cortex. Alpha waves can be influenced by various factors, including sensory stimuli, mental activities, and even the position of the eyes (they are often more prominent with eyes closed). 
+
+\addsubsection{Sigma activity}
+Sigma activity, also known as sigma power or spindle activity, refers to brainwave activity in the frequency range of 11.5-15.5 Hz, a key component of non-REM sleep. These brainwaves are characterized by transient oscillations and are often associated with sleep-dependent memory consolidation and sleep stability. In infants, sigma activity is linked to psychomotor development and local brain maturation.
+
+\addsubsection{Beta activity}
+Beta activity in the brain refers to a range of brainwave frequencies, typically between 15.5 and 30 Hz, associated with alert, focused, and active mental states. These brainwaves are commonly present during waking hours and when engaged in tasks requiring concentration, problem-solving, or decision-making.
+
+An excessive beta activity can be associated with symptoms of brain over-arousal, such as anxiety, obsessiveness, and sleep difficulties, while a deficient beta activity may be linked to difficulties concentrating, problem-solving, and overall brain under-arousal.
+
+\addsection{Power Spectral Density (PSD)}
+Power Spectral Density (PSD) analysis is used to examine the spectral composition of EEG signals during sleep, providing insights into different sleep stages and potential sleep disorders. It's a quantitative EEG (qEEG) technique that measures the distribution of power across different frequency bands within the EEG signal.
+
+Inspired by \href{https://mne.tools/stable/auto_tutorials/clinical/60_sleep.html#design-a-scikit-learn-transformer-from-a-python-function}{this} article, I used the frequencies spectrum derivated from the PSD analisys of the EEGs, obtaining a vector of "features" characterizing which amount of power we find in each channel for the frequencies related to brain activity.
+
+This time we have a much cleaner and representative dataset, we must, however think in a new network architecture that fits better with our new dataset.
 
 \addsection{Multi Layer Perceptron (MLP)}
-\blindtext
-
-\addsubsection{Band power aggregation}
 \blindtext
 
 \addchapter{Evaluation}

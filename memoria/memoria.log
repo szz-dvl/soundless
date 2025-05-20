@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2026/dev/Arch Linux)  (format=lualatex 2025.5.20)  20 MAY 2025 15:01
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2026/dev/Arch Linux)  (format=lualatex 2025.5.20)  20 MAY 2025 20:32
  restricted system commands enabled.
 **memoria.tex
 (./memoria.tex
@@ -291,7 +291,111 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 (/usr/share/texmf-dist/tex/latex/parskip/parskip.sty
 Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 56.
+(/usr/share/texmf-dist/tex/latex/adjustbox/adjustbox.sty
+Package: adjustbox 2025/02/26 v1.3c Adjusting TeX boxes (trim, clip, ...)
+
+(/usr/share/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
+
+(/usr/share/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks21
+\XKV@tempa@toks=\toks22
+)
+\XKV@depth=\count301
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(/usr/share/texmf-dist/tex/latex/adjustbox/adjcalc.sty
+Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back
+-ends (calc, etex, pgfmath)
+)
+(/usr/share/texmf-dist/tex/latex/adjustbox/trimclip.sty
+Package: trimclip 2025/02/21 v1.2a Trim and clip general TeX material
+
+(/usr/share/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+)
+(/usr/share/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: luatex.def on input line 106.
+
+(/usr/share/texmf-dist/tex/latex/graphics-def/luatex.def
+File: luatex.def 2024/04/13 v1.2e Graphics/color driver for luatex
+))
+\Gin@req@height=\dimen145
+\Gin@req@width=\dimen146
+)
+(/usr/share/texmf-dist/tex/latex/collectbox/collectbox.sty
+Package: collectbox 2022/10/17 v0.4c Collect macro arguments as boxes
+\collectedbox=\box52
+)
+\tc@llx=\dimen147
+\tc@lly=\dimen148
+\tc@urx=\dimen149
+\tc@ury=\dimen150
+Package trimclip Info: Using driver 'tc-luatex.def'.
+
+(/usr/share/texmf-dist/tex/latex/adjustbox/tc-luatex.def
+File: tc-luatex.def 2025/02/26 v1.1 Clipping driver for luatex
+
+(/usr/share/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
+File: tc-pdftex.def 2025/02/26 v2.3 Clipping driver for pdftex
+)))
+\adjbox@Width=\dimen151
+\adjbox@Height=\dimen152
+\adjbox@Depth=\dimen153
+\adjbox@Totalheight=\dimen154
+\adjbox@pwidth=\dimen155
+\adjbox@pheight=\dimen156
+\adjbox@pdepth=\dimen157
+\adjbox@ptotalheight=\dimen158
+
+(/usr/share/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+Package: ifoddpage 2022/10/18 v1.2 Conditionals for odd/even page detection
+\c@checkoddpage=\count302
+)
+(/usr/share/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box53
+\sift@deathcycles=\count303
+\@vwid@loff=\dimen159
+\@vwid@roff=\dimen160
+))
+(/usr/share/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(/usr/share/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count304
+\Gm@cntv=\count305
+\c@Gm@tempcnt=\count306
+\Gm@bindingoffset=\dimen161
+\Gm@wd@mp=\dimen162
+\Gm@odd@mp=\dimen163
+\Gm@even@mp=\dimen164
+\Gm@layoutwidth=\dimen165
+\Gm@layoutheight=\dimen166
+\Gm@layouthoffset=\dimen167
+\Gm@layoutvoffset=\dimen168
+\Gm@dimlist=\toks23
+)
+(/usr/share/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count307
+\float@exts=\toks24
+\float@box=\box54
+\@float@everytoks=\toks25
+\@floatcapt=\box55
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 60.
 LaTeX Font Info:    Trying to load font information for T1+ppl on input line 83
 .
 
@@ -300,10 +404,14 @@ File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
 (/usr/share/texmf-dist/tex/latex/l3backend/l3backend-luatex.def
 File: l3backend-luatex.def 2024-05-08 L3 backend support: PDF output (LuaTeX)
-\l__color_backend_stack_int=\count301
+\l__color_backend_stack_int=\count308
 Inserting `l3color' in `luaotfload.parse_color'.
-\l__pdf_internal_box=\box52
-) (./memoria.aux)
+\l__pdf_internal_box=\box56
+) (./memoria.aux
+
+LaTeX Warning: Label `fig1' multiply defined.
+
+)
 \openout1 = memoria.aux
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 83.
@@ -326,7 +434,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 83.
 LaTeX Font Info:    ... okay on input line 83.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 83.
 LaTeX Font Info:    ... okay on input line 83.
-\big@size=\dimen145
+\big@size=\dimen169
  (/usr/share/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2024/06/23 v1.3e Standard LaTeX Color (DPC)
 
@@ -335,32 +443,72 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: luatex.def on input line 149.
 
-(/usr/share/texmf-dist/tex/latex/graphics-def/luatex.def
-File: luatex.def 2024/04/13 v1.2e Graphics/color driver for luatex
-
-(/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count302
-\scratchdimen=\dimen146
-\scratchbox=\box53
-\nofMPsegments=\count303
-\nofMParguments=\count304
-\everyMPshowfont=\toks21
-\MPscratchCnt=\count305
-\MPscratchDim=\dimen147
-\MPnumerator=\count306
-\makeMPintoPDFobject=\count307
-\everyMPtoPDFconversion=\toks22
-)) (/usr/share/texmf-dist/tex/latex/graphics/mathcolor.ltx))
+(/usr/share/texmf-dist/tex/latex/graphics/mathcolor.ltx))
 Package hyperref Info: Link coloring ON on input line 83.
  (./memoria.out)
 (./memoria.out)
 \@outlinefile=\write3
 
 \openout3 = memoria.out
+ (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count309
+\scratchdimen=\dimen170
+\scratchbox=\box57
+\nofMPsegments=\count310
+\nofMParguments=\count311
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count312
+\MPscratchDim=\dimen171
+\MPnumerator=\count313
+\makeMPintoPDFobject=\count314
+\everyMPtoPDFconversion=\toks27
+) (/usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/share/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+*geometry* driver: auto-detecting
+*geometry* detected driver: luatex
+*geometry* verbose mode - [ preamble ] result:
+* driver: luatex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(92.14519pt, 430.00462pt, 92.14519pt)
+* v-part:(T,H,B)=(95.39737pt, 556.47656pt, 143.09605pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=430.00462pt
+* \textheight=556.47656pt
+* \oddsidemargin=19.8752pt
+* \evensidemargin=19.8752pt
+* \topmargin=-13.87262pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=11.0pt
+* \footskip=30.0pt
+* \marginparwidth=59.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
 LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 1
 25.
- (/usr/share/texmf-dist/tex/latex/psnfss/ot1ppl.fd
+(/usr/share/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
 LaTeX Font Info:    Trying to load font information for OML+zplm on input line 
@@ -420,52 +568,138 @@ warning  (pdf backend): ignoring duplicate destination with the name 'page.1'
 
 ]
 
-[7]
+[7
+warning  (pdf backend): ignoring duplicate destination with the name 'table.0.1'
 
-[8]
+]
+*geometry* verbose mode - [ newgeometry ] result:
+* driver: luatex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(42.67912pt, 479.47069pt, 92.14519pt)
+* v-part:(T,H,B)=(14.22636pt, 738.0645pt, 42.67912pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=479.47069pt
+* \textheight=738.0645pt
+* \oddsidemargin=-29.59087pt
+* \evensidemargin=-29.59087pt
+* \topmargin=-95.04362pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=11.0pt
+* \footskip=30.0pt
+* \marginparwidth=59.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-[9]
+
+Overfull \hbox (80.31444pt too wide) in paragraph at lines 248--272
+ [] 
+ []
+
+
+
+[8
+
+
+warning  (pdf backend): ignoring duplicate destination with the name 'table.0.2'
+
+]
+LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 2
+85.
+ (/usr/share/texmf-dist/tex/latex/psnfss/ts1ppl.fd
+File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
+)
+<figs/fcn.png, id=153, 1201.48875pt x 3986.895pt>
+File: figs/fcn.png Graphic file (type png)
+<use figs/fcn.png>
+Package luatex.def Info: figs/fcn.png  used on input line 299.
+(luatex.def)             Requested size: 120.15591pt x 398.71286pt.
+
+
+[9
+
+]
 
 [10
+warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
+'
+<./figs/fcn.png>]
+<figs/fcn-lstm.png, id=172, 1201.48875pt x 2971.1pt>
+File: figs/fcn-lstm.png Graphic file (type png)
+<use figs/fcn-lstm.png>
+Package luatex.def Info: figs/fcn-lstm.png  used on input line 319.
+(luatex.def)             Requested size: 120.15591pt x 297.12741pt.
 
-]
 
 [11
+warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.2
+'
+<./figs/fcn-lstm.png>]
+
+[12]
+
+[13]
+
+[14]
+
+[15
 
 ]
 
-[12
+[16
 
 ]
 
-[13
+[17
+
+]
+
+[18
 
 ] (./memoria.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
+
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `memoria.out' has not changed.
-(rerunfilecheck)             Checksum: BB063E0ACDB3C95543C2F0B8EC884540;1736.
+(rerunfilecheck)             Checksum: 60AE06C7B3D03BFA022D37A5D1F87DC1;2118.
 )
 
 Here is how much of LuaTeX's memory you used:
- 9455 strings out of 475506
+ 11582 strings out of 475506
  125056,662416 words of node,token memory allocated
- 948 words of node memory still in use:
-   3 hlist, 1 vlist, 1 rule, 2 glue, 86 kern, 1 glyph, 32 attribute, 51 glue_spe
-c, 32 attribute_list, 1 write nodes
-   avail lists: 1:2,2:339,3:188,4:148,5:104,6:53,7:5380,8:1,9:276,10:11,11:446
- 32163 multiletter control sequences out of 65536+600000
- 92 fonts using 5996607 bytes
- 72i,5n,75p,1076b,402s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 1381 words of node memory still in use:
+   3 hlist, 1 vlist, 1 rule, 2 glue, 151 kern, 1 glyph, 59 attribute, 51 glue_sp
+ec, 59 attribute_list, 1 write nodes
+   avail lists: 1:1,2:668,3:418,4:196,5:118,6:140,7:5750,8:1,9:1170,10:12,11:479
+
+ 34161 multiletter control sequences out of 65536+600000
+ 95 fonts using 6219631 bytes
+ 86i,12n,88p,1076b,404s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fonts/
 type1/urw/palatino/uplb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/up
 lr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on memoria.pdf (14 pages, 68455 bytes).
+Output written on memoria.pdf (19 pages, 419847 bytes).
 
-PDF statistics: 166 PDF objects out of 1000 (max. 8388607)
- 145 compressed objects within 2 object streams
- 32 named destinations out of 1000 (max. 131072)
- 105 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 229 PDF objects out of 1000 (max. 8388607)
+ 199 compressed objects within 2 object streams
+ 47 named destinations out of 1000 (max. 131072)
+ 121 words of extra memory for PDF output out of 10000 (max. 100000000)
 
