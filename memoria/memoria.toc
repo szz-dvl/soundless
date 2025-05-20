@@ -1,0 +1,18 @@
+
+\contentsline {section}{Introduction}{1}{chapter*.1}%
+\contentsline {subsection}{Soundless}{2}{chapter*.2}%
+\contentsline {subsection}{The Human Sleep Project}{2}{section*.3}%
+\contentsline {section}{Background}{3}{section*.4}%
+\contentsline {section}{State of art}{4}{chapter*.5}%
+\contentsline {section}{Implementation}{5}{chapter*.6}%
+\contentsline {subsection}{Feature engineering}{6}{chapter*.7}%
+\contentsline {subsubsection}{Channel selection}{7}{section*.8}%
+\contentsline {subsubsection}{Data scalation}{7}{section*.9}%
+\contentsline {subsection}{Fully Convolutional neural network (FCN)}{8}{section*.10}%
+\contentsline {subsubsection}{LSTM}{8}{section*.11}%
+\contentsline {subsection}{Multi Layer Perceptron (MLP)}{8}{section*.12}%
+\contentsline {subsubsection}{Band power aggregation}{9}{section*.13}%
+\contentsline {section}{Evaluation}{9}{section*.14}%
+\contentsline {section}{Conclusion}{10}{chapter*.15}%
+\contentsline {section}{Future work}{11}{chapter*.16}%
+\contentsline {section}{Bibliography}{12}{chapter*.17}%

@@ -1,0 +1,229 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Academic Title Page
+% LaTeX Template
+% Version 2.0 (17/7/17)
+%
+% This template was downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% WikiBooks (LaTeX - Title Creation) with modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% 
+% Instructions for using this template:
+% This title page is capable of being compiled as is. This is not useful for 
+% including it in another document. To do this, you have two options: 
+%
+% 1) Copy/paste everything between \begin{document} and \end{document} 
+% starting at \begin{titlepage} and paste this into another LaTeX file where you 
+% want your title page.
+% OR
+% 2) Remove everything outside the \begin{titlepage} and \end{titlepage}, rename
+% this file and move it to the same directory as the LaTeX file you wish to add it to. 
+% Then add \input{./<new filename>.tex} to your LaTeX file where you want your
+% title page.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt]{report}
+
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage{blindtext}
+\usepackage{tocvsec2}
+\usepackage{mathpazo} % Palatino font
+\usepackage{hyperref}
+\usepackage[parfill]{parskip}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+}
+
+%%%%%%%%%%%%%%%%%%%%% COMMANDS %%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\shortlorem{Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.}
+
+\newcommand{\addchapter}[1]{
+	\addcontentsline{toc}{section}{#1}
+	\chapter*{#1}
+}
+
+\newcommand{\addsection}[1]{
+	\addcontentsline{toc}{subsection}{#1}
+	\section*{#1}
+}
+
+\newcommand{\addsubsection}[1]{
+	\addcontentsline{toc}{subsubsection}{#1}
+	\subsection*{#1}
+}
+
+\newcommand{\textblock}[1]{
+	\noindent #1
+}
+
+%%%%%%%%%%%%%%%%%%%%% END COMMANDS %%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for horizontal lines, change thickness here
+	
+	\center % Centre everything on the page
+	
+	%------------------------------------------------
+	%	Headings
+	%------------------------------------------------
+	
+	\textsc{\LARGE URV Universitat Rovira i Virgili}\\[0.5cm] % Main heading such as the name of your university/college
+	\textsc{\LARGE UOC Universitat oberta de Catalunya}\\[1.5cm]
+	
+	\textsc{\Large Master in Computational and Mathematical Engineering}\\[0.5cm] % Major heading such as course name
+	
+	\textsc{\large Final Master Project}\\[0.5cm] % Minor heading such as course title
+	
+	%------------------------------------------------
+	%	Title
+	%------------------------------------------------
+	
+	\HRule\\[0.4cm]
+	
+	{\huge\bfseries Soundless: A study on noise sleep disturbance}\\[0.4cm] % Title of your document
+	
+	\HRule\\[1.5cm]
+	
+	%------------------------------------------------
+	%	Author(s)
+	%------------------------------------------------
+	
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushleft}
+			\large
+			\textit{Author}\\
+			Santi \textsc{Mart\'inez P\'erez} % Your name
+		\end{flushleft}
+	\end{minipage}
+	~
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright}
+			\large
+			\textit{Supervisor}\\
+			Prof. Pedro \textsc{Garc\'ia L\'opez} % Supervisor's name
+		\end{flushright}
+	\end{minipage}
+	
+	% If you don't want a supervisor, uncomment the two lines below and comment the code above
+	%{\large\textit{Author}}\\
+	%John \textsc{Smith} % Your name
+	
+	%------------------------------------------------
+	%	Date
+	%------------------------------------------------
+	
+	\vfill\vfill\vfill % Position the date 3/4 down the remaining page
+	
+	{\large\today} % Date, change the \today to a set date if you want to be precise
+	
+	%------------------------------------------------
+	%	Logo
+	%------------------------------------------------
+	
+	%\vfill\vfill
+	%\includegraphics[width=0.2\textwidth]{placeholder.jpg}\\[1cm] % Include a department/university logo - this will require the graphicx package
+	 
+	%----------------------------------------------------------------------------------------
+	
+	\vfill % Push the date up 1/4 of the remaining page
+	
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+
+
+\tableofcontents
+
+\addchapter{Introduction}
+Sleep quality is an important factor for good health. Nowadays the human population is living in megalopolis, with high density population in small areas, giving rise to noisy ambients the 24 hours of the day. Studying how noise can affect sleep quality seems like a worthwhile topic to which we should devote time. The following pages presents a first approach to an sleep quality study.
+
+\addsection{Soundless}
+The \href{https://soundless.app}{Soundless} app is a project leaded by Universitat Rovira i Virgili at Tarragona, Spain. The project aims to study how noise affects the sleep quality by providing a bracalet equiped with sensory to monitor vital signs of the subject. Along with the bracalet, an android app is provided to record the sound in the ambient while the bracelet is working. Ideally we must be able to see some arousals in the vital signs signals when high noise is recorded by the mobile application, so we can conclude how noise affects or not the sleep quality. The challenge is, however, not trivial. Since the bracelet will only record oxigen saturation and heart rate, to arrive at any conclusion is hard to do. In top of that the sleep itself is a field of study and a complex topic: there are several stages at sleep, noise may affect differently in different stages. There may be subjects more used to noise in the ambient while sleeping and noise at different frequency ranges may affect differently to different subjects.
+
+Additionally, there are not many subjects in the sounless app study yet, around 20 people participed in the study so we looked for alternatives datasets to start our study.
+
+\addsection{The Human Sleep Project}
+\href{https://bdsp.io/content/hsp/2.0/}{The Human Sleep Project} is a project carried out by several American hospitals, they are recording several electroencephalograms of subjects with some sleep pathology. The documents, stored in .edf (European Data Format) format are usually accompanied with annotations on the electroencephalograms as well as the channels used for the recording. This is a vast dataset with around 25000 encephalograms to study. With this information makes sense to try to develop some kind of artificial intelligence solution to annotate encephalograms automatically, this is the main focus of this study. At some point, the tecnology used here may help to detect arousals related to noise in the ambient using similar methodologies. 
+
+\addchapter{Background}
+\blindtext
+
+\addchapter{State of art}
+\blindtext
+
+\addchapter{Implementation}
+In this section we will present the different approaches to the problem that have been used in the development process, some of them have been dropped for the poor results obtained, and the last one presented here is the main proposal of the document, giving fair results, and aiming to be a useful tool in electroencephalography classification. Due to the nature of the dataset, more that 25000 files, weighting around 500MB in average, the training process of neural networks presented here is not simple, we need in a first phase to download the data, in a second stage, the data must be treated and aggregated, and finally the network shoud be trained.
+
+The whole \href{https://github.com/szz-dvl/soundless/tree/main}{implementation} is coded in python, a friendly language for IA related tasks, having great libraries such as keras, tensorflow and scikit learn, that we will use extensively.
+
+For the download process, \href{https://pypi.org/project/boto3/}{boto3} library is used to interactuate with AWS s3 instances hosting the data.
+
+To treat the data, \href{https://mne.tools/stable/index.html}{MNE} library is used, this one comes in handy to deal with .edf files, allowing us to get the epochs of an encephalogram related to a particular annotation and computing the PSDs associated with each event.
+
+To aggregate the data a \href{https://www.postgresql.org/}{postgreSQL} DDBB have been used, when the data is downloaded and treated is aggregated in different batches and saved into a relational database, the neural network will read those chunks of data for the training process.
+
+Finally to create the neural networks proposed here \href{https://keras.io/}{keras} is used. This is a great library abstracting the tough part of neural networks and allowing for quick prototipe a neural network. 
+
+\addsection{Feature engineering}
+\blindtext
+
+\addsubsection{Channel selection}
+\blindtext
+
+\addsubsection{Data scalation}
+\blindtext
+
+\addsection{Fully Convolutional neural network (FCN)}
+\blindtext
+
+\addsubsection{LSTM}
+\blindtext
+
+\addsection{Multi Layer Perceptron (MLP)}
+\blindtext
+
+\addsubsection{Band power aggregation}
+\blindtext
+
+\addchapter{Evaluation}
+\blindtext
+
+\addchapter{Conclusion}
+\blindtext
+
+\addchapter{Future work}
+\blindtext
+
+\addchapter{Bibliography}
+\blindtext
+
+
+\end{document}
