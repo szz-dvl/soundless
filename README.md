@@ -28,7 +28,11 @@ Este script generará un json que dejará en el fichero "out/annotations.json" c
 
 ### nn.py
 
-Este script está en progreso en el momento de escribir esta documentación, pretende entrenar una red neuronal con las conclusiones sacadas de las salidas de los scripts anteriores, se descargará los encefalogramas, seleccionará una lista de 18 canales (que deben estar presentes) y las anotaciones asociadas con estos, iremos partiendo los encefalogramas en los trozos asociados con las anotaciones, y entrenaremos la red neuronal con los "trozos" de encefalograma y la anotacion pertinente cómo etiqueta asociada a la lectura. El parámetro habitual CHUNK_SIZE esta también disponible en este script, sin embargo se aconseja usarlo con cautela, ya que valores grandes pueden provocar que la memória del ordenador se agote dado el tamaño de los ficheros de los encefalogramas. Valor por defecto 2. Adicionalmente se ofrece el parámetro CHUNKS_TO_SAVE, que configura cada cuantos chunks volcamos el modelo a disco (10 por defecto).
+Este script está obsoleto, pretende entrenar una red neuronal con las conclusiones sacadas de las salidas de los scripts anteriores, se descargará los encefalogramas, seleccionará una lista de 18 canales (que deben estar presentes) y las anotaciones asociadas con estos, iremos partiendo los encefalogramas en los trozos asociados con las anotaciones, y entrenaremos la red neuronal con los "trozos" de encefalograma y la anotacion pertinente cómo etiqueta asociada a la lectura. El parámetro habitual CHUNK_SIZE esta también disponible en este script, sin embargo se aconseja usarlo con cautela, ya que valores grandes pueden provocar que la memória del ordenador se agote dado el tamaño de los ficheros de los encefalogramas. Valor por defecto 2. Adicionalmente se ofrece el parámetro CHUNKS_TO_SAVE, que configura cada cuantos chunks volcamos el modelo a disco (10 por defecto).
+
+### mlp.py
+
+Este script es una segunda versión de nn.py, en esta caso se pretende entrenar un MLP (Multi Layer Perceptron). En nn.py tratabamos de estudiar los encefalogramas cómo una sequencia de datos en el tiempo, es decir, de predecir las fases del sueño a través de los encefalogramas en plano. En este nuevo punto de vista, sacamos un espectro de las potencias en las bandas representativas del cerebro (alpha, beta, gamma, sigma, theta) i obtenemos un vector de "features" para cada evennto asociado a un tramo del encefalograma, con esos vectores, más representativos de la actividad cerebral en un instante del encefalograma previamente anotado, tratamos de entrenar el MLP. En el momento de escribir estoy obteniendo una accuracy del 70% en las predicciones. Este script tiene dos parámetros el ya habitual CHUNK_SIZE, que debiera mantenerse por debajo de 4, dependiendo de las capacidades de la máquina y CHUNKS_PER_TRAIN que configurará cada cuantos pacientes (cada uno con varios eventos) entrenaremos el MLP.
 
 ## Modulos
 
@@ -37,9 +41,17 @@ Los scripts anteriores dependen de una serie de modulos escritos para la ocasió
 - aws: Se encarga de toda la comunicación con amazon, donde estan alojados los datos.
 - chann_selector: La lógica de la selección de canales está implementada en este pequeño módulo, para hacerlo he usado las conclusiones que he sacado de la salida del script channels.py, de la que hay una cópia en "out/channel_freqs.txt".
 - edf: Este modulo encapsúla la lógica asociada con los ficheros de los encefalogramas (.edf). Usa la librería de python [mne](https://mne.tools/stable/index.html) para facilitar el trabajo.
-- model: Este modulo implementa la red neuronal con [keras](https://keras.io/).
 - utils: Un pequeño modulo para implementar lógica que reuso en varios scripts.
+
+Usados por nn.py:
+
+- model: Este modulo implementa la red neuronal con [keras](https://keras.io/).
 - db: Modulo que se encarga de interactuar con una BBDD PostgreSQL.
+
+Usados por mlp.py:
+
+- mlp: Este modulo implementa el MLP con [keras](https://keras.io/).
+- db_mlp: Modulo que se encarga de interactuar con una BBDD PostgreSQL.
 
 ## Entorno
 
@@ -50,7 +62,11 @@ Para usar los scripts es necesario tener en el mismo path donde esté este repos
 - AWS_BUCKET: Amazon bucket que contiene los datos, también facilitado por [The Human Sleep Project](https://bdsp.io/content/hsp/2.0/)
 - AWS_REGION: Región que aloja los datos en Amazon.
 - MODEL_CHECKPOINT_DIR: Directorio local donde se iran guardando los checkpoints de la red neuronal entrenada por el script nn.py.
-- DB_NAME: Nombre de la BBDD a la que se conectará el script.
-- DB_HOST: Host que aloja la BBDD.
-- DB_USER: Usuario para la BBDD.
-- DB_PASS: Password para la BBDD.
+- DB_NAME: Nombre de la BBDD a la que se conectará el script, para nn.py.
+- DB_HOST: Host que aloja la BBDD para nn.py.
+- DB_USER: Usuario para la BBDD para nn.py.
+- DB_PASS: Password para la BBDD para nn.py.
+- DB_MLP_NAME: Nombre de la BBDD a la que se conectará el script, para mlp.py.
+- DB_MLP_HOST: Host que aloja la BBDD para mlp.py.
+- DB_MLP_USER: Usuario para la BBDD para mlp.py.
+- DB_MLP_PASS: Password para la BBDD para mlp.py.
