@@ -9,68 +9,9 @@ import keras_tuner as kt
 from modules.db import Db
 
 load_dotenv()
-
-# class CustomCallback(keras.callbacks.Callback):
-#     def on_train_begin(self, logs=None):
-#         keys = list(logs.keys())
-#         print("Starting training; got log keys: {}".format(keys))
-
-#     def on_train_end(self, logs=None):
-#         keys = list(logs.keys())
-#         print("Stop training; got log keys: {}".format(keys))
-
-#     def on_epoch_begin(self, epoch, logs=None):
-#         keys = list(logs.keys())
-#         print("Start epoch {} of training; got log keys: {}".format(epoch, keys))
-
-#     def on_epoch_end(self, epoch, logs=None):
-#         keys = list(logs.keys())
-#         print("End epoch {} of training; got log keys: {}".format(epoch, keys))
-
-#     def on_test_begin(self, logs=None):
-#         keys = list(logs.keys())
-#         print("Start testing; got log keys: {}".format(keys))
-
-#     def on_test_end(self, logs=None):
-#         keys = list(logs.keys())
-#         print("Stop testing; got log keys: {}".format(keys))
-
-#     def on_predict_begin(self, logs=None):
-#         keys = list(logs.keys())
-#         print("Start predicting; got log keys: {}".format(keys))
-
-#     def on_predict_end(self, logs=None):
-#         keys = list(logs.keys())
-#         print("Stop predicting; got log keys: {}".format(keys))
-
-#     def on_train_batch_begin(self, batch, logs=None):
-#         keys = list(logs.keys())
-#         print("...Training: start of batch {}; got log keys: {}".format(batch, keys))
-
-#     def on_train_batch_end(self, batch, logs=None):
-#         keys = list(logs.keys())
-#         print("...Training: end of batch {}; got log keys: {}".format(batch, keys))
-
-#     def on_test_batch_begin(self, batch, logs=None):
-#         keys = list(logs.keys())
-#         print("...Evaluating: start of batch {}; got log keys: {}".format(batch, keys))
-
-#     def on_test_batch_end(self, batch, logs=None):
-#         keys = list(logs.keys())
-#         print("...Evaluating: end of batch {}; got log keys: {}".format(batch, keys))
-
-#     def on_predict_batch_begin(self, batch, logs=None):
-#         keys = list(logs.keys())
-#         print("...Predicting: start of batch {}; got log keys: {}".format(batch, keys))
-
-#     def on_predict_batch_end(self, batch, logs=None):
-#         keys = list(logs.keys())
-#         print("...Predicting: end of batch {}; got log keys: {}".format(batch, keys))
-
-
 class EEGModel():
     
-    def __init__(self):
+    def __init__(self, tune = False):
 
         # https://arxiv.org/abs/1611.06455
         # https://keras.io/examples/timeseries/timeseries_classification_from_scratch/
@@ -85,39 +26,40 @@ class EEGModel():
         self.batch_size = 64
         self.dir = os.getenv("MODEL_CHECKPOINT_DIR")
 
-        if os.path.exists(self.dir + "eeg.keras"):
-            self.model = keras.models.load_model(self.dir + "eeg.keras", compile=True)
-            self.db.flushData()
-        else:
-            
-            input = keras.Input(shape=(6001, 18), name="EGGInput")
+        if not tune:
+            if os.path.exists(self.dir + "eeg.keras"):
+                self.model = keras.models.load_model(self.dir + "eeg.keras", compile=True)
+                self.db.flushData()
+            else:
+                
+                input = keras.Input(shape=(6001, 18), name="EGGInput")
 
-            conv1 = keras.layers.Conv1D(filters=32, kernel_size=3, padding="same")(input)
-            conv1 = keras.layers.BatchNormalization()(conv1)
-            conv1 = keras.layers.ReLU()(conv1)
+                conv1 = keras.layers.Conv1D(filters=32, kernel_size=3, padding="same")(input)
+                conv1 = keras.layers.BatchNormalization()(conv1)
+                conv1 = keras.layers.ReLU()(conv1)
 
-            conv2 = keras.layers.Conv1D(filters=32, kernel_size=5, padding="same")(conv1)
-            conv2 = keras.layers.BatchNormalization()(conv2)
-            conv2 = keras.layers.ReLU()(conv2)
+                conv2 = keras.layers.Conv1D(filters=32, kernel_size=5, padding="same")(conv1)
+                conv2 = keras.layers.BatchNormalization()(conv2)
+                conv2 = keras.layers.ReLU()(conv2)
 
-            conv3 = keras.layers.Conv1D(filters=64, kernel_size=5, padding="same")(conv2)
-            conv3 = keras.layers.BatchNormalization()(conv3)
-            conv3 = keras.layers.ReLU()(conv3)
+                conv3 = keras.layers.Conv1D(filters=64, kernel_size=5, padding="same")(conv2)
+                conv3 = keras.layers.BatchNormalization()(conv3)
+                conv3 = keras.layers.ReLU()(conv3)
 
-            gap = keras.layers.GlobalAveragePooling1D()(conv3)
+                gap = keras.layers.GlobalAveragePooling1D()(conv3)
 
-            output = keras.layers.Dense(self.num_classes, activation="softmax")(gap)
+                output = keras.layers.Dense(self.num_classes, activation="softmax")(gap)
 
-            self.model =  keras.models.Model(inputs=input, outputs=output)
+                self.model =  keras.models.Model(inputs=input, outputs=output)
 
-            self.model.compile(
-                optimizer=keras.optimizers.Adam(learning_rate=1e-5),
-                loss=keras.losses.CategoricalCrossentropy(),
-                metrics=[keras.metrics.CategoricalAccuracy()]
-            )
-            self.db.restart()
+                self.model.compile(
+                    optimizer=keras.optimizers.Adam(learning_rate=1e-5),
+                    loss=keras.losses.CategoricalCrossentropy(),
+                    metrics=[keras.metrics.CategoricalAccuracy()]
+                )
+                self.db.restart()
 
-        self.model.summary()
+            self.model.summary()
 
     def __tuneModel(self, hp):
 
@@ -178,7 +120,6 @@ class EEGModel():
             epochs=self.tuner_epochs,
             validation_data=valGen(),
             validation_steps=math.ceil(self.db.sampleNum("validation_tags") / self.batch_size),
-            # callbacks=[DbRestart()]
         )
 
         tuner.results_summary()
