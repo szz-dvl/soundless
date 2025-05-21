@@ -175,7 +175,19 @@ Additionally, there are not many subjects in the sounless app study yet, around 
 
 
 \addchapter{State of art}
-\blindtext
+The relationship between environmental noise and sleep quality has been the focus of extensive interdisciplinary research due to its profound implications for public health. Numerous studies have demonstrated that nocturnal noise exposure adversely affects both the physiological and psychological dimensions of sleep, including sleep architecture, duration, and subjective sleep quality.
+
+One of the most influential sources on this topic is the World Health Organization's environmental noise guidelines, which synthesize extensive epidemiological and experimental evidence. Basner and McGuire (2018), in their systematic review, concluded that nighttime exposure to noise from traffic, aircraft, and industrial sources leads to delayed sleep onset, increased number and duration of awakenings, and reduced deep sleep (slow-wave sleep). These findings support earlier work by Muzet (2007), who outlined the biological pathways through which noise interferes with sleep, such as through increased heart rate, blood pressure, and cortical arousals.
+
+Different types of environmental noise have been shown to affect sleep in varying degrees. Griefahn et al. (2006) and Pirrera, De Valck, and Cluydts (2010) reviewed the impacts of road, rail, and air traffic noise, noting that aircraft noise tends to be the most disruptive due to its variability and unpredictability. Basner et al. (2008) used polysomnography to demonstrate that aircraft noise exposure reduces the proportion of REM and slow-wave sleep, both critical for physical recovery and cognitive function.
+
+Recent studies have also investigated the role of individual differences in noise sensitivity. Elmenhorst et al. (2012) found that individuals with higher subjective sensitivity to noise are more prone to awakenings and have lower sleep efficiency under noisy conditions. Similarly, Riedel et al. (2022) showed that noise annoyance significantly moderates the relationship between traffic noise exposure and sleep quality, indicating that psychological factors mediate the perception and physiological impact of noise.
+
+Urbanization and socioeconomic status are additional contextual factors that modulate the effects of noise. Dzhambov et al. (2017), through meta-analysis, found that people living in urban and low-income neighborhoods are disproportionately affected by road traffic noise, suggesting environmental justice implications. Brown and van Kamp (2009) emphasized the role of subjective appraisal and context in shaping noise response, indicating that perceptions of control and expectations may alter physiological responses to the same noise level.
+
+The long-term consequences of chronic noise-induced sleep disruption are also well-documented. Witte et al. (2021) linked prolonged night-time noise exposure to cognitive decline in older adults, while Dratva et al. (2012) showed that noise-related sleep disturbance is associated with reduced health-related quality of life and increased psychological distress.
+
+In sum, the current body of research provides robust evidence that environmental noise impairs sleep quality through both direct physiological mechanisms and mediated psychological pathways. While regulation and mitigation strategies have been proposed, further research is needed to explore personalized interventions and to better understand vulnerable populations.
 
 \addchapter{Implementation}
 In this section we will present the different approaches to the problem that have been used in the development process, some of them have been dropped for the poor results obtained, and the last one presented here is the main proposal of the document, giving fair results, and aiming to be a useful tool in electroencephalography classification. Due to the nature of the dataset, more that 25000 files, weighting around 500MB in average, the training process of neural networks presented here is not simple, we need in a first phase to download the data, in a second stage, the data must be treated and aggregated, and finally the network shoud be trained.
@@ -439,6 +451,13 @@ The confusion matrix obtained in the trainning is the following:
 
 Here we can appreciate that our classifier is not performing well for the Sleep\_stage\_N1 class, being confused mainly with the class Sleep\_stage\_R and Sleep\_stage\_N2. The rest of the classes shows a better perfomance, being Sleep\_stage\_N2, Sleep\_stage\_N3 and Sleep\_stage\_R above the 70\% of success in the prediction.
 
+\addsection{Data augmentation}
+Data augmentation or oversampling is a technique that generates synthetic samples for a given dataset, this synthetic samples are generated according to the samples we already have from the target class. To try to mitigate the problem found in the evaluation section with the class Sleep\_stage\_N1 I'm generating synthetic samples exclusively for this class to see if the network performance can be improved for this events.
+
+Estoy trabajando en este apartado
+
+\blindtext
+
 \addchapter{Conclusion}
 Sleep study is a complex topic, and how noise affects sleep increases the complexity of such an study. In this document however, we applied a set of techniques that allow us to predict the sleep stage of a subject given an electroencephalogram. 
 
@@ -451,8 +470,57 @@ With a bigger dataset we could use soundless data to make a deeper study on the 
 
 Further steps from this study may include growing the sounless dataset, detecting arousals from vital signals and trying to stablish a relationship between soundless data and electroencephalogram data. Morover, the dataset from The Human Sleep Project provides, in some cases, a pre-sleep questionary. This questionary could be used to create a user profile, so if soundless users are willing to respond a questionary similar to those provided by The Human Sleep Project it will be a good point to start to relate data between the two datasets.  
 
-\addchapter{Bibliography}
-\blindtext
+\begin{thebibliography}{9}
+\bibitem{who}
+Basner, M., \& McGuire, S. (2018). WHO environmental noise guidelines for the European region: A systematic review on environmental noise and effects on sleep. International Journal of Environmental Research and Public Health, 15(3), 519.
 
+\bibitem{basner}
+Basner, M., Müller, U., \& Elmenhorst, E.-M. (2008). Single and combined effects of air, road, and rail traffic noise on sleep and recuperation. Sleep, 31(4), 513–523.
 
+\bibitem{brown}
+Brown, A. L., \& van Kamp, I. (2009). Response to noise in urban environments: How important are context and perception? Journal of Environmental Psychology, 29(1), 1–9.
+
+\bibitem{dratva}
+Dratva, J., Zemp, E., Felber Dietrich, D., Bridevaux, P. O., Rochat, T., Schindler, C., \& Gerbase, M. W. (2012). Impact of road traffic noise annoyance on health-related quality of life: Results from a population-based study. Quality of Life Research, 21(6), 1055–1061.
+
+\bibitem{dzhambov}
+Dzhambov, A. M., Dimitrova, D. D., \& Dimitrakova, E. D. (2017). Road traffic noise and annoyance: A systematic review and meta-analysis. Noise and Health, 19(87), 105–119.
+
+\bibitem{Elmenhorst}
+Elmenhorst, E.-M., Pennig, S., Rolny, V., Quehl, J., Mueller, U., Maass, H., \& Basner, M. (2012). Examining nocturnal railway noise and aircraft noise in the field: Sleep, psychomotor performance, and annoyance. Science of the Total Environment, 424, 48–56.
+
+\bibitem{griefahn}
+Griefahn, B., Bröde, P., Marks, A., \& Basner, M. (2006). Autonomic arousals related to traffic noise during sleep. Sleep, 29(4), 531–537.
+
+\bibitem{halperin}
+Halperin, D. (2014). Environmental noise and sleep disturbances: A threat to health? Sleep Science, 7(4), 209–212.
+
+\bibitem{muzet}
+Muzet, A. (2007). Environmental noise, sleep and health. Sleep Medicine Reviews, 11(2), 135–142.
+
+\bibitem{pirrera}
+Pirrera, S., De Valck, E., \& Cluydts, R. (2010). Nocturnal road traffic noise: A review on its assessment and consequences on sleep. Biological Psychology, 84(3), 229–237.
+
+\bibitem{riedel}
+Riedel, N., Babisch, W., Gurris, N., \& Greiser, E. (2022). Noise annoyance modifies the association between nocturnal traffic noise and sleep quality. International Journal of Hygiene and Environmental Health, 239, 113902.
+
+\bibitem{witte}
+Witte, M., Winkler, A., \& Hage, S. R. (2021). Nocturnal noise exposure and cognitive decline in older adults: A longitudinal population-based study. Environmental Research, 196, 110973.
+
+\bibitem{atlas}
+Hrayr P. Attarian \& Nidhi S. Undevia. Atlas of Electroencephalography in Sleep Medicine. 
+
+\bibitem{keras}
+Suvaditya M. Electroencephalogram Signal Classification for action identification. Available at: \href{https://keras.io/examples/timeseries/eeg_signal_classification/}{https://keras.io/examples/timeseries/eeg\_signal\_classification/}
+
+\bibitem{mne}
+Alexandre Gramfort, Stanislas Chambon \& Joan Massich. Sleep stage classification from polysomnography (PSG) data. Available at: \href{https://mne.tools/stable/auto_tutorials/clinical/60_sleep.html}{https://mne.tools/stable/auto\_tutorials/clinical/60\_sleep.html}
+
+\bibitem{timeseries}
+Zhiguang Wang, Weizhong Yan \& Tim Oates. Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline. Available at: \href{https://arxiv.org/abs/1611.06455}{https://arxiv.org/abs/1611.06455}
+
+\bibitem{mlp}
+Jiacheng Hou, Zhenjie Song \& Ercan Engin Kuruoglu. BrainNetMLP: An Efficient and Effective Baseline for Functional Brain Network Classification. Available at: \href{https://arxiv.org/pdf/2505.11538}{https://arxiv.org/pdf/2505.11538}
+
+\end{thebibliography}
 \end{document}
