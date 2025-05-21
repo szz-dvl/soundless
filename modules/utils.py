@@ -1,5 +1,7 @@
+from collections import Counter
 import os
 import pandas as pd
+from imblearn.over_sampling import SMOTE
 
 class Utils():
     def __init__(self):
@@ -14,3 +16,16 @@ class Utils():
         for startRow in range(0, df.shape[0], chunkSize):
             endRow  = min(startRow + chunkSize, df.shape[0])
             yield df.iloc[startRow:endRow, :]
+
+    def oversample(self, features, labels):
+        counter = Counter(labels)
+        maximum = max(counter, key=counter.get)
+
+        smote = SMOTE(sampling_strategy={
+            1: counter[maximum]
+        })
+
+        return smote.fit_resample(features, labels)
+
+        
+

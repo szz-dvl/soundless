@@ -142,13 +142,17 @@ def isValidation(folder, session, site):
     
     return False
 
-def parseData(folder, session, site, channels): 
+def parseData(folder, session, site, channels, oversample = True): 
     
     parser = aws.loadEegEdf(folder, session, site)
     annotations = aws.loadEegAnnotationsCsv(folder, session, site)
 
     parser.setAnottations(annotations)
     features, labels = parser.featuresPerEvent(channels)
+
+    if oversample:
+        features, labels = utils.oversample(features, labels)
+
     parser.purge()
 
     return features, labels
@@ -161,12 +165,12 @@ def getInfoTask(row: pd.Series):
     if isValidation(folder, session, site):
         raise ValidationElement()
 
+    if db.isTest(folder, session, site):
+        raise TestReserve()
+    
     channels = ChannSelector().selectEeg(aws.loadEegChannelsTsv(folder, session, site))
 
-    if row['HasAnnotations'] == 'Y':
-
-        if random.randrange(100) <= 10:
-            raise TestReserve()
+    if row['HasAnnotations'] == 'Y':    
                 
         return parseData(folder, session, site, channels)
     
@@ -188,7 +192,7 @@ def populateValidation():
             site = validation["site"]
 
             channels = ChannSelector().selectEeg(aws.loadEegChannelsTsv(folder, session, site))
-            features, labels = parseData(folder, session, site, channels)
+            features, labels = parseData(folder, session, site, channels, False)
             db.insertFeatures(features, labels, "validation")
 
         except Exception as ex:
@@ -252,7 +256,7 @@ def trainMLP():
                         pass
                     except TestReserve:
                         print(f"Reserved for test: {row["BidsFolder"]}, session: {row["SessionID"]}")
-                        db.insertTest(row["BidsFolder"], row["SessionID"], row["SiteID"])
+                        #db.insertTest(row["BidsFolder"], row["SessionID"], row["SiteID"])
                         pass
                     except ClientError:
                         print(f"Missing data for sub: {row["BidsFolder"]}, session: {row["SessionID"]}")
