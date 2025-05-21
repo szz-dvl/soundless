@@ -2,23 +2,22 @@
 \contentsline {section}{Introduction}{1}{chapter*.1}%
 \contentsline {subsection}{Soundless}{2}{chapter*.2}%
 \contentsline {subsection}{The Human Sleep Project}{2}{section*.3}%
-\contentsline {section}{Background}{3}{section*.4}%
-\contentsline {section}{State of art}{4}{chapter*.5}%
-\contentsline {section}{Implementation}{5}{chapter*.6}%
-\contentsline {subsection}{Feature engineering}{6}{chapter*.7}%
-\contentsline {subsubsection}{Channel selection}{7}{section*.8}%
-\contentsline {subsubsection}{Classes}{9}{table.0.2}%
-\contentsline {subsection}{Fully Convolutional neural network (FCN)}{9}{section*.10}%
-\contentsline {subsubsection}{LSTM}{10}{figure.0.1}%
-\contentsline {subsection}{Band power aggregation}{11}{figure.0.2}%
-\contentsline {subsubsection}{Delta activity}{12}{section*.13}%
-\contentsline {subsubsection}{Theta activity}{12}{section*.14}%
-\contentsline {subsubsection}{Alpha activity}{12}{section*.15}%
-\contentsline {subsubsection}{Sigma activity}{13}{section*.16}%
-\contentsline {subsubsection}{Beta activity}{13}{section*.17}%
-\contentsline {subsection}{Power Spectral Density (PSD)}{13}{section*.18}%
-\contentsline {subsection}{Multi Layer Perceptron (MLP)}{13}{section*.19}%
-\contentsline {section}{Evaluation}{14}{section*.20}%
-\contentsline {section}{Conclusion}{15}{chapter*.21}%
-\contentsline {section}{Future work}{16}{chapter*.22}%
-\contentsline {section}{Bibliography}{17}{chapter*.23}%
+\contentsline {section}{State of art}{3}{section*.4}%
+\contentsline {section}{Implementation}{4}{chapter*.5}%
+\contentsline {subsection}{Feature engineering}{5}{chapter*.6}%
+\contentsline {subsubsection}{Channel selection}{6}{section*.7}%
+\contentsline {subsubsection}{Classes}{8}{table.0.2}%
+\contentsline {subsection}{Fully Convolutional neural network (FCN)}{8}{section*.9}%
+\contentsline {subsubsection}{LSTM}{9}{figure.0.1}%
+\contentsline {subsection}{Band power aggregation}{10}{figure.0.2}%
+\contentsline {subsubsection}{Delta activity}{11}{section*.12}%
+\contentsline {subsubsection}{Theta activity}{11}{section*.13}%
+\contentsline {subsubsection}{Alpha activity}{11}{section*.14}%
+\contentsline {subsubsection}{Sigma activity}{12}{section*.15}%
+\contentsline {subsubsection}{Beta activity}{12}{section*.16}%
+\contentsline {subsection}{Power Spectral Density (PSD)}{12}{section*.17}%
+\contentsline {subsection}{Multi Layer Perceptron (MLP)}{13}{table.0.3}%
+\contentsline {section}{Evaluation}{14}{figure.0.3}%
+\contentsline {section}{Conclusion}{16}{figure.0.4}%
+\contentsline {section}{Future work}{17}{chapter*.21}%
+\contentsline {section}{Bibliography}{18}{chapter*.22}%

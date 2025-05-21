@@ -171,10 +171,8 @@ The \href{https://soundless.app}{Soundless} app is a project leaded by Universit
 Additionally, there are not many subjects in the sounless app study yet, around 20 people participed in the study so we looked for alternatives datasets to start our study.
 
 \addsection{The Human Sleep Project}
-\href{https://bdsp.io/content/hsp/2.0/}{The Human Sleep Project} is a project carried out by several American hospitals, they are recording several electroencephalograms of subjects with some sleep pathology. The documents, stored in .edf (European Data Format) format are usually accompanied with annotations on the electroencephalograms as well as the channels used for the recording. This is a vast dataset with around 25000 encephalograms to study. With this information makes sense to try to develop some kind of artificial intelligence solution to annotate encephalograms automatically, this is the main focus of this study. At some point, the tecnology used here may help to detect arousals related to noise in the ambient using similar methodologies. 
+\href{https://bdsp.io/content/hsp/2.0/}{The Human Sleep Project} is a project carried out by Massachusetts General Hospital, they are recording several electroencephalograms of subjects with some sleep pathology. The documents, stored in .edf (European Data Format) format are usually accompanied with annotations on the electroencephalograms as well as the channels used for the recording. This is a vast dataset with around 25000 encephalograms to study. With this information makes sense to try to develop some kind of artificial intelligence solution to annotate encephalograms automatically, this is the main focus of this study. At some point, the tecnology used here may help to detect arousals related to noise in the ambient using similar methodologies. 
 
-\addchapter{Background}
-\blindtext
 
 \addchapter{State of art}
 \blindtext
@@ -318,7 +316,7 @@ After one day of training this approach could not overcome a 20\% of validation 
 \centering
 \includegraphics[scale=.1, angle=90]{figs/fcn-lstm.png}
 \caption{CN-LSTM architecture}
-\label{fig1}
+\label{fig2}
 \end{figure}
 
 We keep the same input layer, with shape (6001, 18). After that we use an initial convolutional layer with 64 filters and a kernel size of 3, which is good at learning general patterns in our data after that we use a normalization layer that we connect with a ReLU activation layer, finally we use a pooling layer to downsample the results obtained in this first step. After that we connect a droput layer to avoid overfiting, this layer will "deactivate" a percentage of the neurons of the interconnected layers to trying to avoid that the weights of our gradient are too much affected by noisy data. After that we plug the LSTM layer with 100 neurons and the default tanh activation function, a dropout layer is added after this one and finally we have the output layer, with 5 neurons, again the number of classes we would like to classify.
@@ -330,7 +328,7 @@ After several days training this architecture was not able to overcome 45\% in v
 \addsection{Band power aggregation}
 Until now I did not have too much success, a 45\% on validation accuracy is still not a good result. Most probably we are dealing with very noisy data not representative of the sleep stage in the subjects, as an instance ABD or IC channels does not seem a good choice to study the sleep stages of a subject. In top of that try to feed a neural network with the raw readings of an encephalogram seems a pretty poor choice, since there may be a lot of artifacts messing our data.
 
-We can think in an encephalogram as a bunch of signals, but, the brain activity is characterized by particular frequencies appearing or desapearing at different moments in the brain activity if we were able to study the influence of those frequencies en each of our events we will have a much more cleaner dataset.
+We can think in an encephalogram as a bunch of signals, but, the brain activity is characterized by particular frequencies appearing or desapearing at different moments in the brain, if we were able to study the influence of those frequencies en each of our events we will have a much more cleaner dataset.
 
 \addsubsection{Delta activity}
 Delta brainwaves, also known as delta activity, are the slowest brainwaves, typically between 0.5 and 4.5 Hz. They are primarily associated with deep, dreamless sleep, where the body is in a state of complete relaxation and the mind is minimally active. Delta waves are also observed in newborns, and can be induced in a waking state by experienced meditators.
@@ -360,19 +358,98 @@ Power Spectral Density (PSD) analysis is used to examine the spectral compositio
 
 Inspired by \href{https://mne.tools/stable/auto_tutorials/clinical/60_sleep.html#design-a-scikit-learn-transformer-from-a-python-function}{this} article, I used the frequencies spectrum derivated from the PSD analisys of the EEGs, obtaining a vector of "features" characterizing which amount of power we find in each channel for the frequencies related to brain activity.
 
+However, the channels we were using until the moment are not the best choice to look for brain activity, hence the list of meaningfull channels we will study has been cropped into an smaller but more representative list, the channels we will use for PSD Analisys are the following:
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{ |p{3cm}||p{3cm}||p{3cm}| }
+ \hline
+ Channel & Frequency (\%) & Equivalence\\
+ \hline  
+ C3-M2 & 71.951220 & No \\
+ C4-M1 & 76.371951 & Yes \\
+ E1-M1 & 85.365854 & Yes \\
+ E2-M1 & 87.347561 & Yes \\
+ F4-M1 & 81.402439 & Yes \\
+ O1-M2 & 70.731707 & No \\
+ O2-M2 & 86.280488 & Yes \\
+ \hline
+\end{tabular}
+\end{center}
+\caption{Channels for PSD Analisys}
+\label{tab3}
+\end{table}
+
+By computing the PSD of the electroencephalograms for this channels we will obtain a vector of 35 features, the amount of power in each of the brain related activity frequencies (presented above) for each of the channels, we will dircard any other frequency range.
+
 This time we have a much cleaner and representative dataset, we must, however think in a new network architecture that fits better with our new dataset.
 
 \addsection{Multi Layer Perceptron (MLP)}
-\blindtext
+A Multi Layer Perceptron (\href{https://en.wikipedia.org/wiki/Multilayer_perceptron}{MLP}) is a feed forward neural network, characterized for having an input layer, several hidden layers and an output layer. This kind of neural networs are very well suited for classifing tabulated data. After our PSD analisys we are getting a vector of fixed "features" representing the amount of power of each frequency associated with the brain activity for each of the channels we are studing, a simple MLP must do the job properly, this time the architecture used is the following:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.2, angle=90]{figs/mlp.png}
+\caption{MLP architecture}
+\label{fig3}
+\end{figure}
+
+We first have our input layer of shape (35), since we have 7 channels multiplied by the 5 frequencies we are interested in. The input is then connected to a first dense layer with 100 neurons and using the ReLU activation function, following another hidden layer of again 100 neurons and using the ReLU activation function. After the dense layers, the input is concatenated with the ouput of the hidden layers, so we have a deep path and a wide path for the data, this use to help the classification process when our input is very representative what we are willing to predict. Finally a dense layer with 5 neurons and an activation function of softmax is attached to the network.
+
+The optimizer used for the MLP is Adam with an initial leraning rate of 1e-3, however a \href{https://keras.io/api/callbacks/reduce_lr_on_plateau/}{ReduceLROnPlateau} is in use to reduce the learning rate when our error is not improving, allowing the network to focus more and to more stable but slow convergence.
+
+The parameters for the number of neurons and the leraning rate for this network have been optimized using \href{https://keras.io/keras_tuner/}{keras tuner}.
 
 \addchapter{Evaluation}
-\blindtext
+At the moment of writing, the MLP has been trained with 1437 subjects, with, in average, around 850 events each patient what results in more that 1.2M events. we are reaching an accuracy of nearly a 70\% in the validation phase. Now, the tests have been performed in 124 subjects taken randomly from the dataset, with about 102000 events, those subjects are nod feed into the neural network at training stage.
+
+The \href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html}{classification report} obtained for the predictions computed with the resulting model is the following:
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{ |p{3cm}||p{2cm}||p{2cm}||p{2cm}||p{2cm}| }
+ \hline
+ & precision & recall & f1-score & support\\
+ \hline  
+ Sleep\_stage\_W & 0.59 & 0.60 & 0.60 & 13843 \\
+ Sleep\_stage\_N1 & 0.33 & 0.26 & 0.29 & 10978 \\
+ Sleep\_stage\_N2 & 0.80 & 0.77 & 0.78 & 47168 \\
+ Sleep\_stage\_N3 & 0.70 & 0.73 & 0.71 & 13242 \\
+ Sleep\_stage\_R & 0.65 & 0.78 & 0.71 & 17240 \\
+ & & & & \\
+ accuracy &  &  & 0.69 & 102471 \\
+ macro avg & 0.61 & 0.63 & 0.62 & 102471 \\
+ weighted avg & 0.68 & 0.69 & 0.68 & 102471 \\
+ \hline
+\end{tabular}
+\end{center}
+\caption{Classification report}
+\label{tab4}
+\end{table}
+
+As we can see, our main problem is with class Sleep\_stage\_N1, where we get a precision of 33\%, if we look closely into the classification report we observe that the class is the class with less support, probably applying some data augmentation techniques, like \href{https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html}{SMOTE} will help the neural network to predict better for this class.
+
+The confusion matrix obtained in the trainning is the following:
+
+\begin{figure}[H]
+\hspace*{-4cm}\includegraphics[scale=.5]{figs/cm.png}
+\caption{Confussion matrix}
+\label{fig4}
+\end{figure}
+
+Here we can appreciate that our classifier is not performing well for the Sleep\_stage\_N1 class, being confused mainly with the class Sleep\_stage\_R and Sleep\_stage\_N2. The rest of the classes shows a better perfomance, being Sleep\_stage\_N2, Sleep\_stage\_N3 and Sleep\_stage\_R above the 70\% of success in the prediction.
 
 \addchapter{Conclusion}
-\blindtext
+Sleep study is a complex topic, and how noise affects sleep increases the complexity of such an study. In this document however, we applied a set of techniques that allow us to predict the sleep stage of a subject given an electroencephalogram. 
+
+This techniques can be adapted or extended to study the noise disturbance on a subject while sleeping. As an instance we could categorize and classify the different arousals found in an electroencephalogram and compare the results with a recording with an standard microphone. Actually, the SNORE channel present in most of the electroencephalograms of the The Human Sleep project dataset is a microphone to capture snoring volume during sleep, however we need to take into account that this electroencephalograms has been captured in a very controled environment, so use this recordings to comparate the sounds, probably emitted by the subject itself, with arousals will probably lead to poor results, since the arousals related to snoring may not be related to noise particullarly. Ideally, with similar montages we can achieve what we want, exposing the subjects to sounds at different frequencies and amplitudes we may get a desirable result for this study. World is not ideal, neither is the data, so with the working dataset of the human sleep project this is a first step towards gaining some knowledge on how the noise affect the sleep quality.
 
 \addchapter{Future work}
-\blindtext
+As concluded above, the techniques used in this study may be a first step towards gaining some knowledge on how the noise affects the sleep quality. By classifing the sleep stages of a subject given an electroencephalogram we can stablish in which period the noise affects more or less a subject. Besides, the gerealization on sleep stage classification, it is, being able to predict the sleep stage of a subject given other subjects data is a great capability, the way we predict sleep stages we can predict arousals given another subject data. Arousal prediction will be another step forward to gain knowledge on how noise affects the sleep quality. 
+
+With a bigger dataset we could use soundless data to make a deeper study on the noise in the ambient, probably by taking the power of sound at different frequencies and trying to detect abnormalities in the signals registered by the bracalet, however, an electroencephalogarm is ideal to study how sleep occurs during the resting hours. 
+
+Further steps from this study may include growing the sounless dataset, detecting arousals from vital signals and trying to stablish a relationship between soundless data and electroencephalogram data. Morover, the dataset from The Human Sleep Project provides, in some cases, a pre-sleep questionary. This questionary could be used to create a user profile, so if soundless users are willing to respond a questionary similar to those provided by The Human Sleep Project it will be a good point to start to relate data between the two datasets.  
 
 \addchapter{Bibliography}
 \blindtext
