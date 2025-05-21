@@ -10,6 +10,10 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.utils import gen_batches, shuffle
 import tensorflow as tf
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 class Db():
 
     def __init__(self):
@@ -116,6 +120,46 @@ class Db():
                     g_beta float8 NOT NULL,
                     "label" int4 NOT NULL    
                 );
+                           
+                CREATE TABLE IF NOT EXISTS public.test_data (
+                    id SERIAL PRIMARY KEY,
+                    a_delta float8 NOT NULL,
+                    a_theta float8 NOT NULL,
+                    a_alpha float8 NOT NULL,
+                    a_sigma float8 NOT NULL,
+                    a_beta float8 NOT NULL,
+                    b_delta float8 NOT NULL,
+                    b_theta float8 NOT NULL,
+                    b_alpha float8 NOT NULL,
+                    b_sigma float8 NOT NULL,
+                    b_beta float8 NOT NULL,
+                    c_delta float8 NOT NULL,
+                    c_theta float8 NOT NULL,
+                    c_alpha float8 NOT NULL,
+                    c_sigma float8 NOT NULL,
+                    c_beta float8 NOT NULL,
+                    d_delta float8 NOT NULL,
+                    d_theta float8 NOT NULL,
+                    d_alpha float8 NOT NULL,
+                    d_sigma float8 NOT NULL,
+                    d_beta float8 NOT NULL,
+                    e_delta float8 NOT NULL,
+                    e_theta float8 NOT NULL,
+                    e_alpha float8 NOT NULL,
+                    e_sigma float8 NOT NULL,
+                    e_beta float8 NOT NULL,
+                    f_delta float8 NOT NULL,
+                    f_theta float8 NOT NULL,
+                    f_alpha float8 NOT NULL,
+                    f_sigma float8 NOT NULL,
+                    f_beta float8 NOT NULL,
+                    g_delta float8 NOT NULL,
+                    g_theta float8 NOT NULL,
+                    g_alpha float8 NOT NULL,
+                    g_sigma float8 NOT NULL,
+                    g_beta float8 NOT NULL,
+                    "label" int4 NOT NULL    
+                );
             """)
 
         self.conn.commit()
@@ -153,6 +197,25 @@ class Db():
         with self.conn.cursor() as cursor:
             cursor.execute("SELECT * FROM test;")
             return cursor.fetchall()
+        
+    def isTest(self, folder, session, site):
+        with self.conn.cursor() as cursor:
+            cursor.execute(f"SELECT folder FROM test WHERE folder = %s AND ses = %s and site = %s;", (folder, str(session), site))
+            return cursor.fetchone() is not None
+        
+    def __countTest(self):
+        with self.conn.cursor() as cursor:
+            cursor.execute("SELECT count(*) FROM test;")
+            result = cursor.fetchone()
+            return result[0]
+    
+    def paginateTest(self, page = 0, pageSize = 3):
+        count = self.__countTest()
+        with self.conn.cursor() as cursor:
+            while page * pageSize < count:
+                cursor.execute(f"SELECT * FROM test ORDER BY folder OFFSET {page * pageSize} LIMIT {pageSize};")
+                page += 1
+                yield cursor.fetchall()
 
     # https://medium.com/@askintamanli/fastest-methods-to-bulk-insert-a-pandas-dataframe-into-postgresql-2aa2ab6d2b24
     def insertFeatures(self, features, labels, mode = "samples"):
@@ -216,9 +279,9 @@ class Db():
             cursor.execute(f"SELECT id FROM samples;")
             return shuffle(list(map(lambda x: x[0], cursor.fetchall())))
         
-    def __validationChunks(self):
+    def __validationChunks(self, mode = "validation"):
         with self.conn.cursor() as cursor:
-            cursor.execute(f"SELECT id FROM validation;")
+            cursor.execute(f"SELECT id FROM {mode} ORDER BY id;")
             return list(map(lambda x: x[0], cursor.fetchall()))
     
     def sampleNum(self, mode = "samples"):
@@ -256,7 +319,7 @@ class Db():
                     if mode == "samples":
                         available = self.__shuffleChunks()    
                     else:
-                        available = self.__validationChunks()
+                        available = self.__validationChunks(mode)
 
                     for slice in gen_batches(len(available), batchSize):
                         batch = available[slice]
@@ -316,6 +379,82 @@ class Db():
                         scaled = scaler.fit_transform(chunks.transpose())
                             
                         yield tf.stack(scaled.T), tf.stack(keras.utils.to_categorical(labels, num_classes=self.num_classes)), np.vectorize(lambda x: classWeights[x])(labels)
+
+    def predictChunks(self, batchSize: int):
+            
+            with self.conn.cursor() as cursor:
+            
+                available = self.__validationChunks("test_data")
+
+                for slice in gen_batches(len(available), batchSize):
+                    batch = available[slice]
+                    
+                    cursor.execute(f"""
+                        SELECT a_delta, a_theta, a_alpha, a_sigma, a_beta, b_delta, b_theta, b_alpha, b_sigma, b_beta, c_delta, c_theta, c_alpha, c_sigma, c_beta, d_delta, d_theta, d_alpha, d_sigma, d_beta,
+                                e_delta, e_theta, e_alpha, e_sigma, e_beta, f_delta, f_theta, f_alpha, f_sigma, f_beta, g_delta, g_theta, g_alpha, g_sigma, g_beta 
+                        FROM test_data AS s
+                        WHERE s.id IN %s;   
+                    """,
+                    (tuple(batch),))
+
+                    df = pd.DataFrame(cursor.fetchall(), columns=[
+                        "a_delta",
+                        "a_theta",
+                        "a_alpha",
+                        "a_sigma",
+                        "a_beta",
+                        "b_delta",
+                        "b_theta",
+                        "b_alpha",
+                        "b_sigma",
+                        "b_beta",
+                        "c_delta",
+                        "c_theta",
+                        "c_alpha",
+                        "c_sigma",
+                        "c_beta",
+                        "d_delta",
+                        "d_theta",
+                        "d_alpha",
+                        "d_sigma",
+                        "d_beta",
+                        "e_delta",
+                        "e_theta",
+                        "e_alpha",
+                        "e_sigma",
+                        "e_beta",
+                        "f_delta",
+                        "f_theta",
+                        "f_alpha",
+                        "f_sigma",
+                        "f_beta",
+                        "g_delta",
+                        "g_theta",
+                        "g_alpha",
+                        "g_sigma",
+                        "g_beta"
+                    ])
+
+                    # Data is already normalized in featuresPerEvent (modules/edf.py), previously to data insertion.
+                    scaler = MinMaxScaler()
+                    scaled = scaler.fit_transform(df.transpose())
+                        
+                    yield tf.stack(scaled.T),
+    
+    def getTestLabels(self):
+            
+            with self.conn.cursor() as cursor:    
+                cursor.execute(f"""
+                    SELECT "label" 
+                    FROM test_data AS s
+                    ORDER BY id;   
+                """)
+
+                df = pd.DataFrame(cursor.fetchall(), columns=[
+                    "label"
+                ])
+                        
+                return df["label"].to_numpy()
                         
     def close(self):
         self.conn.close()

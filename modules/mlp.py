@@ -148,6 +148,14 @@ class MLPEegModel():
         self.db.reconnect()
 
         return cat_acc, val_cat_acc, loss, val_loss
+    
+    def predict(self):
+
+        return self.model.predict(
+            self.db.predictChunks(self.batch_size),
+            steps=math.ceil(self.db.sampleNum("test_data") / self.batch_size),
+            verbose=1,
+        )
 
     def evaluate(self, chunk, tags):
         return self.model.evaluate(tf.stack(chunk), tf.stack(keras.utils.to_categorical(tags, num_classes=5)))
@@ -165,3 +173,6 @@ class MLPEegModel():
             chunksFile.write(f"INSERTED={inserted}\n")
             if done == True:
                 chunksFile.write(f"DONE")
+
+    def plot(self):
+        keras.utils.plot_model(self.model, to_file="memoria/figs/mlp.png", show_shapes=True)
