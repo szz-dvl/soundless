@@ -38,7 +38,7 @@ class MLPEegModel():
         self.epochs = 100
         self.tuner_epochs = 2
         self.batch_size = 64
-        self.dir = os.getenv("MODEL_CHECKPOINT_DIR")
+        self.dir = os.getenv("MODEL_CHECKPOINT_DIR") #+ "old/mlp-smote-max-22-05-2025/"
         self.db = Db()
 
         self.callbacks = [
