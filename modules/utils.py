@@ -25,7 +25,7 @@ class Utils():
 
         if mean > counter[1]:
             smote = SMOTE(sampling_strategy={
-                1: math.ceil(np.mean([value for value in counter.values()]))
+                1: mean
             })
 
             return smote.fit_resample(features, labels)
