@@ -6,18 +6,21 @@
 \contentsline {section}{Implementation}{5}{chapter*.5}%
 \contentsline {subsection}{Feature engineering}{6}{chapter*.6}%
 \contentsline {subsubsection}{Channel selection}{7}{section*.7}%
-\contentsline {subsubsection}{Classes}{9}{table.0.2}%
-\contentsline {subsection}{Fully Convolutional neural network (FCN)}{9}{section*.9}%
-\contentsline {subsubsection}{LSTM}{10}{figure.0.1}%
-\contentsline {subsection}{Band power aggregation}{11}{figure.0.2}%
-\contentsline {subsubsection}{Delta activity}{12}{section*.12}%
-\contentsline {subsubsection}{Theta activity}{12}{section*.13}%
-\contentsline {subsubsection}{Alpha activity}{12}{section*.14}%
-\contentsline {subsubsection}{Sigma activity}{13}{section*.15}%
-\contentsline {subsubsection}{Beta activity}{13}{section*.16}%
-\contentsline {subsection}{Power Spectral Density (PSD)}{13}{section*.17}%
-\contentsline {subsection}{Multi Layer Perceptron (MLP)}{14}{table.0.3}%
-\contentsline {section}{Evaluation}{15}{figure.0.3}%
-\contentsline {subsection}{Data augmentation}{17}{figure.0.4}%
-\contentsline {section}{Conclusion}{18}{section*.21}%
-\contentsline {section}{Future work}{19}{chapter*.22}%
+\contentsline {subsubsection}{Classes}{10}{table.0.2}%
+\contentsline {subsection}{Fully Convolutional neural network (FCN)}{10}{section*.9}%
+\contentsline {subsubsection}{LSTM}{11}{figure.0.1}%
+\contentsline {subsection}{Band power aggregation}{12}{figure.0.2}%
+\contentsline {subsubsection}{Delta activity}{13}{section*.12}%
+\contentsline {subsubsection}{Theta activity}{13}{section*.13}%
+\contentsline {subsubsection}{Alpha activity}{13}{section*.14}%
+\contentsline {subsubsection}{Sigma activity}{14}{section*.15}%
+\contentsline {subsubsection}{Beta activity}{14}{section*.16}%
+\contentsline {subsection}{Power Spectral Density (PSD)}{14}{section*.17}%
+\contentsline {subsection}{Multi Layer Perceptron (MLP)}{15}{table.0.3}%
+\contentsline {subsubsection}{Data scaling}{16}{figure.0.3}%
+\contentsline {section}{Evaluation}{17}{section*.20}%
+\contentsline {subsection}{Data augmentation}{19}{figure.0.4}%
+\contentsline {section}{Conclusion}{22}{figure.0.7}%
+\contentsline {section}{Future work}{23}{chapter*.23}%
+\contentsline {section}{Acknowledgements}{24}{chapter*.24}%
+\contentsline {section}{Bibliography}{25}{chapter*.25}%

@@ -171,7 +171,7 @@ The \href{https://soundless.app}{Soundless} app is a project leaded by Universit
 Additionally, there are not many subjects in the sounless app study yet, around 20 people participed in the study so we looked for alternatives datasets to start our study.
 
 \addsection{The Human Sleep Project}
-\href{https://bdsp.io/content/hsp/2.0/}{The Human Sleep Project} is a project carried out by Massachusetts General Hospital, they are recording several electroencephalograms of subjects with some sleep pathology. The documents, stored in .edf (European Data Format) format are usually accompanied with annotations on the electroencephalograms as well as the channels used for the recording. This is a vast dataset with around 25000 encephalograms to study. With this information makes sense to try to develop some kind of artificial intelligence solution to annotate encephalograms automatically, this is the main focus of this study. At some point, the tecnology used here may help to detect arousals related to noise in the ambient using similar methodologies. 
+\href{https://bdsp.io/content/hsp/2.0/}{The Human Sleep Project} is a project carried out by Massachusetts General Hospital, they are recording several electroencephalograms of subjects with some sleep pathology. The documents, stored in .edf (European Data Format) format are usually accompanied with annotations on the electroencephalograms as well as the channels used for the recording. This is a vast dataset with around 25000 electroencephalograms to study. With this information makes sense to try to develop some kind of artificial intelligence solution to annotate electroencephalograms automatically, this is the main focus of this study. At some point, the tecnology used here may help to detect arousals related to noise in the ambient using similar methodologies. 
 
 
 \addchapter{State of art}
@@ -196,18 +196,18 @@ The whole \href{https://github.com/szz-dvl/soundless/tree/main}{implementation} 
 
 For the download process, \href{https://pypi.org/project/boto3/}{boto3} library is used to interactuate with AWS s3 instances hosting the data.
 
-To treat the data, \href{https://mne.tools/stable/index.html}{MNE} library is used, this one comes in handy to deal with .edf files, allowing us to get the epochs of an encephalogram related to a particular annotation and computing the PSDs associated with each event.
+To treat the data, \href{https://mne.tools/stable/index.html}{MNE} library is used, this one comes in handy to deal with .edf files, allowing us to get the epochs of an electroencephalogram related to a particular annotation and computing the PSDs associated with each event.
 
 To aggregate the data a \href{https://www.postgresql.org/}{postgreSQL} DDBB have been used, when the data is downloaded and treated is aggregated in different batches and saved into a relational database, the neural network will read those chunks of data for the training process.
 
 Finally to create the neural networks proposed here \href{https://keras.io/}{keras} is used. This is a great library abstracting the tough part of neural networks and allowing for quick prototipe a neural network. 
 
 \addsection{Feature engineering}
-The vast amount of data comming from encephalogram files must be treated before we can feed this data to a neural network.
-First of all we need to get a glimpse at the channels used for the encephalogram recording, with some examples we realize that there are several kinds of configurations for encephalograms, a neural network won't work if we do not standardize the data between the different encephalograms. Once we select a set of channels representing the majority of our data set, we need to obtain the different epochs of the encephalograms associated to the annotations. 
+The vast amount of data comming from electroencephalogram files must be treated before we can feed this data to a neural network.
+First of all we need to get a glimpse at the channels used for the electroencephalogram recording, with some examples we realize that there are several kinds of configurations for electroencephalograms, a neural network won't work if we do not standardize the data between the different electroencephalograms. Once we select a set of channels representing the majority of our data set, we need to obtain the different epochs of the electroencephalograms associated to the annotations. 
 
 \addsubsection{Channel selection}
-To select the representative channels of our dataset, we first traverse all our documents looking for the different channels configurations, this process will generate a CSV file with a fingerprint of the channels for each encephalogram, here a fingerprint means nothing but to concatenate all the channel names separated by a "|" character for each encephalogram. This \href{https://github.com/szz-dvl/soundless/blob/main/parser_channels.py}{file} is the responsible for this data gathering process.
+To select the representative channels of our dataset, we first traverse all our documents looking for the different channels configurations, this process will generate a CSV file with a fingerprint of the channels for each electroencephalogram, here a fingerprint means nothing but to concatenate all the channel names separated by a "|" character for each electroencephalogram. This \href{https://github.com/szz-dvl/soundless/blob/main/parser_channels.py}{file} is the responsible for this data gathering process.
 
 Once we have generated the CSV file with one fingerprint per row, we can start analysing the different channel configurations to get a set of desired channels to study. The process is coded in this \href{https://github.com/szz-dvl/soundless/blob/main/channels.py}{file}. Roughly, this file will make an study of the frequency of each channel present in the dataset, and will try to llok for equivalent channels, two channels are considered equivalent when two different configurations are equal by exchanging this channels. The results obtained in this process are as follows:
 
@@ -237,7 +237,7 @@ Once we have generated the CSV file with one fingerprint per row, we can start a
 \label{tab1}
 \end{table}
 
-So, demanding that our encephalograms have, at least, this channels we must get a representation of around a 71\% of our dataset, which must be more than enough to train our neural network. Following with the obtained results, the meaningful equivalences found are as follows:
+So, demanding that our electroencephalograms have, at least, this channels we must get a representation of around a 71\% of our dataset, which must be more than enough to train our neural network. Following with the obtained results, the meaningful equivalences found are as follows:
 
 \newgeometry{left=1.5cm,bottom=1.5cm,top=0.5cm}
 \begin{minipage}{0.45\textwidth}
@@ -289,7 +289,7 @@ So, demanding that our encephalograms have, at least, this channels we must get 
 In table \autoref{tab2} I sumarize the frequencies obtained when aggregating the equivalences found by the code, after all we have 18 meaningful channels to play with, however we need to take into account that most of them are not electroencephalogram channels, so looking for brain activity on those channels will make no sense, we will review this part later on. However we can try to use the 18 channels to feed a neural network as they are, as a sequence of voltages per channel over time. 
 
 \addsubsection{Classes}
-If we take a look at the annotation documents associated to each encephalogram there is a huge number of distinct annotations for the whole set, however if we look carefully, we realise that the most prevalent annotations in all the encephalograms are the sleeping stages. It makes sense to try to classify the sleeping stages of a subject, the sleeping stages are:
+If we take a look at the annotation documents associated to each electroencephalogram there is a huge number of distinct annotations for the whole set, however if we look carefully, we realise that the most prevalent annotations in all the electroencephalograms are the sleeping stages. It makes sense to try to classify the sleeping stages of a subject, the sleeping stages are:
 
 \begin{itemize}
   \item \textbf{Sleep\_stage\_W:} This stage indicates that the subject is awake.
@@ -299,7 +299,7 @@ If we take a look at the annotation documents associated to each encephalogram t
   \item \textbf{Sleep\_stage\_R:} This stage indicates that the subject is in REM (Rapid Eye Movement) stage.
 \end{itemize} 
 
-So these will be our class set, lets try to classify our encephalogram events into one of these stages. We can try to use a similar method to look for diferent kind of arousals in the encephalograms and, later on, try to associate those arousals to noise in the ambient.
+So these will be our class set, lets try to classify our electroencephalogram events into one of these stages. We can try to use a similar method to look for diferent kind of arousals in the electroencephalograms and, later on, try to associate those arousals to noise in the ambient.
 
 \addsection{Fully Convolutional neural network (FCN)}
 Based on \href{https://arxiv.org/abs/1611.06455}{this} paper and the related work found \href{https://keras.io/examples/timeseries/eeg_signal_classification/}{here} I tried to build a fully convolutional network for timeseries classification, the architecture is as follows:
@@ -311,7 +311,7 @@ Based on \href{https://arxiv.org/abs/1611.06455}{this} paper and the related wor
 \label{fig1}
 \end{figure}
 
-The input shape is (6001, 18) given that we have 18 channels and that we are annalising cropped segments of the encephalogram 30 seconds long. The sample frequency of the encephalograms is 200 Hz, so we have 6000 samples per event. Any encephalogram found with a different sample frequency will be discarted in this approach. Then we have a convolutional layer of 32 filters with a kernel size of 3. After that another convolutional layer with again 32 filters and a kernel size of 5. Finally we use a last convolutional layer with 64 filters and a kernel size of 5. Then we use an average pooling layer to downsample the results of convulational layers. Finally a dense layer with 5 neurons, the number of classes we would like to classificate.
+The input shape is (6001, 18) given that we have 18 channels and that we are annalising cropped segments of the electroencephalogram 30 seconds long. The sample frequency of the electroencephalograms is 200 Hz, so we have 6000 samples per event. Any electroencephalogram found with a different sample frequency will be discarted in this approach. Then we have a convolutional layer of 32 filters with a kernel size of 3. After that another convolutional layer with again 32 filters and a kernel size of 5. Finally we use a last convolutional layer with 64 filters and a kernel size of 5. Then we use an average pooling layer to downsample the results of convulational layers. Finally a dense layer with 5 neurons, the number of classes we would like to classificate.
 
 The activation function I'm using for the hidden layers of the network is \href{https://en.wikipedia.org/wiki/Rectifier_(neural_networks)}{ReLU}(rectified linear unit) since is very efficient and mitigates the \href{https://en.wikipedia.org/wiki/Vanishing_gradient_problem}{vanishing gradient} problem. For the output layer softmax is used, since we have a multiclass classification problem.
 
@@ -338,9 +338,9 @@ For this architecture several optimizers has been tried too, particullarly Adam 
 After several days training this architecture was not able to overcome 45\% in validation accuracy, an improvement over fully convolutional neural networks, not enough however.
 
 \addsection{Band power aggregation}
-Until now I did not have too much success, a 45\% on validation accuracy is still not a good result. Most probably we are dealing with very noisy data not representative of the sleep stage in the subjects, as an instance ABD or IC channels does not seem a good choice to study the sleep stages of a subject. In top of that try to feed a neural network with the raw readings of an encephalogram seems a pretty poor choice, since there may be a lot of artifacts messing our data.
+Until now I did not have too much success, a 45\% on validation accuracy is still not a good result. Most probably we are dealing with very noisy data not representative of the sleep stage in the subjects, as an instance ABD or IC channels does not seem a good choice to study the sleep stages of a subject. In top of that try to feed a neural network with the raw readings of an electroencephalogram seems a pretty poor choice, since there may be a lot of artifacts messing our data.
 
-We can think in an encephalogram as a bunch of signals, but, the brain activity is characterized by particular frequencies appearing or desapearing at different moments in the brain, if we were able to study the influence of those frequencies en each of our events we will have a much more cleaner dataset.
+We can think in an electroencephalogram as a bunch of signals, but, the brain activity is characterized by particular frequencies appearing or desapearing at different moments in the brain, if we were able to study the influence of those frequencies en each of our events we will have a much more cleaner dataset.
 
 \addsubsection{Delta activity}
 Delta brainwaves, also known as delta activity, are the slowest brainwaves, typically between 0.5 and 4.5 Hz. They are primarily associated with deep, dreamless sleep, where the body is in a state of complete relaxation and the mind is minimally active. Delta waves are also observed in newborns, and can be induced in a waking state by experienced meditators.
@@ -412,8 +412,11 @@ The optimizer used for the MLP is Adam with an initial leraning rate of 1e-3, ho
 
 The parameters for the number of neurons and the leraning rate for this network have been optimized using \href{https://keras.io/keras_tuner/}{keras tuner}.
 
+\addsubsection{Data scaling}
+Data scaling is a technique to scale our data, Multi layer perceptrons are very sensitive to data scaling, the MLP assumes a sample centered in 0 and with a standard deviation of 1. To achieve that we first \href{https://github.com/szz-dvl/soundless/blob/main/modules/edf.py#L157}{normalize} our samples, and, afterwards we scale each sample with \href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html}{MinMaxScaler}. After applying MinMaxScaler the network was pretty more stable and I was able to acchieve a better accuracy.
+
 \addchapter{Evaluation}
-At the moment of writing, the MLP has been trained with 1437 subjects, with, in average, around 850 events each patient what results in more that 1.2M events. we are reaching an accuracy of nearly a 70\% in the validation phase. Now, the tests have been performed in 124 subjects taken randomly from the dataset, with about 102000 events, those subjects are nod feed into the neural network at training stage.
+At the moment of writing, the MLP has been trained with 1437 subjects, with, in average, around 850 events each patient what results in more that 1.2M events. We are reaching an accuracy of nearly a 70\% in the validation phase. Now, the \href{https://github.com/szz-dvl/soundless/blob/main/mlp_test.py}{tests} have been performed in 124 subjects taken randomly from the dataset, with about 102000 events, those subjects are nod feed into the neural network at training stage.
 
 The \href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html}{classification report} obtained for the predictions computed with the resulting model is the following:
 
@@ -454,14 +457,44 @@ Here we can appreciate that our classifier is not performing well for the Sleep\
 \addsection{Data augmentation}
 Data augmentation or oversampling is a technique that generates synthetic samples for a given dataset, this synthetic samples are generated according to the samples we already have from the target class. To try to mitigate the problem found in the evaluation section with the class Sleep\_stage\_N1 I'm generating synthetic samples exclusively for this class to see if the network performance can be improved for this events.
 
-Estoy trabajando en este apartado
+Three approaches have been employed regarding data augmentation, the first one is to generate synthetic samples for the class Sleep\_Stage\_N1 to equiparate the number of samples of this class to the number of classes of the majority class, usually Sleep\_Stage\_N2, the confusion matrix obtained for this approach is the following:
 
-\blindtext
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.5]{figs/cm-da-max.png}
+\caption{Confussion matrix oversampling N1 to equiparate the majority class}
+\label{fig5}
+\end{figure}
+
+As we can see, we improve the classification for Sleep\_stage\_N1 to the detriment of other classes, this is no ideal but all the classes but Sleep\_stage\_W are above the 50\%.
+
+\newpage
+In the next approach I computed the mean of the elements for all classes, if Sleep\_stage\_N1 number of elements was below that number, the class is oversamplet to achieve that number, the confusion matrix is the following:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.5]{figs/cm-da-mean.png}
+\caption{Confussion matrix oversampling N1 to achieve the mean}
+\label{fig6}
+\end{figure}
+
+As we can see this approach is more similar to the one obtained without any oversampling at all, however Sleep\_stage\_N1 success rate is improved by over a 15\%, again in detriment to the other classes. If we oversample just one class, we hurt the rest of the classes, no matter what we do. The third approach that has been tried here is to oversample all the minority classes to match the majority class, it is: the default configuration for SMOTE. The confusion matrix obtained in this case is the following:
+
+\begin{figure}[H]
+\centering
+\hspace*{-2cm}\includegraphics[scale=.5]{figs/cm-da-all.png}
+\caption{Confussion matrix oversampling all minority classes}
+\label{fig7}
+\end{figure}
+
+As we can see, the overall accuracy is reduced, and, in this case we do not improve Sleep\_stage\_N1 that much, which was the first goal of oversampling at all.
 
 \addchapter{Conclusion}
 Sleep study is a complex topic, and how noise affects sleep increases the complexity of such an study. In this document however, we applied a set of techniques that allow us to predict the sleep stage of a subject given an electroencephalogram. 
 
-This techniques can be adapted or extended to study the noise disturbance on a subject while sleeping. As an instance we could categorize and classify the different arousals found in an electroencephalogram and compare the results with a recording with an standard microphone. Actually, the SNORE channel present in most of the electroencephalograms of the The Human Sleep project dataset is a microphone to capture snoring volume during sleep, however we need to take into account that this electroencephalograms has been captured in a very controled environment, so use this recordings to comparate the sounds, probably emitted by the subject itself, with arousals will probably lead to poor results, since the arousals related to snoring may not be related to noise particullarly. Ideally, with similar montages we can achieve what we want, exposing the subjects to sounds at different frequencies and amplitudes we may get a desirable result for this study. World is not ideal, neither is the data, so with the working dataset of the human sleep project this is a first step towards gaining some knowledge on how the noise affect the sleep quality.
+This techniques can be adapted or extended to study the noise disturbance on a subject while sleeping. As an instance we could categorize and classify the different arousals found in an electroencephalogram and compare the results with a recording with an standard microphone. Actually, the SNORE channel present in most of the electroencephalograms of the The Human Sleep project dataset is a microphone to capture snoring volume during sleep, however we need to take into account that this electroencephalograms has been captured in a very controled environment, so use this recordings to comparate the sounds, probably emitted by the subject itself, with arousals will probably lead to poor results, since the arousals related to snoring may not be related to noise particullarly. In top of that, the dataset from the Human SLeep Project contains electroencephalograms of subjects with some pathology, it would be nice to have a dataset of healthy patiens to try to expand further our conclusions.
+
+Ideally, with similar montages we can achieve what we want, exposing the subjects to sounds at different frequencies and amplitudes we may get a desirable result for this study. World is not ideal, neither is the data, so with the working dataset of the human sleep project this is a first step towards gaining some knowledge on how the noise affect the sleep quality.
 
 \addchapter{Future work}
 As concluded above, the techniques used in this study may be a first step towards gaining some knowledge on how the noise affects the sleep quality. By classifing the sleep stages of a subject given an electroencephalogram we can stablish in which period the noise affects more or less a subject. Besides, the gerealization on sleep stage classification, it is, being able to predict the sleep stage of a subject given other subjects data is a great capability, the way we predict sleep stages we can predict arousals given another subject data. Arousal prediction will be another step forward to gain knowledge on how noise affects the sleep quality. 
@@ -470,6 +503,11 @@ With a bigger dataset we could use soundless data to make a deeper study on the 
 
 Further steps from this study may include growing the sounless dataset, detecting arousals from vital signals and trying to stablish a relationship between soundless data and electroencephalogram data. Morover, the dataset from The Human Sleep Project provides, in some cases, a pre-sleep questionary. This questionary could be used to create a user profile, so if soundless users are willing to respond a questionary similar to those provided by The Human Sleep Project it will be a good point to start to relate data between the two datasets.  
 
+\addchapter{Acknowledgements}
+I would like to give thanks specialy to Prof. Pedro Garc\'ia L\'opez for all the guidance and time spent with the project and to the UOC and URV for the material shared without wich I wouldn't have been able to write this study. I would like to thank Dra. Mirea Lecina for her assistance at understanding electroencephalograms.
+
+
+\addcontentsline{toc}{section}{Bibliography}
 \begin{thebibliography}{9}
 \bibitem{who}
 Basner, M., \& McGuire, S. (2018). WHO environmental noise guidelines for the European region: A systematic review on environmental noise and effects on sleep. International Journal of Environmental Research and Public Health, 15(3), 519.
