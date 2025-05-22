@@ -1,5 +1,7 @@
 from collections import Counter
+import math
 import os
+import numpy as np
 import pandas as pd
 from imblearn.over_sampling import SMOTE
 
@@ -19,13 +21,16 @@ class Utils():
 
     def oversample(self, features, labels):
         counter = Counter(labels)
-        maximum = max(counter, key=counter.get)
+        mean = math.ceil(np.mean([value for value in counter.values()]))
 
-        smote = SMOTE(sampling_strategy={
-            1: counter[maximum]
-        })
+        if mean > counter[1]:
+            smote = SMOTE(sampling_strategy={
+                1: math.ceil(np.mean([value for value in counter.values()]))
+            })
 
-        return smote.fit_resample(features, labels)
+            return smote.fit_resample(features, labels)
+        else:
+            return features, labels
 
         
 
