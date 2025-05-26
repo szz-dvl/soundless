@@ -489,6 +489,44 @@ As we can see this approach is more similar to the one obtained without any over
 
 As we can see, the overall accuracy is reduced, and, in this case we do not improve Sleep\_stage\_N1 that much, which was the first goal of oversampling at all.
 
+\addsection{Class clustering}
+Oversampling did not suceed as expected, another technique we can apply here is to cluster the class Sleep\_stage\_N1 and Sleep\_stage\_N2. We loose precision in the results obtained, but we may be more accurate predicting a the satges of sleep. By applying this technique the model was trained on 1371 subjects with a mean of 850 samples per subject, giving a result of 1.16M samples. The same test set used for the previous sections is used here, the classification report obttained in this case is the following:
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{ |p{3cm}||p{2cm}||p{2cm}||p{2cm}||p{2cm}| }
+ \hline
+ & precision & recall & f1-score & support\\
+ \hline  
+ Sleep\_stage\_W & 0.64 & 0.80 & 0.72 & 17240 \\
+ Sleep\_stage\_N1/N2 & 0.83 & 0.73 & 0.78 & 58146 \\
+ Sleep\_stage\_N3 & 0.66 & 0.76 & 0.70 & 13242 \\
+ Sleep\_stage\_R & 0.58 & 0.61 & 0.60 & 13843 \\
+ & & & & \\
+ accuracy &  &  & 0.73 & 102471 \\
+ macro avg & 0.68 & 0.73 & 0.70 & 102471 \\
+ weighted avg & 0.74 & 0.73 & 0.73 & 102471 \\
+ \hline
+\end{tabular}
+\end{center}
+\caption{Classification report}
+\label{tab4}
+\end{table}
+
+And the confussion matrix obtained is:
+
+\begin{figure}[H]
+\centering
+\hspace*{-1cm}\includegraphics[scale=.42]{figs/cm-clustering.png}
+\caption{Confussion matrix clustering N1/N2}
+\label{fig8}
+\end{figure}
+
+This time the results are pretty more solid, we will be able to classify the different sleep stages and, particullarly we will be able to know when a subject is awake or not. With this kind of data we can carry on and try to link our data set to sounless dataset.
+
+\addchapter{Soundless dataset}
+
+
 \addchapter{Conclusion}
 Sleep study is a complex topic, and how noise affects sleep increases the complexity of such an study. In this document however, we applied a set of techniques that allow us to predict the sleep stage of a subject given an electroencephalogram. 
 

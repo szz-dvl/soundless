@@ -20,7 +20,9 @@
 \contentsline {subsubsection}{Data scaling}{16}{figure.0.3}%
 \contentsline {section}{Evaluation}{17}{section*.20}%
 \contentsline {subsection}{Data augmentation}{19}{figure.0.4}%
-\contentsline {section}{Conclusion}{22}{figure.0.7}%
-\contentsline {section}{Future work}{23}{chapter*.23}%
-\contentsline {section}{Acknowledgements}{24}{chapter*.24}%
-\contentsline {section}{Bibliography}{25}{chapter*.25}%
+\contentsline {subsection}{Class clustering}{22}{figure.0.7}%
+\contentsline {section}{Soundless dataset}{24}{figure.0.8}%
+\contentsline {section}{Conclusion}{25}{chapter*.24}%
+\contentsline {section}{Future work}{26}{chapter*.25}%
+\contentsline {section}{Acknowledgements}{27}{chapter*.26}%
+\contentsline {section}{Bibliography}{28}{chapter*.27}%
