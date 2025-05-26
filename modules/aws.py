@@ -56,7 +56,10 @@ class AWS():
             return [item["Key"] for item in result["Contents"]]
         except KeyError:
             return []
-        
+    
+    def __buildSubFolder(self, sub, site) -> str:
+        return f"PSG/bids/{site}/{sub}/"
+    
     def __buildSubPrefix(self, sub: str, session: str, site: str) -> str:
         return f"PSG/bids/{site}/{sub}/ses-{session}/eeg/"
 
@@ -104,6 +107,12 @@ class AWS():
             file = self.__loadAwsFile(self.__buildPreSleepQuestNoInfoCsv(sub, session, site))
 
         return pd.read_csv(file, names=["key", "value"], header=0)
+    
+    def getSubSessions(self, sub, site):
+        return self.__listAwsFolder(self.__buildSubFolder(sub, site))
+    
+    def getSessionFiles(self, sub, session, site):
+        return self.__listAwsFiles(self.__buildSubPrefix(sub, session, site))
 
     def loadEegEdf(self, sub, session, site) -> EdfParser:
         file = self.__loadAwsFile(self.__buildEdfFile(sub, session, site))
