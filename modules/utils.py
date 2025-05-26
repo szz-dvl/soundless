@@ -20,8 +20,17 @@ class Utils():
             yield df.iloc[startRow:endRow, :]
 
     def oversample(self, features, labels):
-        smote = SMOTE(sampling_strategy='auto')
-        return smote.fit_resample(features, labels)
-    
+        counter = Counter(labels)
+        mean = math.ceil(np.mean([value for value in counter.values()]))
+
+        if mean > counter[1]:
+            smote = SMOTE(sampling_strategy={
+                1: mean
+            })
+
+            return smote.fit_resample(features, labels)
+        else:
+            return features, labels
+
         
 
