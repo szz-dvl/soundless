@@ -8,3 +8,9 @@ random_forest.py
 model_tunner.py
 out/eeg_tune
 out/mlp_tune
+cluster.py
+example.py
+test_data.csv
+train_data.csv
+tab_transformer.py
+model.png
