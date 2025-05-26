@@ -142,17 +142,13 @@ def isValidation(folder, session, site):
     
     return False
 
-def parseData(folder, session, site, channels, oversample = True): 
+def parseData(folder, session, site, channels): 
     
     parser = aws.loadEegEdf(folder, session, site)
     annotations = aws.loadEegAnnotationsCsv(folder, session, site)
 
     parser.setAnottations(annotations)
     features, labels = parser.featuresPerEvent(channels)
-
-    if oversample:
-        features, labels = utils.oversample(features, labels)
-
     parser.purge()
 
     return features, labels
@@ -192,7 +188,7 @@ def populateValidation():
             site = validation["site"]
 
             channels = ChannSelector().selectEeg(aws.loadEegChannelsTsv(folder, session, site))
-            features, labels = parseData(folder, session, site, channels, False)
+            features, labels = parseData(folder, session, site, channels)
             db.insertFeatures(features, labels, "validation")
 
         except Exception as ex:

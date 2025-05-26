@@ -18,15 +18,13 @@ class EdfParser:
         self.picks = None
         self.stopEvent = "Stopped_Analyzer_-_Sleep_Events"
         self.annotationsTags = { 
-            "Sleep_stage_W" : ["Sleep_stage_4" ,"Sleep_stage_W"], 
-            "Sleep_stage_N1": ["Sleep_stage_1", "Sleep_stage_N1"], 
-            "Sleep_stage_N2": ["Sleep_stage_N2", "Sleep_stage_2"], 
+            "Sleep_stage_W" : ["Sleep_stage_4" ,"Sleep_stage_W"],  
+            "Sleep_stage_N2": ["Sleep_stage_N2", "Sleep_stage_2", "Sleep_stage_1", "Sleep_stage_N1"], 
             "Sleep_stage_N3": ["Sleep_stage_N3", "Sleep_stage_3"], 
             "Sleep_stage_R": ["Sleep_stage_REM", "Sleep_stage_R"] 
         }
         self.tagsToClass = { 
-            "Sleep_stage_W" : 4, 
-            "Sleep_stage_N1": 1, 
+            "Sleep_stage_W" : 1, 
             "Sleep_stage_N2": 2, 
             "Sleep_stage_N3": 3, 
             "Sleep_stage_R": 0 

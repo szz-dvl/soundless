@@ -34,7 +34,7 @@ class MLPEegModel():
         self.aws = AWS()
 
         self.lr = 1e-3
-        self.num_classes = 5
+        self.num_classes = 4
         self.epochs = 100
         self.tuner_epochs = 2
         self.batch_size = 64

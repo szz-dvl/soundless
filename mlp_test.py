@@ -61,19 +61,19 @@ for categorical in model.predict():
 
 y_test = db.getTestLabels()
 
-cm = confusion_matrix(y_test, y_pred, labels=[0,1,2,3,4], normalize='true')
-cr = classification_report(y_test, y_pred, labels=[0,1,2,3,4], target_names=[
+cm = confusion_matrix(y_test, y_pred, labels=[0,1,2,3], normalize='true')
+cr = classification_report(y_test, y_pred, labels=[0,1,2,3], target_names=[
+            "Sleep_stage_R",
             "Sleep_stage_W",
-            "Sleep_stage_N1",
-            "Sleep_stage_N2",
+            "Sleep_stage_N1/N2",
             "Sleep_stage_N3",
-            "Sleep_stage_R"]
+        ]
 )
 print(cr)
 ConfusionMatrixDisplay(cm, display_labels=[
+            "Sleep_stage_R",
             "Sleep_stage_W",
-            "Sleep_stage_N1",
-            "Sleep_stage_N2",
+            "Sleep_stage_N1/N2",
             "Sleep_stage_N3",
-            "Sleep_stage_R"]).plot()
+            ]).plot()
 plt.show()

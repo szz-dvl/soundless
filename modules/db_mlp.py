@@ -18,7 +18,7 @@ class Db():
 
     def __init__(self):
 
-        self.num_classes = 5
+        self.num_classes = 4
 
         self.db = os.getenv("DB_MLP_NAME")
         self.host = os.getenv("DB_MLP_HOST")
