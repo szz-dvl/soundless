@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2026/dev/Arch Linux)  (format=lualatex 2025.5.20)  26 MAY 2025 18:33
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2026/dev/Arch Linux)  (format=lualatex 2025.5.20)  26 MAY 2025 21:46
  restricted system commands enabled.
 **memoria.tex
 (./memoria.tex
@@ -627,7 +627,7 @@ LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 2
  (/usr/share/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 )
-<figs/fcn.png, id=169, 1201.48875pt x 3986.895pt>
+<figs/fcn.png, id=174, 1201.48875pt x 3986.895pt>
 File: figs/fcn.png Graphic file (type png)
 <use figs/fcn.png>
 Package luatex.def Info: figs/fcn.png  used on input line 309.
@@ -642,7 +642,7 @@ Package luatex.def Info: figs/fcn.png  used on input line 309.
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
 '
 <./figs/fcn.png>]
-<figs/fcn-lstm.png, id=188, 1201.48875pt x 2971.1pt>
+<figs/fcn-lstm.png, id=193, 1201.48875pt x 2971.1pt>
 File: figs/fcn-lstm.png Graphic file (type png)
 <use figs/fcn-lstm.png>
 Package luatex.def Info: figs/fcn-lstm.png  used on input line 329.
@@ -657,7 +657,7 @@ warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.2
 [13]
 
 [14]
-<figs/mlp.png, id=208, 1437.37pt x 1616.0375pt>
+<figs/mlp.png, id=213, 1437.37pt x 1616.0375pt>
 File: figs/mlp.png Graphic file (type png)
 <use figs/mlp.png>
 Package luatex.def Info: figs/mlp.png  used on input line 404.
@@ -675,7 +675,7 @@ warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.3
 <./figs/mlp.png>]
 
 [17]
-<figs/cm.png, id=233, 1269.0612pt x 721.9773pt>
+<figs/cm.png, id=238, 1269.0612pt x 721.9773pt>
 File: figs/cm.png Graphic file (type png)
 <use figs/cm.png>
 Package luatex.def Info: figs/cm.png  used on input line 450.
@@ -698,7 +698,7 @@ warning  (pdf backend): ignoring duplicate destination with the name 'table.0.4'
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.4
 '
 <./figs/cm.png>]
-<figs/cm-da-max.png, id=247, 971.3088pt x 628.0263pt>
+<figs/cm-da-max.png, id=252, 971.3088pt x 628.0263pt>
 File: figs/cm-da-max.png Graphic file (type png)
 <use figs/cm-da-max.png>
 Package luatex.def Info: figs/cm-da-max.png  used on input line 464.
@@ -719,7 +719,7 @@ Overfull \hbox (0.3136pt too wide) in paragraph at lines 472--473
  for all classes, if Sleep_stage_N1
  []
 
-<figs/cm-da-mean.png, id=255, 1004.553pt x 654.7662pt>
+<figs/cm-da-mean.png, id=260, 1004.553pt x 654.7662pt>
 File: figs/cm-da-mean.png Graphic file (type png)
 <use figs/cm-da-mean.png>
 Package luatex.def Info: figs/cm-da-mean.png  used on input line 476.
@@ -729,7 +729,7 @@ Overfull \hbox (72.27065pt too wide) in paragraph at lines 476--477
  [][] 
  []
 
-<figs/cm-da-all.png, id=256, 1154.8746pt x 677.8926pt>
+<figs/cm-da-all.png, id=261, 1154.8746pt x 677.8926pt>
 File: figs/cm-da-all.png Graphic file (type png)
 <use figs/cm-da-all.png>
 Package luatex.def Info: figs/cm-da-all.png  used on input line 485.
@@ -755,7 +755,7 @@ Overfull \hbox (12.4023pt too wide) in paragraph at lines 502--502
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.7
 '
 <./figs/cm-da-all.png>]
-<figs/cm-clustering.png, id=270, 1105.731pt x 763.1712pt>
+<figs/cm-clustering.png, id=275, 1105.731pt x 763.1712pt>
 File: figs/cm-clustering.png Graphic file (type png)
 <use figs/cm-clustering.png>
 Package luatex.def Info: figs/cm-clustering.png  used on input line 520.
@@ -776,30 +776,64 @@ warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.8
 <./figs/cm-clustering.png>]
 
 [24]
+<figs/plot-se.png, id=286, 1080.4365pt x 847.7271pt>
+File: figs/plot-se.png Graphic file (type png)
+<use figs/plot-se.png>
+Package luatex.def Info: figs/plot-se.png  used on input line 538.
+(luatex.def)             Requested size: 540.21693pt x 423.8625pt.
+
+Overfull \hbox (53.30681pt too wide) in paragraph at lines 538--539
+ []| [] 
+ []
+
+
 
 [25
 
 ]
 
 [26
+warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.9
+'
+<./figs/plot-se.png>]
+<figs/plot-ess.png, id=299, 869.4081pt x 719.0865pt>
+File: figs/plot-ess.png Graphic file (type png)
+<use figs/plot-ess.png>
+Package luatex.def Info: figs/plot-ess.png  used on input line 564.
+(luatex.def)             Requested size: 434.70299pt x 359.54237pt.
+
+Overfull \hbox (4.69836pt too wide) in paragraph at lines 564--565
+ [][] 
+ []
+
+
+
+[27]
+
+[28
+warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
+0'
+<./figs/plot-ess.png>]
+
+[29
 
 ]
-Overfull \hbox (2.30695pt too wide) in paragraph at lines 542--543
+Overfull \hbox (2.30695pt too wide) in paragraph at lines 582--583
 []\T1/ppl/m/n/10.95 Fur-ther steps from this study may in-clude grow-ing the sou
 n-less dataset, de-tect-ing arousals
  []
 
 
 
-[27
+[30
 
 ]
 
-[28
+[31
 
 ]
 
-[29
+[32
 
 
 Missing character: There is no – (U+2013) in font pplr8t!
@@ -811,19 +845,19 @@ Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 ]
-Underfull \hbox (badness 6592) in paragraph at lines 596--597
+Underfull \hbox (badness 6592) in paragraph at lines 636--637
 []\T1/ppl/m/n/10.95 Zhiguang Wang, Weizhong Yan & Tim Oates. Time Se-ries Clas-s
 i-fi-ca-tion
  []
 
 
-Underfull \hbox (badness 2384) in paragraph at lines 596--597
+Underfull \hbox (badness 2384) in paragraph at lines 636--637
 \T1/ppl/m/n/10.95 from Scratch with Deep Neu-ral Net-works: A Strong Base-line. Avail-able at:
  []
 
 
 
-[30
+[33
 Missing character: There is no – (U+2013) in font pplr8t!
 ] (./memoria.aux)
  ***********
@@ -834,33 +868,28 @@ L3 programming layer <2025-01-18>
 
 LaTeX Warning: There were multiply-defined labels.
 
-
-Package rerunfilecheck Warning: File `memoria.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `memoria.out':
-(rerunfilecheck)             Before: 82AE5682E8DC1C08BED9F6EE783FDB41;2428
-(rerunfilecheck)             After:  A55A86E35208DDF2C5F5DF14ADACAFEA;2562.
+Package rerunfilecheck Info: File `memoria.out' has not changed.
+(rerunfilecheck)             Checksum: C36C518DAC6F0DB8B6EFAEAA53499D02;2542.
 )
 
 Here is how much of LuaTeX's memory you used:
- 11714 strings out of 475506
+ 11742 strings out of 475506
  125056,662416 words of node,token memory allocated
- 1979 words of node memory still in use:
-   3 hlist, 1 vlist, 1 rule, 2 glue, 235 kern, 1 glyph, 102 attribute, 51 glue_s
-pec, 102 attribute_list, 1 write, 1 pdf_action nodes
-   avail lists: 2:594,3:418,4:220,5:132,6:139,7:5785,8:1,9:1170,10:12,11:543
- 34233 multiletter control sequences out of 65536+600000
+ 2085 words of node memory still in use:
+   3 hlist, 1 vlist, 1 rule, 2 glue, 249 kern, 1 glyph, 111 attribute, 51 glue_s
+pec, 111 attribute_list, 1 write, 1 pdf_action nodes
+   avail lists: 2:576,3:418,4:228,5:132,6:139,7:5785,8:10,9:1170,10:12,11:543
+ 34250 multiletter control sequences out of 65536+600000
  95 fonts using 6219631 bytes
  86i,12n,88p,1076b,454s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fonts/
-type1/urw/palatino/uplb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/up
-lr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on memoria.pdf (31 pages, 759401 bytes).
+type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/urw/palati
+no/uplb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/s
+hare/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on memoria.pdf (34 pages, 804285 bytes).
 
-PDF statistics: 350 PDF objects out of 1000 (max. 8388607)
- 295 compressed objects within 3 object streams
- 89 named destinations out of 1000 (max. 131072)
- 137 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 377 PDF objects out of 1000 (max. 8388607)
+ 313 compressed objects within 4 object streams
+ 94 named destinations out of 1000 (max. 131072)
+ 145 words of extra memory for PDF output out of 10000 (max. 100000000)
 

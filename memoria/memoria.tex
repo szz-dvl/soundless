@@ -524,8 +524,49 @@ And the confussion matrix obtained is:
 
 This time the results are pretty more solid, we will be able to classify the different sleep stages and, particullarly we will be able to know when a subject is awake or not. With this kind of data we can carry on and try to link our data set to sounless dataset.
 
-\addchapter{Soundless dataset}
+\addchapter{Sleep Metrics}
+When looking for sensitivity to external stimuli is often good to stick to some well known metrics.One of them is sleep efficiency, defined as:
 
+\[ SE = TST / TIB \]
+
+Where TST is the total time sleeping in bed, and TIB is the total time in bed. Now that we can classify our electroencephalograms slices into the different sleep stages, we can compute the sleep efficiency of a subject, with such metric we will be able to compare soundless users with patiens which recordings have been taken in a very controled environment, allowing us to dilucidate if a recording has been altered by external noise given a user profile. 
+
+Given the pre-sleep questionaries of the Human Sleep Project and the sleep stages of each subject I've elaborated a user profile of around 4.6m sessions of different subjects. Computing the sleep efficiency of each of those subjects we obtain:
+
+\begin{figure}[H]
+\centering
+\hspace*{-2cm}\includegraphics[scale=.5]{figs/plot-se.png}
+\caption{Sleep Efficiency in the Human Sleep Project}
+\label{fig9}
+\end{figure}
+
+As one can see the median sleep efficiency for the sample is around 85\% what is a correct metric, however a lot of outliers below the lower quartile appear in the image too, this is more likely due to the fact that the dataset is composed of people with some kind of sleep pathology. 
+
+Another important aspect in sleep quality is how much sleep time out of bed a subject have. There is a metric called Epworth Sleepiness Scale (ESS), which mesures the tendency to fall asleep during common daily activities, the subject needs to answer to the following eight questions ranging from 0 (very low chance) to 3 (very high chance) of falling asleep:
+
+\begin{itemize}
+  \item How likely to fall asleep while sitting reading?
+  \item How likely to fall asleep while watching TV?
+  \item How likely to fall asleep while sitting in public?
+  \item How likely to fall asleep while going by car as passanger during one hour?
+  \item How likely to fall asleep while laying down in the afternoon?
+  \item How likely to fall asleep while sitting and talking?
+  \item How likely to fall asleep while sitting quiet after lunch?
+  \item How likely to fall asleep while stopped few minutes in traffic?    
+\end{itemize}
+
+The sum of the responses to this questions will yield the ESS punctuation, being from 0 to 10 a normal puntuation while above 10 may suggest excessive daytime sleepiness, which could be a sign of an underlying condition or disorder.
+
+In the dataset taken the ESS looks as follows:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.5]{figs/plot-ess.png}
+\caption{ESS in the Human Sleep Project}
+\label{fig10}
+\end{figure} 
+
+A median around 7 and the upper quartile above 10, again this may be due to the pathologies suffered by the subjects of the human sleep project.
 
 \addchapter{Conclusion}
 Sleep study is a complex topic, and how noise affects sleep increases the complexity of such an study. In this document however, we applied a set of techniques that allow us to predict the sleep stage of a subject given an electroencephalogram. 
@@ -542,7 +583,7 @@ With a bigger dataset we could use soundless data to make a deeper study on the 
 Further steps from this study may include growing the sounless dataset, detecting arousals from vital signals and trying to stablish a relationship between soundless data and electroencephalogram data. Morover, the dataset from The Human Sleep Project provides, in some cases, a pre-sleep questionary. This questionary could be used to create a user profile, so if soundless users are willing to respond a questionary similar to those provided by The Human Sleep Project it will be a good point to start to relate data between the two datasets.  
 
 \addchapter{Acknowledgements}
-I would like to give thanks specialy to Prof. Pedro Garc\'ia L\'opez for all the guidance and time spent with the project and to the UOC and URV for the material shared without wich I wouldn't have been able to write this study. I would like to thank Dra. Mirea Lecina for her assistance at understanding electroencephalograms.
+I would like to give thanks specialy to Prof. Pedro Garc\'ia L\'opez for all the guidance and time spent with the project and to the UOC and URV for the material shared without wich I wouldn't have been able to write this study. I would like to thank Dra. Mirea Lecina for her assistance at understanding electroencephalograms. Aditionally I would like to thank Daniel Alejandro Coll for his assistance.
 
 
 \addcontentsline{toc}{section}{Bibliography}
