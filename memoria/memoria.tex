@@ -524,49 +524,66 @@ And the confussion matrix obtained is:
 
 This time the results are pretty more solid, we will be able to classify the different sleep stages and, particullarly we will be able to know when a subject is awake or not. With this kind of data we can carry on and try to link our data set to sounless dataset.
 
+\addchapter{Soundless}
+The soundless dataset is composed of 362 sessions for 44 users. In the different sessions the decibels in the ambient are recorded, and the different sleep stages of each patient are recorded too. With this data, we can try to compare the users in HSP project and in Soundless dataset to see if noise is affecting the sleep quality of the patiens.
+
 \addchapter{Sleep Metrics}
-When looking for sensitivity to external stimuli is often good to stick to some well known metrics.One of them is sleep efficiency, defined as:
+When looking for sensitivity to external stimuli is often good to stick to some well known metrics. The main metric is sleep efficiency, defined as:
 
 \[ SE = TST / TIB \]
 
 Where TST is the total time sleeping in bed, and TIB is the total time in bed. Now that we can classify our electroencephalograms slices into the different sleep stages, we can compute the sleep efficiency of a subject, with such metric we will be able to compare soundless users with patiens which recordings have been taken in a very controled environment, allowing us to dilucidate if a recording has been altered by external noise given a user profile. 
 
-Given the pre-sleep questionaries of the Human Sleep Project and the sleep stages of each subject I've elaborated a user profile of around 4.6m sessions of different subjects. Computing the sleep efficiency of each of those subjects we obtain:
+Given the sleep stages of each subject I've elaborated a user profile of around 12.1m sessions of different subjects of both HSP and soundless dataset. Computing the sleep efficiency of each of those subjects we obtain:
 
 \begin{figure}[H]
 \centering
-\hspace*{-2cm}\includegraphics[scale=.5]{figs/plot-se.png}
+\hspace*{-2cm}\includegraphics[scale=.5]{figs/plot-se-all.png}
 \caption{Sleep Efficiency in the Human Sleep Project}
 \label{fig9}
 \end{figure}
 
-As one can see the median sleep efficiency for the sample is around 85\% what is a correct metric, however a lot of outliers below the lower quartile appear in the image too, this is more likely due to the fact that the dataset is composed of people with some kind of sleep pathology. 
+As one can see the median sleep efficiency for the sample is around 85\% what is a correct metric, however a lot of outliers below the lower quartile appear in the image too, this is more likely due to the fact that the dataset is composed of people with some kind of sleep pathology and soundless users, exposed to noise during sleep are included in the plot.
 
-Another important aspect in sleep quality is how much sleep time out of bed a subject have. There is a metric called Epworth Sleepiness Scale (ESS), which mesures the tendency to fall asleep during common daily activities, the subject needs to answer to the following eight questions ranging from 0 (very low chance) to 3 (very high chance) of falling asleep:
-
-\begin{itemize}
-  \item How likely to fall asleep while sitting reading?
-  \item How likely to fall asleep while watching TV?
-  \item How likely to fall asleep while sitting in public?
-  \item How likely to fall asleep while going by car as passanger during one hour?
-  \item How likely to fall asleep while laying down in the afternoon?
-  \item How likely to fall asleep while sitting and talking?
-  \item How likely to fall asleep while sitting quiet after lunch?
-  \item How likely to fall asleep while stopped few minutes in traffic?    
-\end{itemize}
-
-The sum of the responses to this questions will yield the ESS punctuation, being from 0 to 10 a normal puntuation while above 10 may suggest excessive daytime sleepiness, which could be a sign of an underlying condition or disorder.
-
-In the dataset taken the ESS looks as follows:
+Now if we compute the same plot for HSP users we see:
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=.5]{figs/plot-ess.png}
-\caption{ESS in the Human Sleep Project}
+\hspace*{-2cm}\includegraphics[scale=.5]{figs/plot-se-hsp.png}
+\caption{Sleep Efficiency in the Human Sleep Project}
 \label{fig10}
-\end{figure} 
+\end{figure}
 
-A median around 7 and the upper quartile above 10, again this may be due to the pathologies suffered by the subjects of the human sleep project.
+The plot is very similar to the first one, what is natural since the vast majority of the samples come from the HSP dataset, lets see what happens when we plot the sleep efficiency for soundless users:
+
+\begin{figure}[H]
+\centering
+\hspace*{-2cm}\includegraphics[scale=.5]{figs/plot-se-soundless.png}
+\caption{Sleep Efficiency in the Soundless dataset}
+\label{fig11}
+\end{figure}
+
+As we can see the sleep efficiency drops dramatically for Soundless users, and the outliers present are above the upper quartile instead of below the lower quartile. 
+
+Goig a little bit further we can try to plot the mean of the decibels for each soundless session using a boundary for the sleep efficiency metric, so, soundless users with a sleep efficiency of 0.6 or above are affected by decibels in the following way:
+
+\begin{figure}[H]
+\centering
+\hspace*{-2cm}\includegraphics[scale=.5]{figs/plot-db-upper.png}
+\caption{Decibels in Soundless dataset for sleep efficiency over 0.6}
+\label{fig12}
+\end{figure}
+ 
+As we can see the decibels median is slightly above 32dB, while the upper quartile is slightly below 60, which is a pretty loud noise, however this patiens are able to sleep the 60\% of the time in bed, now looking at the other side, it is, plotting the decibels for soundless users with an sleep efficiency of less than 0.6 we see:
+
+\begin{figure}[H]
+\centering
+\hspace*{-2cm}\includegraphics[scale=.5]{figs/plot-db-lower.png}
+\caption{Decibels in Soundless dataset for sleep efficiency under 0.6}
+\label{fig13}
+\end{figure}
+
+In this case the median is in the same range of the first case, however, we can see that although the upper quartile is below 50dB we have a lot of outliers above this upper quartile, meaning that people that sleep less is affected by higher decibels.
 
 \addchapter{Conclusion}
 Sleep study is a complex topic, and how noise affects sleep increases the complexity of such an study. In this document however, we applied a set of techniques that allow us to predict the sleep stage of a subject given an electroencephalogram. 
@@ -574,6 +591,8 @@ Sleep study is a complex topic, and how noise affects sleep increases the comple
 This techniques can be adapted or extended to study the noise disturbance on a subject while sleeping. As an instance we could categorize and classify the different arousals found in an electroencephalogram and compare the results with a recording with an standard microphone. Actually, the SNORE channel present in most of the electroencephalograms of the The Human Sleep project dataset is a microphone to capture snoring volume during sleep, however we need to take into account that this electroencephalograms has been captured in a very controled environment, so use this recordings to comparate the sounds, probably emitted by the subject itself, with arousals will probably lead to poor results, since the arousals related to snoring may not be related to noise particullarly. In top of that, the dataset from the Human SLeep Project contains electroencephalograms of subjects with some pathology, it would be nice to have a dataset of healthy patiens to try to expand further our conclusions.
 
 Ideally, with similar montages we can achieve what we want, exposing the subjects to sounds at different frequencies and amplitudes we may get a desirable result for this study. World is not ideal, neither is the data, so with the working dataset of the human sleep project this is a first step towards gaining some knowledge on how the noise affect the sleep quality.
+
+Regarding the soundless dataset, we can say that noise seems to be a crucial factor in sleep quality. People exposed to higher decibels is not able to sleep the most of the night, and people who has been exposed to noise regularly tend to show a lower sleep efficiency than people that does not.  
 
 \addchapter{Future work}
 As concluded above, the techniques used in this study may be a first step towards gaining some knowledge on how the noise affects the sleep quality. By classifing the sleep stages of a subject given an electroencephalogram we can stablish in which period the noise affects more or less a subject. Besides, the gerealization on sleep stage classification, it is, being able to predict the sleep stage of a subject given other subjects data is a great capability, the way we predict sleep stages we can predict arousals given another subject data. Arousal prediction will be another step forward to gain knowledge on how noise affects the sleep quality. 

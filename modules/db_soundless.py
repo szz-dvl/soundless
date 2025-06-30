@@ -1,4 +1,5 @@
 from io import StringIO
+import math
 import psycopg2
 import os
 from datetime import datetime
@@ -44,6 +45,13 @@ class Db():
                     dB float4 NOT NULL,
                     uuid varchar NOT NULL,
                     se float4 NOT NULL  
+                );
+                           
+                CREATE TABLE IF NOT EXISTS public.aggregated (
+                    dB float4 NOT NULL,
+                    session varchar NOT NULL,
+                    se float4 NOT NULL,
+                    dataset varchar NOT NULL
                 );
             """)
 
@@ -95,6 +103,7 @@ class Db():
         self.conn.commit()
 
     def insertEfficiencies(self, efficiencies: pd.DataFrame):
+
         sio = StringIO()
         efficiencies.to_csv(sio, index=None, header=None)
         sio.seek(0)
@@ -109,6 +118,46 @@ class Db():
                     ) FROM STDIN WITH CSV
                 """,
                 file=sio
+            )
+            
+        self.conn.commit()
+
+    def insertAggregatedSoundless(self, efficiencies: pd.DataFrame):
+
+        efficiencies["dataset"] = "soundless"
+        
+        sio = StringIO()
+        efficiencies.to_csv(sio, index=None, header=None)
+        sio.seek(0)
+        
+        with self.conn.cursor() as cursor:           
+            cursor.copy_expert(
+                sql = f"""
+                    COPY aggregated (
+                        dB,
+                        session,
+                        se,
+                        dataset
+                    ) FROM STDIN WITH CSV
+                """,
+                file=sio
+            )
+            
+        self.conn.commit()
+
+    def insertAggregatedHSP(self, session: str, se: float):
+        
+        with self.conn.cursor() as cursor:           
+            cursor.execute(
+                """
+                    INSERT INTO aggregated (
+                        dB,
+                        session,
+                        se,
+                        dataset
+                    ) VALUES (%s, %s, %s, %s)
+                """,
+                (math.nan, session, se, "hsp")
             )
             
         self.conn.commit()
@@ -170,5 +219,13 @@ class Db():
             data["se"] = ses
 
             return data
+        
+    def getCluster(self):
+        with self.conn.cursor() as cursor:
+            cursor.execute("""
+                SELECT dB, session, se, dataset 
+                FROM public.aggregated;
+            """)
 
+            return pd.DataFrame(cursor.fetchall(), columns=["dB", "session", "se", "dataset"])
 
