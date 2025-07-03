@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2026/dev/Arch Linux)  (format=lualatex 2025.5.20)  30 JUN 2025 10:36
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2026/dev/Arch Linux)  (format=lualatex 2025.5.20)  3 JUL 2025 10:45
  restricted system commands enabled.
 **memoria.tex
 (./memoria.tex
@@ -411,9 +411,6 @@ Inserting `l3color' in `luaotfload.parse_color'.
 
 LaTeX Warning: Label `tab4' multiply defined.
 
-
-LaTeX Warning: Label `fig12' multiply defined.
-
 )
 \openout1 = memoria.aux
 
@@ -556,13 +553,18 @@ warning  (pdf backend): ignoring duplicate destination with the name 'page.1'
 [2
 
 ]
+LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 1
+77.
+ (/usr/share/texmf-dist/tex/latex/psnfss/ts1ppl.fd
+File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
+)
 
 [3]
 
 [4
 
 ]
-Overfull \hbox (35.66017pt too wide) in paragraph at lines 188--189
+Overfull \hbox (35.66017pt too wide) in paragraph at lines 193--194
 []\T1/ppl/m/n/10.95 The long-term con-se-quences of chronic noise-induced sleep dis-rup-tion are also well-documented.
  []
 
@@ -572,14 +574,12 @@ Overfull \hbox (35.66017pt too wide) in paragraph at lines 188--189
 
 [6
 
-]
 
-[7
 warning  (pdf backend): ignoring duplicate destination with the name 'table.0.1'
 
 ]
 
-[8]
+[7]
 *geometry* verbose mode - [ newgeometry ] result:
 * driver: luatex
 * paper: <default>
@@ -613,27 +613,26 @@ warning  (pdf backend): ignoring duplicate destination with the name 'table.0.1'
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 
-Overfull \hbox (80.31444pt too wide) in paragraph at lines 258--282
+Overfull \hbox (80.31444pt too wide) in paragraph at lines 250--274
  [] 
  []
 
 
 
-[9
+[8
 
 
 warning  (pdf backend): ignoring duplicate destination with the name 'table.0.2'
 
 ]
-LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 2
-95.
- (/usr/share/texmf-dist/tex/latex/psnfss/ts1ppl.fd
-File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
-)
-<figs/fcn.png, id=179, 1201.48875pt x 3986.895pt>
+
+[9
+
+]
+<figs/fcn.png, id=165, 1201.48875pt x 3986.895pt>
 File: figs/fcn.png Graphic file (type png)
 <use figs/fcn.png>
-Package luatex.def Info: figs/fcn.png  used on input line 309.
+Package luatex.def Info: figs/fcn.png  used on input line 301.
 (luatex.def)             Requested size: 120.15591pt x 398.71286pt.
 
 
@@ -645,10 +644,10 @@ Package luatex.def Info: figs/fcn.png  used on input line 309.
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
 '
 <./figs/fcn.png>]
-<figs/fcn-lstm.png, id=198, 1201.48875pt x 2971.1pt>
+<figs/fcn-lstm.png, id=184, 1201.48875pt x 2971.1pt>
 File: figs/fcn-lstm.png Graphic file (type png)
 <use figs/fcn-lstm.png>
-Package luatex.def Info: figs/fcn-lstm.png  used on input line 329.
+Package luatex.def Info: figs/fcn-lstm.png  used on input line 323.
 (luatex.def)             Requested size: 120.15591pt x 297.12741pt.
 
 
@@ -660,10 +659,10 @@ warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.2
 [13]
 
 [14]
-<figs/mlp.png, id=218, 1437.37pt x 1616.0375pt>
+<figs/mlp.png, id=204, 1437.37pt x 1616.0375pt>
 File: figs/mlp.png Graphic file (type png)
 <use figs/mlp.png>
-Package luatex.def Info: figs/mlp.png  used on input line 404.
+Package luatex.def Info: figs/mlp.png  used on input line 398.
 (luatex.def)             Requested size: 287.4689pt x 323.20177pt.
 
 
@@ -678,99 +677,103 @@ warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.3
 <./figs/mlp.png>]
 
 [17]
-<figs/cm.png, id=243, 1269.0612pt x 721.9773pt>
+
+[18
+
+]
+<figs/cm.png, id=239, 1269.0612pt x 721.9773pt>
 File: figs/cm.png Graphic file (type png)
 <use figs/cm.png>
-Package luatex.def Info: figs/cm.png  used on input line 450.
+Package luatex.def Info: figs/cm.png  used on input line 456.
 (luatex.def)             Requested size: 634.52905pt x 360.98776pt.
 
-Overfull \hbox (90.71341pt too wide) in paragraph at lines 450--451
+Overfull \hbox (90.71341pt too wide) in paragraph at lines 456--457
 []| []
  []
 
 
 
-[18
+[19
 
 
 warning  (pdf backend): ignoring duplicate destination with the name 'table.0.4'
 
 ]
 
-[19
+[20
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.4
 '
 <./figs/cm.png>]
-<figs/cm-da-max.png, id=257, 971.3088pt x 628.0263pt>
+<figs/cm-da-max.png, id=254, 971.3088pt x 628.0263pt>
 File: figs/cm-da-max.png Graphic file (type png)
 <use figs/cm-da-max.png>
-Package luatex.def Info: figs/cm-da-max.png  used on input line 464.
+Package luatex.def Info: figs/cm-da-max.png  used on input line 470.
 (luatex.def)             Requested size: 485.65321pt x 314.01237pt.
 
-Overfull \hbox (55.64859pt too wide) in paragraph at lines 464--465
+Overfull \hbox (55.64859pt too wide) in paragraph at lines 470--471
  [][] 
- []
-
-
-
-[20
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.5
-'
-<./figs/cm-da-max.png>]
-Overfull \hbox (0.3136pt too wide) in paragraph at lines 472--473
-[]\T1/ppl/m/n/10.95 In the next ap-proach I com-puted the mean of the el-e-ments
- for all classes, if Sleep_stage_N1
- []
-
-<figs/cm-da-mean.png, id=265, 1004.553pt x 654.7662pt>
-File: figs/cm-da-mean.png Graphic file (type png)
-<use figs/cm-da-mean.png>
-Package luatex.def Info: figs/cm-da-mean.png  used on input line 476.
-(luatex.def)             Requested size: 502.27527pt x 327.3823pt.
-
-Overfull \hbox (72.27065pt too wide) in paragraph at lines 476--477
- [][] 
- []
-
-<figs/cm-da-all.png, id=266, 1154.8746pt x 677.8926pt>
-File: figs/cm-da-all.png Graphic file (type png)
-<use figs/cm-da-all.png>
-Package luatex.def Info: figs/cm-da-all.png  used on input line 485.
-(luatex.def)             Requested size: 577.43588pt x 338.94547pt.
-
-Overfull \hbox (90.52576pt too wide) in paragraph at lines 485--486
- []| [] 
  []
 
 
 
 [21
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.6
+warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.5
 '
-<./figs/cm-da-mean.png>]
-Overfull \hbox (12.4023pt too wide) in paragraph at lines 502--502
-[]\T1/ppl/m/n/10.95 Sleep_stage_N1/N2| 
+<./figs/cm-da-max.png>]
+Overfull \hbox (0.3136pt too wide) in paragraph at lines 478--479
+[]\T1/ppl/m/n/10.95 In the next ap-proach I com-puted the mean of the el-e-ments
+ for all classes, if Sleep_stage_N1
  []
 
+<figs/cm-da-mean.png, id=263, 1004.553pt x 654.7662pt>
+File: figs/cm-da-mean.png Graphic file (type png)
+<use figs/cm-da-mean.png>
+Package luatex.def Info: figs/cm-da-mean.png  used on input line 482.
+(luatex.def)             Requested size: 502.27527pt x 327.3823pt.
 
+Overfull \hbox (72.27065pt too wide) in paragraph at lines 482--483
+ [][] 
+ []
 
-[22
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.7
-'
-<./figs/cm-da-all.png>]
-<figs/cm-clustering.png, id=280, 1105.731pt x 763.1712pt>
-File: figs/cm-clustering.png Graphic file (type png)
-<use figs/cm-clustering.png>
-Package luatex.def Info: figs/cm-clustering.png  used on input line 520.
-(luatex.def)             Requested size: 464.40385pt x 320.52972pt.
+<figs/cm-da-all.png, id=265, 1154.8746pt x 677.8926pt>
+File: figs/cm-da-all.png Graphic file (type png)
+<use figs/cm-da-all.png>
+Package luatex.def Info: figs/cm-da-all.png  used on input line 491.
+(luatex.def)             Requested size: 577.43588pt x 338.94547pt.
 
-Overfull \hbox (5.94649pt too wide) in paragraph at lines 520--521
+Overfull \hbox (90.52576pt too wide) in paragraph at lines 491--492
  []| [] 
  []
 
 
 
+[22
+warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.6
+'
+<./figs/cm-da-mean.png>]
+Overfull \hbox (12.4023pt too wide) in paragraph at lines 508--508
+[]\T1/ppl/m/n/10.95 Sleep_stage_N1/N2| 
+ []
+
+
+
 [23
+warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.7
+'
+<./figs/cm-da-all.png>]
+<figs/cm-clustering.png, id=282, 1105.731pt x 763.1712pt>
+File: figs/cm-clustering.png Graphic file (type png)
+<use figs/cm-clustering.png>
+Package luatex.def Info: figs/cm-clustering.png  used on input line 526.
+(luatex.def)             Requested size: 464.40385pt x 320.52972pt.
+
+Overfull \hbox (5.94649pt too wide) in paragraph at lines 526--527
+ []| [] 
+ []
+
+
+
+[24
 warning  (pdf backend): ignoring duplicate destination with the name 'table.0.5'
 
 
@@ -778,91 +781,96 @@ warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.8
 '
 <./figs/cm-clustering.png>]
 
-[24]
-
-[25
-
-]
-<figs/plot-se-all.png, id=295, 826.0461pt x 652.5981pt>
-File: figs/plot-se-all.png Graphic file (type png)
-<use figs/plot-se-all.png>
-Package luatex.def Info: figs/plot-se-all.png  used on input line 541.
-(luatex.def)             Requested size: 413.02203pt x 326.29825pt.
-
+[25]
 
 [26
 
 ]
-<figs/plot-se-hsp.png, id=302, 832.5504pt x 698.8509pt>
-File: figs/plot-se-hsp.png Graphic file (type png)
-<use figs/plot-se-hsp.png>
-Package luatex.def Info: figs/plot-se-hsp.png  used on input line 552.
-(luatex.def)             Requested size: 416.27419pt x 349.42459pt.
-
 
 [27
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.9
-'
-<./figs/plot-se-all.png>]
-<figs/plot-se-soundless.png, id=309, 826.0461pt x 667.7748pt>
-File: figs/plot-se-soundless.png Graphic file (type png)
-<use figs/plot-se-soundless.png>
-Package luatex.def Info: figs/plot-se-soundless.png  used on input line 561.
-(luatex.def)             Requested size: 413.02203pt x 333.88658pt.
+Missing character: There is no – (U+2013) in font pplr8t!
+Missing character: There is no – (U+2013) in font pplr8t!
+]
+<figs/plot-se-all.png, id=304, 826.0461pt x 652.5981pt>
+File: figs/plot-se-all.png Graphic file (type png)
+<use figs/plot-se-all.png>
+Package luatex.def Info: figs/plot-se-all.png  used on input line 567.
+(luatex.def)             Requested size: 413.02203pt x 326.29825pt.
 
 
 [28
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
-0'
-<./figs/plot-se-hsp.png>]
-<figs/plot-db-upper.png, id=316, 880.2486pt x 692.3466pt>
-File: figs/plot-db-upper.png Graphic file (type png)
-<use figs/plot-db-upper.png>
-Package luatex.def Info: figs/plot-db-upper.png  used on input line 572.
-(luatex.def)             Requested size: 440.12323pt x 346.17245pt.
 
+]
 
 [29
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
-1'
-<./figs/plot-se-soundless.png>]
-<figs/plot-db-lower.png, id=323, 862.9038pt x 675.0018pt>
-File: figs/plot-db-lower.png Graphic file (type png)
-<use figs/plot-db-lower.png>
-Package luatex.def Info: figs/plot-db-lower.png  used on input line 581.
-(luatex.def)             Requested size: 431.45084pt x 337.50008pt.
+warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.9
+'
+<./figs/plot-se-all.png>]
+<figs/plot-se-hsp.png, id=318, 832.5504pt x 698.8509pt>
+File: figs/plot-se-hsp.png Graphic file (type png)
+<use figs/plot-se-hsp.png>
+Package luatex.def Info: figs/plot-se-hsp.png  used on input line 578.
+(luatex.def)             Requested size: 416.27419pt x 349.42459pt.
 
 
 [30
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
-2'
-<./figs/plot-db-upper.png>]
+0'
+<./figs/plot-se-hsp.png>]
+<figs/plot-se-soundless.png, id=326, 826.0461pt x 667.7748pt>
+File: figs/plot-se-soundless.png Graphic file (type png)
+<use figs/plot-se-soundless.png>
+Package luatex.def Info: figs/plot-se-soundless.png  used on input line 589.
+(luatex.def)             Requested size: 413.02203pt x 333.88658pt.
+
 
 [31
+warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
+1'
+<./figs/plot-se-soundless.png>]
+<figs/plot-db-upper.png, id=333, 880.2486pt x 692.3466pt>
+File: figs/plot-db-upper.png Graphic file (type png)
+<use figs/plot-db-upper.png>
+Package luatex.def Info: figs/plot-db-upper.png  used on input line 600.
+(luatex.def)             Requested size: 440.12323pt x 346.17245pt.
+
+
+[32
+warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
+2'
+<./figs/plot-db-upper.png>]
+<figs/plot-db-lower.png, id=340, 862.9038pt x 675.0018pt>
+File: figs/plot-db-lower.png Graphic file (type png)
+<use figs/plot-db-lower.png>
+Package luatex.def Info: figs/plot-db-lower.png  used on input line 611.
+(luatex.def)             Requested size: 431.45084pt x 337.50008pt.
+
+
+[33
 warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
 3'
 <./figs/plot-db-lower.png>]
 
-[32
+[34
 
 ]
-Overfull \hbox (2.30695pt too wide) in paragraph at lines 602--603
+Overfull \hbox (2.30695pt too wide) in paragraph at lines 632--633
 []\T1/ppl/m/n/10.95 Fur-ther steps from this study may in-clude grow-ing the sou
 n-less dataset, de-tect-ing arousals
  []
 
 
 
-[33
-
-]
-
-[34
-
-]
-
 [35
 
+]
+
+[36
+
+]
+
+[37
+
 
 Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
@@ -873,19 +881,19 @@ Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 ]
-Underfull \hbox (badness 6592) in paragraph at lines 656--657
+Underfull \hbox (badness 6592) in paragraph at lines 686--687
 []\T1/ppl/m/n/10.95 Zhiguang Wang, Weizhong Yan & Tim Oates. Time Se-ries Clas-s
 i-fi-ca-tion
  []
 
 
-Underfull \hbox (badness 2384) in paragraph at lines 656--657
+Underfull \hbox (badness 2384) in paragraph at lines 686--687
 \T1/ppl/m/n/10.95 from Scratch with Deep Neu-ral Net-works: A Strong Base-line. Avail-able at:
  []
 
 
 
-[36
+[38
 Missing character: There is no – (U+2013) in font pplr8t!
 ] (./memoria.aux)
  ***********
@@ -897,27 +905,27 @@ L3 programming layer <2025-01-18>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `memoria.out' has not changed.
-(rerunfilecheck)             Checksum: DB6338060E7050035DA2E8761FAD05AA;2633.
+(rerunfilecheck)             Checksum: 59173D988449B479CDBEBFD7F4AF719F;2356.
 )
 
 Here is how much of LuaTeX's memory you used:
- 11783 strings out of 475506
+ 11780 strings out of 475506
  125056,662416 words of node,token memory allocated
- 2103 words of node memory still in use:
-   3 hlist, 1 vlist, 1 rule, 2 glue, 251 kern, 1 glyph, 113 attribute, 51 glue_s
-pec, 113 attribute_list, 1 write, 1 pdf_action nodes
-   avail lists: 2:572,3:418,4:236,5:132,6:139,7:5785,8:10,9:1170,10:12,11:543
- 34275 multiletter control sequences out of 65536+600000
+ 2370 words of node memory still in use:
+   3 hlist, 1 vlist, 1 rule, 2 glue, 298 kern, 1 glyph, 121 attribute, 51 glue_s
+pec, 121 attribute_list, 1 write, 1 pdf_action nodes
+   avail lists: 2:542,3:418,4:204,5:132,6:139,7:5887,8:10,9:1170,10:16,11:543
+ 34274 multiletter control sequences out of 65536+600000
  95 fonts using 6219631 bytes
- 86i,12n,88p,1076b,454s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 86i,12n,88p,1123b,454s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/urw/palati
 no/uplb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/s
 hare/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on memoria.pdf (37 pages, 849071 bytes).
+Output written on memoria.pdf (39 pages, 854296 bytes).
 
-PDF statistics: 404 PDF objects out of 1000 (max. 8388607)
- 331 compressed objects within 4 object streams
- 101 named destinations out of 1000 (max. 131072)
- 153 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 414 PDF objects out of 1000 (max. 8388607)
+ 339 compressed objects within 4 object streams
+ 99 named destinations out of 1000 (max. 131072)
+ 145 words of extra memory for PDF output out of 10000 (max. 100000000)
 
