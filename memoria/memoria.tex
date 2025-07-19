@@ -46,6 +46,8 @@
 \usepackage{geometry}
 \usepackage{float}
 \usepackage{graphicx}
+\usepackage{caption}
+\captionsetup[table]{font=small,skip=-5pt}     %% Adjust here
 
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
@@ -558,71 +560,70 @@ When looking for sensitivity to external stimuli is often good to stick to some 
 
 \[ SE = TST / TIB \]
 
-Where TST is the total time sleeping in bed, and TIB is the total time in bed. Now that we can classify our electroencephalograms slices into the different sleep stages, we can compute the sleep efficiency of a subject, with such metric we will be able to compare soundless users with patiens which recordings have been taken in a very controled environment, allowing us to dilucidate if a recording has been altered by external noise given a user profile. 
+Where TST is the total time sleeping in bed, and TIB is the total time in bed. Now that we can classify our electroencephalograms slices into the different sleep stages, we can compute the sleep efficiency of a subject, with such metric we will be able to compare soundless users with patiens which recordings have been taken in a very controled environment, allowing us to dilucidate if a recording has been altered by external noise given a user profile.
 
-Given the sleep stages of each subject I've elaborated a user profile of around 12.1m sessions of different subjects of both HSP and soundless dataset. Computing the sleep efficiency of each of those subjects we obtain:
+Taking into account the different sleep phases of the different subjjects we can try to tune up even more our study. Deep sleep, also known as slow-wave sleep or stage N3, is a crucial phase of the sleep cycle characterized by its restorative properties. It's the deepest stage of non-REM sleep, where the body and mind engage in restorative processes. During deep sleep, brain waves slow down, and the body experiences a significant decrease in heart rate, breathing rate, and muscle tension. This stage is essential for physical recovery, immune system strengthening, memory consolidation, and hormone regulation. REM (Rapid Eye Movement) sleep is the final stage of a sleep cycle, characterized by intense brain activity, vivid dreams, and temporary paralysis of the limbs. It typically begins about 90 minutes after falling asleep and recurs in cycles throughout the night, with later cycles becoming longer. REM sleep is believed to be crucial for cognitive functions like memory consolidation, learning, and emotional processing.
+
+In addition to the sleep efficiency we will compute the percentage of the night a subject is in light sleep stage (stages N1 and N2), deep sleep stage (stage N3) or REM sleep stage. With this values we can try to aggregate all the users from soundless dataset and The Human Sleep Project and estimate clusters of users. We will work with around 12m sessions of The Human Sleep project and the 362 sessions of soundless dataset.
+
+We will use the well known KMeans algorithm for the clustering. Before clustering the subjects a PCA analisis to reduce the variable space is performed, using two components for the four variables we are studing, the sleep efficiency, the percentage of time in light sleep, the percentage of time in deep sleeep and the percentage of time in REM sleep. Further on, performing a \href{https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html#sphx-glr-auto-examples-cluster-plot-kmeans-silhouette-analysis-py}{silhouette score} study on the data for 2, 3, 4, 5 and 6 clusters we obtain that three clusters is the optimum with an score of 0.392, the graphic is as follows:
 
 \begin{figure}[H]
 \centering
-\hspace*{-2cm}\includegraphics[scale=.5]{figs/plot-se-all.png}
-\caption{Sleep Efficiency in the Human Sleep Project}
+\hspace*{-4cm}\includegraphics[scale=.5]{figs/silhouette.png}
+\caption{Silhouette score for 3 clusters}
 \label{fig9}
 \end{figure}
 
-As one can see the median sleep efficiency for the sample is around 85\% what is a correct metric, however a lot of outliers below the lower quartile appear in the image too, this is more likely due to the fact that the dataset is composed of people with some kind of sleep pathology and soundless users, exposed to noise during sleep are included in the plot.\newpage
-
-Now if we compute the same plot for HSP users we see:
+The graphics for 2, 4, 5 and 6 clusters are not included in this document for the sake of brevity. With this information we can carry on our study, we perform a KMeans clustering for three clusters and study the sleep efficiency en each cluster, the results are as follows:
 
 \begin{figure}[H]
 \centering
-\hspace*{-2cm}\includegraphics[scale=.5]{figs/plot-se-hsp.png}
-\caption{Sleep Efficiency in the Human Sleep Project}
+\vspace{-5cm}\includegraphics[scale=.5, angle=90]{figs/se_clusters.png}
+\caption{Sleep efficiency for 3 clusters}
 \label{fig10}
 \end{figure}
 
-The plot is very similar to the first one, what is natural since the vast majority of the samples come from the HSP dataset,we have a median of 85\% and a lot of outliers under the lower quartile again. This indicates that the vast majority of the people sleeping in a very controlled environment have a good sleep efficiency, and the outliers are probably due to the fact that the analised people have an sleep pathology, whether it is pain related or related to neurological causes. \newpage
+In figure \ref{fig10} we can see three diferent user "profiles". In the first cluster people have a poor sleep efficiency with a median around 0.54 and the lower quartile falling up to 0.13 aproximatelly. This seems to indicate that people in the first cluster is the people having more trouble sleeping, showing a poor sleep quality. For the second cluster we have a median sleep efficiency of 0.9, which is good, however a lot of outliers below the lower quartile (arround 0.75) are present. Finally, the third cluster shows a median of around 0.87 which is a good sleep efficiency, we have no outliers and the lower quartile is around 0.65 which is low but not terrible.
 
-Lets see what happens when we plot the sleep efficiency for soundless users:
+Of the 362 soundless sessions taken in consideration in the study, 293 are in cluster 1, 55 are in cluster 2 and 14 are in cluster 3. This is a first indicator that people exposed to noise in the ambient is affected severely in the sleep quality.
+
+Lets now get deeper into the data and take a look at how many time the subjects in different clusters are in the different sleep stages:
 
 \begin{figure}[H]
-\centering
-\hspace*{-2cm}\includegraphics[scale=.5]{figs/plot-se-soundless.png}
-\caption{Sleep Efficiency in the Soundless dataset}
+\vspace*{-6cm}\includegraphics[scale=.3, angle=90]{figs/sleep_percentages.png}
+\caption{Sleep stages percentages for 3 clusters}
 \label{fig11}
 \end{figure}
 
-As we can see the sleep efficiency drops dramatically for Soundless users, and the outliers present are above the upper quartile instead of below the lower quartile. This figure shows that users exposed to high dB during the night have a worst sleep efficiency than users in a very controlled environment, even when the users have some sleep pathology.\newpage
+The graphic in \ref{fig11} is more explicative taking into account that light sleep, particularly Stage 2 (N2), makes up approximately 50\% of an adult's total sleep time, though this can vary slightly based on individual factors like age and overall health. While Stage 1 (N1) is the very lightest phase where a subject initially drift off, Stage 2 is a more sustained period of light sleep with gradual relaxation and slowed bodily functions. Deep sleep must be around 10\% and 25\% of the night and REM phase must be in around 20\% and 25\% of the night.  
 
-Going a little bit further we can try to plot the mean of the decibels for each soundless session using a boundary for the sleep efficiency metric, so, soundless users with a sleep efficiency of 0.6 or above are affected by decibels in the following way:
+In the cluster 0 we have the median of light sleep percentage in around 75\% which is above the expected percentage, as exptected from the grafic \ref{fig10}. Deep sleep for subjects in cluster 1 is around 12\% in median, while REM sleep is around 10\% what is indicating that subjects that have a worst sleep efficiency have problems too reaching REM sleep phase during the night, either because they are affected by some sleep pathology or are exposed to loud noise in the night.
+
+For cluster 1 we have a median for light sleep time of around a 58\%, with a lot of outliers under the the lower quartile, indicatiing that people in this group is having a better quality in sleep than the previous group, as we can confirm in the graphics for deep sleep percentage (with a median of arround 22\%) and REM sleep phase which is around 20\%.
+
+Finally cluster 2 is kind of a medium group of people, in this group we have people that spend around the 77\% of the night in light sleep, only arrive to deep sleep in the 7\% of the sleep time and reach REM sleep the 12\% of the night. This group is mostly formed of people with some sleep pathology, since only 14 soundless sessions fall into this category.
+
+To confirm our findings we can plot the decibels that the Soundless subjects are exposed to in the different sessions and for the different clusters found:
 
 \begin{figure}[H]
-\centering
-\hspace*{-2cm}\includegraphics[scale=.5]{figs/plot-db-upper.png}
-\caption{Decibels in Soundless dataset for sleep efficiency over 0.6}
+\vspace*{-5cm}\includegraphics[scale=.5, angle=90]{figs/db_clusters.png}
+\caption{Decibels for soundless users for 3 clusters}
 \label{fig12}
 \end{figure}
- 
-As we can see the decibels median is slightly above 32dB, while the upper quartile is slightly below 60, which is a pretty loud noise, however this patiens are able to sleep the 60\% of the time in bed.
-\newpage
-Now looking at the other side, it is, plotting the decibels for soundless users with an sleep efficiency of less than 0.6 we see:
 
-\begin{figure}[H]
-\centering
-\hspace*{-2cm}\includegraphics[scale=.5]{figs/plot-db-lower.png}
-\caption{Decibels in Soundless dataset for sleep efficiency under 0.6}
-\label{fig13}
-\end{figure}
+In the first cluster, lets rememeber, the one with more people with trouble on sleep we have a median in decibels of around 32 dB which is a pretty moderated noise, but the upper quartile is above 48 dB and we find a lot of outliers above the upper quartile, 293 soundless sessions fall into this category. The second cluster, this is the one that is able to achieve deep and REM sleep phases a correct percentage of the night, we have a median of around 33 dB an no outliers above the upper quartile (which is around 58 dB), 55 soundless sessions fall into thihs category. Finally for cluster 2, where we only have 14 Soundless users, the decibels are in median around 31 with an upper quartile of around 39 dB.
 
-In this case the median is in the same range of the first case, however, we can see that although the upper quartile is below 50dB we have a lot of outliers above this upper quartile, meaning that people that sleep less is affected by higher decibels.
+This seems to confirm that noise in the ambient is not only affecting the sleep efficiency of the subjects, but the sleep quality too. Most of the subjects exposed to loud noise in the night are not able to achieve deep sleep and REM phases a healthy percentage of the night.
 
 \addchapter{Conclusion}
-Sleep study is a complex topic, and how noise affects sleep increases the complexity of such an study. In this document however, we applied a set of techniques that allow us to predict the sleep stage of a subject given an electroencephalogram. 
+Sleep study is a complex topic, and how noise affects sleep increases the complexity of such an study. Some people may be more sensible to noise than another one and sleep quality itself may vary between subjects for many different reasons. Additionally, one subject can be affected by sounds at different frequencies that does not disturb other people. In this document however, we applied a set of techniques that allow us to predict the sleep stage of a subject given an electroencephalogram. This techniques can be adapted or extended to study the noise disturbance on a subject while sleeping. As an instance we could categorize and classify the different arousals found in an electroencephalogram and compare the results with a recording with an standard microphone. The dataset from the Human Sleep Project contains electroencephalograms of subjects with some pathology, it would be nice to have a dataset of healthy patiens to try to expand further our conclusions.
 
-This techniques can be adapted or extended to study the noise disturbance on a subject while sleeping. As an instance we could categorize and classify the different arousals found in an electroencephalogram and compare the results with a recording with an standard microphone. Actually, the SNORE channel present in most of the electroencephalograms of the The Human Sleep project dataset is a microphone to capture snoring volume during sleep, however we need to take into account that this electroencephalograms has been captured in a very controled environment, so use this recordings to comparate the sounds, probably emitted by the subject itself, with arousals will probably lead to poor results, since the arousals related to snoring may not be related to noise particullarly. In top of that, the dataset from the Human Sleep Project contains electroencephalograms of subjects with some pathology, it would be nice to have a dataset of healthy patiens to try to expand further our conclusions.
+Ideally, with similar montages we can achieve what we want, exposing the subjects to sounds at different frequencies and amplitudes we may get a desirable result for this study. World is not ideal, neither is the data, so with the working dataset of the The Human Sleep project this is a first step towards gaining some knowledge on how the noise affect the sleep quality.
 
-Ideally, with similar montages we can achieve what we want, exposing the subjects to sounds at different frequencies and amplitudes we may get a desirable result for this study. World is not ideal, neither is the data, so with the working dataset of the human sleep project this is a first step towards gaining some knowledge on how the noise affect the sleep quality.
+Regarding the soundless dataset, we can say that noise seems to be a crucial factor in sleep quality. People exposed to higher decibels is not able to sleep the most of the night, and people who has been exposed to noise regularly tend to show a lower sleep efficiency than people that does not.
 
-Regarding the soundless dataset, we can say that noise seems to be a crucial factor in sleep quality. People exposed to higher decibels is not able to sleep the most of the night, and people who has been exposed to noise regularly tend to show a lower sleep efficiency than people that does not.  
+We can conclude then that noise seems a determining factor for sleep quality, as presented in this study sounds above 45 dB are enough to disturb a subject enough to not be able to sleep efficiently enough most of the nights, and, we can say too that people exposed to noise regularly may develop an sleep pathology if exposed to noise too much time. Or, in other words, that people exposed to noise while sleeping too many time may show an effectiveness in sleep even lower that people that suffers of an sleep pathology, chronic pain and other sleep disorders.
 
 \addchapter{Future work}
 As concluded above, the techniques used in this study may be a first step towards gaining some knowledge on how the noise affects the sleep quality. By classifing the sleep stages of a subject given an electroencephalogram we can stablish in which period the noise affects more or less a subject. Besides, the gerealization on sleep stage classification, it is, being able to predict the sleep stage of a subject given other subjects data is a great capability, the way we predict sleep stages we can predict arousals given another subject data. Arousal prediction will be another step forward to gain knowledge on how noise affects the sleep quality. 

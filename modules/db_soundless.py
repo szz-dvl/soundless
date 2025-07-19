@@ -51,6 +51,9 @@ class Db():
                     dB float4 NOT NULL,
                     session varchar NOT NULL,
                     se float4 NOT NULL,
+                    light float4 NOT NULL,
+                    deep float4 NOT NULL,
+                    rem float4 NOT NULL,
                     dataset varchar NOT NULL
                 );
             """)
@@ -137,6 +140,9 @@ class Db():
                         dB,
                         session,
                         se,
+                        light,
+                        deep,
+                        rem,
                         dataset
                     ) FROM STDIN WITH CSV
                 """,
@@ -145,7 +151,7 @@ class Db():
             
         self.conn.commit()
 
-    def insertAggregatedHSP(self, session: str, se: float):
+    def insertAggregatedHSP(self, session: str, se: float, light: float, deep: float, rem: float):
         
         with self.conn.cursor() as cursor:           
             cursor.execute(
@@ -154,10 +160,13 @@ class Db():
                         dB,
                         session,
                         se,
+                        light,
+                        deep,
+                        rem, 
                         dataset
-                    ) VALUES (%s, %s, %s, %s)
+                    ) VALUES (%s, %s, %s, %s, %s, %s, %s)
                 """,
-                (math.nan, session, se, "hsp")
+                (math.nan, session, se, light, deep, rem, "hsp")
             )
             
         self.conn.commit()
@@ -178,7 +187,10 @@ class Db():
 
             times = {
                 "awake": 0,
-                "sleep": 0
+                "sleep": 0,
+                "light": 0,
+                "deep": 0,
+                "rem": 0
             }
             
             for _, r in data.iterrows():
@@ -192,6 +204,14 @@ class Db():
             
                 if last["ss"] > 0:
                     times["sleep"] += seconds
+
+                    if last["ss"] == 1:
+                        times["light"] += seconds
+                    elif last["ss"] == 2:
+                        times["deep"] += seconds
+                    elif last["ss"] == 3:
+                        times["rem"] += seconds 
+
                 else:
                     times["awake"] += seconds
 
@@ -199,7 +219,12 @@ class Db():
                 last["ss"] = r["ss"]
 
             total = times["awake"] + times["sleep"]
-            return times["sleep"] / total if total > 0 else None
+            se = times["sleep"] / total if total > 0 else None
+            light = times["light"] / times["sleep"] if times["sleep"] > 0 else None
+            deep = times["deep"] / times["sleep"] if times["sleep"] > 0 else None
+            rem = times["rem"] / times["sleep"] if times["sleep"] > 0 else None
+
+            return se, light, deep, rem
 
 
     def getSleepSficiency(self):
@@ -213,19 +238,29 @@ class Db():
             data = pd.DataFrame(cursor.fetchall(), columns=["dB", "uuid"])
             
             ses = []
+            lights = []
+            deeps = []
+            rems = []
             for _, row in data.iterrows():
-                ses.append(self._computeSleepEfficiency(row))
+                se, light, deep, rem = self._computeSleepEfficiency(row)
+                ses.append(se)
+                lights.append(light)
+                deeps.append(deep)
+                rems.append(rem)
 
             data["se"] = ses
-
+            data["light"] = lights
+            data["deep"] = deeps
+            data["rem"] = rems
+            
             return data
         
     def getCluster(self):
         with self.conn.cursor() as cursor:
             cursor.execute("""
-                SELECT dB, session, se, dataset 
+                SELECT dB, session, se, light, deep, rem, dataset 
                 FROM public.aggregated;
             """)
 
-            return pd.DataFrame(cursor.fetchall(), columns=["dB", "session", "se", "dataset"])
+            return pd.DataFrame(cursor.fetchall(), columns=["dB", "session", "se", "light", "deep", "rem", "dataset"])
 

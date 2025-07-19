@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2026/dev/Arch Linux)  (format=lualatex 2025.5.20)  3 JUL 2025 10:45
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2026/dev/Arch Linux)  (format=lualatex 2025.5.20)  19 JUL 2025 15:07
  restricted system commands enabled.
 **memoria.tex
 (./memoria.tex
@@ -395,8 +395,28 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks25
 \@floatcapt=\box55
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 60.
-LaTeX Font Info:    Trying to load font information for T1+ppl on input line 83
+(/usr/share/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+
+(/usr/share/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen169
+\captionmargin=\dimen170
+\caption@leftmargin=\dimen171
+\caption@rightmargin=\dimen172
+\caption@width=\dimen173
+\caption@indent=\dimen174
+\caption@parindent=\dimen175
+\caption@hangindent=\dimen176
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count308
+\c@continuedfloat=\count309
+Package caption Info: float package is loaded.
+Package caption Info: hyperref package is loaded.
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 62.
+LaTeX Font Info:    Trying to load font information for T1+ppl on input line 85
 .
 
 (/usr/share/texmf-dist/tex/latex/psnfss/t1ppl.fd
@@ -404,7 +424,7 @@ File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
 (/usr/share/texmf-dist/tex/latex/l3backend/l3backend-luatex.def
 File: l3backend-luatex.def 2024-05-08 L3 backend support: PDF output (LuaTeX)
-\l__color_backend_stack_int=\count308
+\l__color_backend_stack_int=\count310
 Inserting `l3color' in `luaotfload.parse_color'.
 \l__pdf_internal_box=\box56
 ) (./memoria.aux
@@ -414,27 +434,27 @@ LaTeX Warning: Label `tab4' multiply defined.
 )
 \openout1 = memoria.aux
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-\big@size=\dimen169
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+\big@size=\dimen177
  (/usr/share/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2024/06/23 v1.3e Standard LaTeX Color (DPC)
 
@@ -444,7 +464,7 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 Package color Info: Driver file: luatex.def on input line 149.
 
 (/usr/share/texmf-dist/tex/latex/graphics/mathcolor.ltx))
-Package hyperref Info: Link coloring ON on input line 83.
+Package hyperref Info: Link coloring ON on input line 85.
  (./memoria.out)
 (./memoria.out)
 \@outlinefile=\write3
@@ -452,16 +472,16 @@ Package hyperref Info: Link coloring ON on input line 83.
 \openout3 = memoria.out
  (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count309
-\scratchdimen=\dimen170
+\scratchcounter=\count311
+\scratchdimen=\dimen178
 \scratchbox=\box57
-\nofMPsegments=\count310
-\nofMParguments=\count311
+\nofMPsegments=\count312
+\nofMParguments=\count313
 \everyMPshowfont=\toks26
-\MPscratchCnt=\count312
-\MPscratchDim=\dimen171
-\MPnumerator=\count313
-\makeMPintoPDFobject=\count314
+\MPscratchCnt=\count314
+\MPscratchDim=\dimen179
+\MPnumerator=\count315
+\makeMPintoPDFobject=\count316
 \everyMPtoPDFconversion=\toks27
 ) (/usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -506,31 +526,33 @@ e
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 1
-25.
+27.
 (/usr/share/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
 LaTeX Font Info:    Trying to load font information for OML+zplm on input line 
-125.
+127.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 
-125.
+127.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 
-125.
+127.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 
-125.
+127.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
@@ -554,7 +576,7 @@ warning  (pdf backend): ignoring duplicate destination with the name 'page.1'
 
 ]
 LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 1
-77.
+79.
  (/usr/share/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 )
@@ -564,7 +586,7 @@ File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 [4
 
 ]
-Overfull \hbox (35.66017pt too wide) in paragraph at lines 193--194
+Overfull \hbox (35.66017pt too wide) in paragraph at lines 195--196
 []\T1/ppl/m/n/10.95 The long-term con-se-quences of chronic noise-induced sleep dis-rup-tion are also well-documented.
  []
 
@@ -573,9 +595,6 @@ Overfull \hbox (35.66017pt too wide) in paragraph at lines 193--194
 [5]
 
 [6
-
-
-warning  (pdf backend): ignoring duplicate destination with the name 'table.0.1'
 
 ]
 
@@ -613,16 +632,13 @@ warning  (pdf backend): ignoring duplicate destination with the name 'table.0.1'
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 
-Overfull \hbox (80.31444pt too wide) in paragraph at lines 250--274
+Overfull \hbox (80.31444pt too wide) in paragraph at lines 252--276
  [] 
  []
 
 
 
 [8
-
-
-warning  (pdf backend): ignoring duplicate destination with the name 'table.0.2'
 
 ]
 
@@ -632,7 +648,7 @@ warning  (pdf backend): ignoring duplicate destination with the name 'table.0.2'
 <figs/fcn.png, id=165, 1201.48875pt x 3986.895pt>
 File: figs/fcn.png Graphic file (type png)
 <use figs/fcn.png>
-Package luatex.def Info: figs/fcn.png  used on input line 301.
+Package luatex.def Info: figs/fcn.png  used on input line 303.
 (luatex.def)             Requested size: 120.15591pt x 398.71286pt.
 
 
@@ -640,21 +656,15 @@ Package luatex.def Info: figs/fcn.png  used on input line 301.
 
 ]
 
-[11
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
-'
-<./figs/fcn.png>]
+[11<./figs/fcn.png>]
 <figs/fcn-lstm.png, id=184, 1201.48875pt x 2971.1pt>
 File: figs/fcn-lstm.png Graphic file (type png)
 <use figs/fcn-lstm.png>
-Package luatex.def Info: figs/fcn-lstm.png  used on input line 323.
+Package luatex.def Info: figs/fcn-lstm.png  used on input line 325.
 (luatex.def)             Requested size: 120.15591pt x 297.12741pt.
 
 
-[12
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.2
-'
-<./figs/fcn-lstm.png>]
+[12<./figs/fcn-lstm.png>]
 
 [13]
 
@@ -662,19 +672,13 @@ warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.2
 <figs/mlp.png, id=204, 1437.37pt x 1616.0375pt>
 File: figs/mlp.png Graphic file (type png)
 <use figs/mlp.png>
-Package luatex.def Info: figs/mlp.png  used on input line 398.
+Package luatex.def Info: figs/mlp.png  used on input line 400.
 (luatex.def)             Requested size: 287.4689pt x 323.20177pt.
 
 
-[15
-warning  (pdf backend): ignoring duplicate destination with the name 'table.0.3'
+[15]
 
-]
-
-[16
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.3
-'
-<./figs/mlp.png>]
+[16<./figs/mlp.png>]
 
 [17]
 
@@ -684,43 +688,34 @@ warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.3
 <figs/cm.png, id=239, 1269.0612pt x 721.9773pt>
 File: figs/cm.png Graphic file (type png)
 <use figs/cm.png>
-Package luatex.def Info: figs/cm.png  used on input line 456.
+Package luatex.def Info: figs/cm.png  used on input line 458.
 (luatex.def)             Requested size: 634.52905pt x 360.98776pt.
 
-Overfull \hbox (90.71341pt too wide) in paragraph at lines 456--457
-[]| []
+Overfull \hbox (90.71341pt too wide) in paragraph at lines 458--459
+[]| [] 
  []
 
 
 
 [19
 
-
-warning  (pdf backend): ignoring duplicate destination with the name 'table.0.4'
-
 ]
 
-[20
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.4
-'
-<./figs/cm.png>]
+[20<./figs/cm.png>]
 <figs/cm-da-max.png, id=254, 971.3088pt x 628.0263pt>
 File: figs/cm-da-max.png Graphic file (type png)
 <use figs/cm-da-max.png>
-Package luatex.def Info: figs/cm-da-max.png  used on input line 470.
+Package luatex.def Info: figs/cm-da-max.png  used on input line 472.
 (luatex.def)             Requested size: 485.65321pt x 314.01237pt.
 
-Overfull \hbox (55.64859pt too wide) in paragraph at lines 470--471
+Overfull \hbox (55.64859pt too wide) in paragraph at lines 472--473
  [][] 
  []
 
 
 
-[21
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.5
-'
-<./figs/cm-da-max.png>]
-Overfull \hbox (0.3136pt too wide) in paragraph at lines 478--479
+[21<./figs/cm-da-max.png>]
+Overfull \hbox (0.3136pt too wide) in paragraph at lines 480--481
 []\T1/ppl/m/n/10.95 In the next ap-proach I com-puted the mean of the el-e-ments
  for all classes, if Sleep_stage_N1
  []
@@ -728,58 +723,46 @@ Overfull \hbox (0.3136pt too wide) in paragraph at lines 478--479
 <figs/cm-da-mean.png, id=263, 1004.553pt x 654.7662pt>
 File: figs/cm-da-mean.png Graphic file (type png)
 <use figs/cm-da-mean.png>
-Package luatex.def Info: figs/cm-da-mean.png  used on input line 482.
+Package luatex.def Info: figs/cm-da-mean.png  used on input line 484.
 (luatex.def)             Requested size: 502.27527pt x 327.3823pt.
 
-Overfull \hbox (72.27065pt too wide) in paragraph at lines 482--483
+Overfull \hbox (72.27065pt too wide) in paragraph at lines 484--485
  [][] 
  []
 
 <figs/cm-da-all.png, id=265, 1154.8746pt x 677.8926pt>
 File: figs/cm-da-all.png Graphic file (type png)
 <use figs/cm-da-all.png>
-Package luatex.def Info: figs/cm-da-all.png  used on input line 491.
+Package luatex.def Info: figs/cm-da-all.png  used on input line 493.
 (luatex.def)             Requested size: 577.43588pt x 338.94547pt.
 
-Overfull \hbox (90.52576pt too wide) in paragraph at lines 491--492
+Overfull \hbox (90.52576pt too wide) in paragraph at lines 493--494
  []| [] 
  []
 
 
 
-[22
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.6
-'
-<./figs/cm-da-mean.png>]
-Overfull \hbox (12.4023pt too wide) in paragraph at lines 508--508
+[22<./figs/cm-da-mean.png>]
+Overfull \hbox (12.4023pt too wide) in paragraph at lines 510--510
 []\T1/ppl/m/n/10.95 Sleep_stage_N1/N2| 
  []
 
 
 
-[23
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.7
-'
-<./figs/cm-da-all.png>]
+[23<./figs/cm-da-all.png>]
 <figs/cm-clustering.png, id=282, 1105.731pt x 763.1712pt>
 File: figs/cm-clustering.png Graphic file (type png)
 <use figs/cm-clustering.png>
-Package luatex.def Info: figs/cm-clustering.png  used on input line 526.
+Package luatex.def Info: figs/cm-clustering.png  used on input line 528.
 (luatex.def)             Requested size: 464.40385pt x 320.52972pt.
 
-Overfull \hbox (5.94649pt too wide) in paragraph at lines 526--527
+Overfull \hbox (5.94649pt too wide) in paragraph at lines 528--529
  []| [] 
  []
 
 
 
-[24
-warning  (pdf backend): ignoring duplicate destination with the name 'table.0.5'
-
-
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.8
-'
-<./figs/cm-clustering.png>]
+[24<./figs/cm-clustering.png>]
 
 [25]
 
@@ -791,86 +774,87 @@ warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.8
 Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 ]
-<figs/plot-se-all.png, id=304, 826.0461pt x 652.5981pt>
-File: figs/plot-se-all.png Graphic file (type png)
-<use figs/plot-se-all.png>
-Package luatex.def Info: figs/plot-se-all.png  used on input line 567.
-(luatex.def)             Requested size: 413.02203pt x 326.29825pt.
-
 
 [28
 
 ]
+<figs/silhouette.png, id=312, 1300.86pt x 505.89pt>
+File: figs/silhouette.png Graphic file (type png)
+<use figs/silhouette.png>
+Package luatex.def Info: figs/silhouette.png  used on input line 573.
+(luatex.def)             Requested size: 650.42842pt x 252.94437pt.
 
-[29
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.9
-'
-<./figs/plot-se-all.png>]
-<figs/plot-se-hsp.png, id=318, 832.5504pt x 698.8509pt>
-File: figs/plot-se-hsp.png Graphic file (type png)
-<use figs/plot-se-hsp.png>
-Package luatex.def Info: figs/plot-se-hsp.png  used on input line 578.
-(luatex.def)             Requested size: 416.27419pt x 349.42459pt.
+Overfull \hbox (106.61278pt too wide) in paragraph at lines 573--574
+ []| [] 
+ []
 
-
-[30
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
-0'
-<./figs/plot-se-hsp.png>]
-<figs/plot-se-soundless.png, id=326, 826.0461pt x 667.7748pt>
-File: figs/plot-se-soundless.png Graphic file (type png)
-<use figs/plot-se-soundless.png>
-Package luatex.def Info: figs/plot-se-soundless.png  used on input line 589.
-(luatex.def)             Requested size: 413.02203pt x 333.88658pt.
+<figs/se_clusters.png, id=313, 1495.989pt x 477.7047pt>
+File: figs/se_clusters.png Graphic file (type png)
+<use figs/se_clusters.png>
+Package luatex.def Info: figs/se_clusters.png  used on input line 582.
+(luatex.def)             Requested size: 747.99268pt x 238.85176pt.
 
 
-[31
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
-1'
-<./figs/plot-se-soundless.png>]
-<figs/plot-db-upper.png, id=333, 880.2486pt x 692.3466pt>
-File: figs/plot-db-upper.png Graphic file (type png)
-<use figs/plot-db-upper.png>
-Package luatex.def Info: figs/plot-db-upper.png  used on input line 600.
-(luatex.def)             Requested size: 440.12323pt x 346.17245pt.
+[29<./figs/silhouette.png>]
+Overfull \vbox (72.85233pt too high) has occurred while \output is active []
 
 
-[32
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
-2'
-<./figs/plot-db-upper.png>]
-<figs/plot-db-lower.png, id=340, 862.9038pt x 675.0018pt>
-File: figs/plot-db-lower.png Graphic file (type png)
-<use figs/plot-db-lower.png>
-Package luatex.def Info: figs/plot-db-lower.png  used on input line 611.
-(luatex.def)             Requested size: 431.45084pt x 337.50008pt.
+
+[30<./figs/se_clusters.png>]
+<figs/sleep_percentages.png, id=329, 2774.4453pt x 1514.0565pt>
+File: figs/sleep_percentages.png Graphic file (type png)
+<use figs/sleep_percentages.png>
+Package luatex.def Info: figs/sleep_percentages.png  used on input line 594.
+(luatex.def)             Requested size: 832.34003pt x 454.22046pt.
+
+Overfull \hbox (24.21584pt too wide) in paragraph at lines 594--595
+[][] 
+ []
 
 
-[33
-warning  (pdf backend): ignoring duplicate destination with the name 'figure.0.1
-3'
-<./figs/plot-db-lower.png>]
 
-[34
+[31]
+Overfull \vbox (128.74693pt too high) has occurred while \output is active []
+
+
+
+[32<./figs/sleep_percentages.png>]
+<figs/db_clusters.png, id=343, 1616.6799pt x 579.6054pt>
+File: figs/db_clusters.png Graphic file (type png)
+<use figs/db_clusters.png>
+Package luatex.def Info: figs/db_clusters.png  used on input line 610.
+(luatex.def)             Requested size: 808.33798pt x 289.80199pt.
+
+
+[33]
+Overfull \vbox (133.19763pt too high) has occurred while \output is active []
+
+
+
+[34<./figs/db_clusters.png>]
+
+[35]
+
+[36
 
 ]
-Overfull \hbox (2.30695pt too wide) in paragraph at lines 632--633
+Overfull \hbox (2.30695pt too wide) in paragraph at lines 633--634
 []\T1/ppl/m/n/10.95 Fur-ther steps from this study may in-clude grow-ing the sou
 n-less dataset, de-tect-ing arousals
  []
 
 
 
-[35
-
-]
-
-[36
-
-]
-
 [37
 
+]
+
+[38
+
+]
+
+[39
+
 
 Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
@@ -881,19 +865,19 @@ Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 ]
-Underfull \hbox (badness 6592) in paragraph at lines 686--687
+Underfull \hbox (badness 6592) in paragraph at lines 687--688
 []\T1/ppl/m/n/10.95 Zhiguang Wang, Weizhong Yan & Tim Oates. Time Se-ries Clas-s
 i-fi-ca-tion
  []
 
 
-Underfull \hbox (badness 2384) in paragraph at lines 686--687
+Underfull \hbox (badness 2384) in paragraph at lines 687--688
 \T1/ppl/m/n/10.95 from Scratch with Deep Neu-ral Net-works: A Strong Base-line. Avail-able at:
  []
 
 
 
-[38
+[40
 Missing character: There is no – (U+2013) in font pplr8t!
 ] (./memoria.aux)
  ***********
@@ -905,27 +889,27 @@ L3 programming layer <2025-01-18>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `memoria.out' has not changed.
-(rerunfilecheck)             Checksum: 59173D988449B479CDBEBFD7F4AF719F;2356.
+(rerunfilecheck)             Checksum: FE4763F289D777334D1E8EA65BD58FF6;2434.
 )
 
 Here is how much of LuaTeX's memory you used:
- 11780 strings out of 475506
- 125056,662416 words of node,token memory allocated
- 2370 words of node memory still in use:
-   3 hlist, 1 vlist, 1 rule, 2 glue, 298 kern, 1 glyph, 121 attribute, 51 glue_s
-pec, 121 attribute_list, 1 write, 1 pdf_action nodes
-   avail lists: 2:542,3:418,4:204,5:132,6:139,7:5887,8:10,9:1170,10:16,11:543
- 34274 multiletter control sequences out of 65536+600000
- 95 fonts using 6219631 bytes
- 86i,12n,88p,1123b,454s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 13093 strings out of 475506
+ 125056,794899 words of node,token memory allocated
+ 2672 words of node memory still in use:
+   3 hlist, 1 vlist, 1 rule, 2 glue, 344 kern, 1 glyph, 139 attribute, 51 glue_s
+pec, 139 attribute_list, 1 write, 1 pdf_action nodes
+   avail lists: 2:518,3:424,4:204,5:132,6:141,7:5887,8:10,9:1180,10:16,11:543
+ 35577 multiletter control sequences out of 65536+600000
+ 97 fonts using 6380511 bytes
+ 86i,12n,115p,1123b,536s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/urw/palati
 no/uplb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/s
 hare/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on memoria.pdf (39 pages, 854296 bytes).
+Output written on memoria.pdf (41 pages, 1105548 bytes).
 
-PDF statistics: 414 PDF objects out of 1000 (max. 8388607)
- 339 compressed objects within 4 object streams
- 99 named destinations out of 1000 (max. 131072)
+PDF statistics: 427 PDF objects out of 1000 (max. 8388607)
+ 352 compressed objects within 4 object streams
+ 100 named destinations out of 1000 (max. 131072)
  145 words of extra memory for PDF output out of 10000 (max. 100000000)
 

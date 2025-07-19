@@ -2,19 +2,22 @@ from modules.db_soundless import Db
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.cluster import KMeans
-from sklearn.datasets import make_blobs
+from sklearn.cluster import KMeans, DBSCAN
 from sklearn.metrics import silhouette_samples, silhouette_score
-
+from sklearn.decomposition import PCA
 
 db = Db()
 
 df = db.getCluster()
-# df.loc[df["dB"].isnull(), "dB"] = 0
+df.loc[df["dB"].isnull(), "dB"] = 0
 
-# range_n_clusters = [2, 3, 4, 5, 6]
+range_n_clusters = [2, 3, 4, 5, 6]
 
-# X = df[["dB","se"]].to_numpy()
+# X = df[["se", "light", "deep", "rem"]].to_numpy()
+
+pca = PCA(n_components=2).fit(df[["se", "light", "deep", "rem"]])
+print(pca.explained_variance_ratio_)
+X = pca.transform(df[["se", "light", "deep", "rem"]])
 
 # for n_clusters in range_n_clusters:
 #     # Create a subplot with 1 row and 2 columns
@@ -120,14 +123,143 @@ df = db.getCluster()
 
 # plt.show()
 
-# fig, ax = plt.subplots()
-# ax.set_ylabel('Sleep Efficiency')
+clusterer = KMeans(n_clusters=3, random_state=10)
+cluster_labels = clusterer.fit_predict(X)
 
-# bplot = ax.boxplot(df["se"],
-#                    patch_artist=True)  # will be used to label x-ticks
-# ax.set_xticks([])
-# plt.grid(visible=True)
-# plt.show()
+df["cluster"] = cluster_labels
+
+print("SE")
+print(df.loc[df["cluster"] == 0, "se"].mean())
+print(df.loc[df["cluster"] == 1, "se"].mean())
+print(df.loc[df["cluster"] == 2, "se"].mean())
+print("LIGHT")
+print(df.loc[df["cluster"] == 0, "light"].mean())
+print(df.loc[df["cluster"] == 1, "light"].mean())
+print(df.loc[df["cluster"] == 2, "light"].mean())
+print("DEEP")
+print(df.loc[df["cluster"] == 0, "deep"].mean())
+print(df.loc[df["cluster"] == 1, "deep"].mean())
+print(df.loc[df["cluster"] == 2, "deep"].mean())
+print("REM")
+print(df.loc[df["cluster"] == 0, "rem"].mean())
+print(df.loc[df["cluster"] == 1, "rem"].mean())
+print(df.loc[df["cluster"] == 2, "rem"].mean())
+print("SOUNDLESS")
+print(len(df[(df["dataset"] == "soundless") & (df["cluster"] == 0)]))
+print(len(df[(df["dataset"] == "soundless") & (df["cluster"] == 1)]))
+print(len(df[(df["dataset"] == "soundless") & (df["cluster"] == 2)]))
+print("DECIBELS")
+print(df.loc[(df["dataset"] == "soundless") & (df["cluster"] == 0), "dB"].mean())
+print(df.loc[(df["dataset"] == "soundless") & (df["cluster"] == 1), "dB"].mean())
+print(df.loc[(df["dataset"] == "soundless") & (df["cluster"] == 2), "dB"].mean())
+
+
+fig, ((ax1, ax2, ax3), (ax4, ax5, ax6), (ax7, ax8, ax9)) = plt.subplots(3,3)
+
+ax1.set_ylabel('Light sleep percentage of cluster 0')
+ax2.set_ylabel('Light sleep percentage of cluster 1')
+ax3.set_ylabel('Light sleep percentage of cluster 2')
+
+ax4.set_ylabel('Deep sleep percentage of cluster 0')
+ax5.set_ylabel('Deep sleep percentage of cluster 1')
+ax6.set_ylabel('Deep sleep percentage of cluster 2')
+
+ax7.set_ylabel('REM sleep percentage of cluster 0')
+ax8.set_ylabel('REM sleep percentage of cluster 1')
+ax9.set_ylabel('REM sleep percentage of cluster 2')
+
+bplot = ax1.boxplot(df.loc[df["cluster"] == 0, "light"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+bplot = ax2.boxplot(df.loc[df["cluster"] == 1, "light"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+bplot = ax3.boxplot(df.loc[df["cluster"] == 2, "light"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+
+bplot = ax4.boxplot(df.loc[df["cluster"] == 0, "deep"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+bplot = ax5.boxplot(df.loc[df["cluster"] == 1, "deep"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+bplot = ax6.boxplot(df.loc[df["cluster"] == 2, "deep"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+bplot = ax7.boxplot(df.loc[df["cluster"] == 0, "rem"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+bplot = ax8.boxplot(df.loc[df["cluster"] == 1, "rem"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+bplot = ax9.boxplot(df.loc[df["cluster"] == 2, "rem"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+ax1.set_xticks([])
+ax2.set_xticks([])
+ax3.set_xticks([])
+ax4.set_xticks([])
+ax5.set_xticks([])
+ax6.set_xticks([])
+ax7.set_xticks([])
+ax8.set_xticks([])
+ax9.set_xticks([])
+ax1.grid(visible=True)
+ax2.grid(visible=True)
+ax3.grid(visible=True)
+ax4.grid(visible=True)
+ax5.grid(visible=True)
+ax6.grid(visible=True)
+ax7.grid(visible=True)
+ax8.grid(visible=True)
+ax9.grid(visible=True)
+plt.show()
+
+fig, (ax1, ax2, ax3) = plt.subplots(1,3)
+ax1.set_ylabel('Sleep efficiency for cluster 0')
+ax2.set_ylabel('Sleep efficiency for cluster 1')
+ax3.set_ylabel('Sleep efficiency for cluster 2')
+
+bplot = ax1.boxplot(df.loc[df["cluster"] == 0, "se"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+bplot = ax2.boxplot(df.loc[df["cluster"] == 1, "se"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+bplot = ax3.boxplot(df.loc[df["cluster"] == 2, "se"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+ax1.set_xticks([])
+ax2.set_xticks([])
+ax3.set_xticks([])
+ax1.grid(visible=True)
+ax2.grid(visible=True)
+ax3.grid(visible=True)
+plt.show()
+
+
+fig, (ax1, ax2, ax3) = plt.subplots(1,3)
+ax1.set_ylabel('Decibels for cluster 0')
+ax2.set_ylabel('Decibels for cluster 1')
+ax3.set_ylabel('Decibels for cluster 2')
+
+bplot = ax1.boxplot(df.loc[(df["dataset"] == "soundless") & (df["cluster"] == 0), "dB"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+bplot = ax2.boxplot(df.loc[(df["dataset"] == "soundless") & (df["cluster"] == 1), "dB"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+bplot = ax3.boxplot(df.loc[(df["dataset"] == "soundless") & (df["cluster"] == 2), "dB"],
+                   patch_artist=True)  # will be used to label x-ticks
+
+ax1.set_xticks([])
+ax2.set_xticks([])
+ax3.set_xticks([])
+ax1.grid(visible=True)
+ax2.grid(visible=True)
+ax3.grid(visible=True)
+plt.show()
 
 # fig, ax = plt.subplots()
 # ax.set_ylabel('Sleep Efficiency Soundless')
@@ -147,20 +279,20 @@ df = db.getCluster()
 # plt.grid(visible=True)
 # plt.show()
 
-fig, ax = plt.subplots()
-ax.set_ylabel('Decibels Soundless >0.6')
+# fig, ax = plt.subplots()
+# ax.set_ylabel('Decibels Soundless >0.6')
 
-bplot = ax.boxplot(df.loc[(df["dataset"] == "soundless") & (df["se"] >= 0.6), "dB"],
-                   patch_artist=True)  # will be used to label x-ticks
-ax.set_xticks([])
-plt.grid(visible=True)
-plt.show()
+# bplot = ax.boxplot(df.loc[(df["dataset"] == "soundless") & (df["se"] >= 0.6), "dB"],
+#                    patch_artist=True)  # will be used to label x-ticks
+# ax.set_xticks([])
+# plt.grid(visible=True)
+# plt.show()
 
-fig, ax = plt.subplots()
-ax.set_ylabel('Decibels Soundless <0.6')
+# fig, ax = plt.subplots()
+# ax.set_ylabel('Decibels Soundless <0.6')
 
-bplot = ax.boxplot(df.loc[(df["dataset"] == "soundless") & (df["se"] < 0.6), "dB"],
-                   patch_artist=True)  # will be used to label x-ticks
-ax.set_xticks([])
-plt.grid(visible=True)
-plt.show()
+# bplot = ax.boxplot(df.loc[(df["dataset"] == "soundless") & (df["se"] < 0.6), "dB"],
+#                    patch_artist=True)  # will be used to label x-ticks
+# ax.set_xticks([])
+# plt.grid(visible=True)
+# plt.show()
