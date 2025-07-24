@@ -47,7 +47,7 @@
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{caption}
-\captionsetup[table]{font=small,skip=-5pt}     %% Adjust here
+\captionsetup[table]{font=small,skip=0pt}     %% Adjust here
 
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
@@ -165,45 +165,53 @@
 \tableofcontents
 
 \addchapter{Introduction}
-Sleep quality is an important factor for good health. Nowadays the human population is living in megalopolis, with high density population in small areas, giving rise to noisy ambients the 24 hours of the day. Studying how noise can affect sleep quality seems like a worthwhile topic to which we should devote time. In this document we will present an study on sleep quality focusing on data analisis of previous work. Firstly we will introduce and work with the human sleep project dataset, this dataset is vastly studied by scientific of different areas and several \href{https://bdsp.io/content/}{projects} have been carried out by people of different research areas.
+Sleep quality is a crucial factor in maintaining overall health. In today’s world, where a significant portion of the population resides in densely populated urban areas (megalopolises), people are continuously exposed to noise pollution. This constant exposure to ambient noise—day and night—raises concerns about its potential impact on sleep. Investigating how environmental noise affects sleep quality is therefore a highly relevant topic. In this document, we present a study focused on this issue, primarily through the analysis of existing datasets.
 
-\href{https://bdsp.io/content/hsp/2.0/}{The Human Sleep Project} is a project developed by Massachusetts General Hospital, they are recording several electroencephalograms of subjects with some sleep pathology. The documents, stored in .edf (European Data Format) format are usually accompanied with annotations on the electroencephalograms as well as the channels used for the recording. This is a vast dataset with around 25000 electroencephalograms to study. With this information makes sense to try to develop some kind of artificial intelligence solution to annotate electroencephalograms automatically, the main focus of this part of the study. At some point, the tecnology used here may help to detect arousals related to noise in the ambient using similar methodologies.
+We begin by working with the Human Sleep Project dataset \cite{hsp}, developed by Massachusetts General Hospital, which includes around 25,000 electroencephalogram (EEG) recordings from subjects with various sleep pathologies. These recordings, stored in the .edf (European Data Format), often come with detailed annotations and information on the EEG channels used. The dataset has been widely studied by researchers across multiple disciplines. Leveraging this resource, we aim to develop an artificial intelligence-based solution capable of automatically annotating EEG recordings to assist in sleep quality analysis.
 
-Then we will introduce Soundless dataset. The \href{https://soundless.app}{Soundless} app is a project leaded by Universitat Rovira i Virgili at Tarragona, Spain. The project aims to study how noise affects the sleep quality by providing a FitBit (a bracalet equiped with sensory to monitor vital signs of the subject). Along with the FitBit, an android app is provided to record the sound in the ambient while the FitBit is working. Ideally we must be able to see some arousals in the vital signs signals when high noise is recorded by the mobile application, so we can conclude how noise affects or not the sleep quality. The challenge is, however, not trivial. Since the FitBit will only record oxigen saturation and heart rate, to arrive at any conclusion is hard to do. In top of that the sleep itself is a field of study and a complex topic: there are several stages at sleep, noise may affect differently in different stages. There may be subjects more used to noise in the ambient while sleeping and noise at different frequency ranges may affect differently to different subjects.
+Next, we introduce the Soundless \cite{soundless} dataset, part of a research project led by Universitat Rovira i Virgili in Tarragona, Spain. This project is designed to study the impact of environmental noise on sleep quality through the use of FitBit devices, which monitor participants' vital signs during sleep, and a companion Android application that records ambient sound throughout the night. While the dataset currently includes data from approximately 40 participants, it provides valuable real-world insight into how different noise conditions may influence various stages of sleep. It also acknowledges that individuals may have different sensitivities to noise, and that certain noise frequencies might affect sleep differently across subjects.
 
-Additionally, there are not many subjects in the sounless app study yet, around 40 people participed in the study so the main idea in this document is to relate the dataset from the human sleep project with soundless dataset and extrapolate some metrics to arrive at a conclusion.
+The objective of this work is to bridge the controlled, large-scale data of the Human Sleep Project with the real-world, noise-focused observations of the Soundless dataset. By connecting these two sources, we aim to extrapolate key metrics and draw meaningful conclusions about the relationship between environmental noise and sleep quality.
 
-The following pages presents a first approach to an sleep quality study. The main goals of this document are:
+The following pages present an initial approach to studying sleep quality by combining data-driven analysis with real-world noise exposure scenarios. The primary aim of this work is to explore how different stages of sleep are influenced by environmental noise, using a combination of two complementary datasets: the Human Sleep Project and the Soundless dataset. Through this exploratory study, we aim to build a foundation for further research into sleep quality assessment in urban and noise-rich environments.
+
+The main goals of this document are as follows:
 
 \begin{itemize}
-  \item Conduct a study on a vast dataset related to sleep. This study is born from Soundless project, introduced in the following sections, Soundless dataset is composed of roughly 40 individuals wich is not a big dataset it will be ideal to relate a bigger dataset with soundless and try to extrapolate some conclusions on it. The dataset choosen for the study is the dataset of the \href{https://bdsp.io/content/hsp/2.0/}{human sleep project} wich contains over 25000 electroencephalograms of people taken while sleeping.
-  \item Try to standardize the dataset. To relate the new dataset with soundless we may try to standardize the dataset and extract some common patterns with Soundless project to relate the datasets. The most important factor is trying to impute the different sleep stages in which a patient is in the different moments of the night given a set of annotated encephalograms. To this matter a set of neural networks has been developed to predict the sleep stage of a patient for an electroencephalogram. 
-  \item Try to relate the datasets. With both datasets having the sleep stages established we can compute some metricts, such as sleep efficiency, with the sleep efficiency we will relate the datasets and will try to come to a conclussion on how noise affects people when resting.   
+  \item Design a method for analysing sleep stages in subjects from the Human Sleep Project dataset. This includes processing and interpreting electroencephalogram (EEG) signals to identify key sleep phases such as REM, light sleep, and deep sleep, with a focus on creating a robust and scalable analysis pipeline.
+  \item Define a set of metrics derived from the identified sleep stages to establish a meaningful connection between participants in the Soundless dataset and those in the Human Sleep Project. These metrics may include sleep stage duration, frequency of transitions between stages, interruptions, and overall sleep efficiency, among others. 
+  \item Draw data-driven conclusions about the quality of sleep in environments with varying levels of noise. By correlating ambient sound data with changes in sleep patterns, we aim to understand how specific noise characteristics (e.g., intensity, frequency, duration) may affect different individuals and sleep stages, ultimately influencing overall sleep quality.  
 \end{itemize}
+
+This preliminary study sets the groundwork for future research that could lead to better tools for monitoring and improving sleep in urban settings, potentially informing both clinical practice and consumer health applications.
 
 \addchapter{State of art}
 The relationship between environmental noise and sleep quality has been the focus of extensive interdisciplinary research due to its profound implications for public health. Numerous studies have demonstrated that nocturnal noise exposure adversely affects both the physiological and psychological dimensions of sleep, including sleep architecture, duration, and subjective sleep quality.
 
-One of the most influential sources on this topic is the World Health Organization's environmental noise guidelines, which synthesize extensive epidemiological and experimental evidence. Basner and McGuire (2018), in their systematic review, concluded that nighttime exposure to noise from traffic, aircraft, and industrial sources leads to delayed sleep onset, increased number and duration of awakenings, and reduced deep sleep (slow-wave sleep). These findings support earlier work by Muzet (2007), who outlined the biological pathways through which noise interferes with sleep, such as through increased heart rate, blood pressure, and cortical arousals.
+One of the most influential sources on this topic is the World Health Organization's environmental noise guidelines, which synthesize extensive epidemiological and experimental evidence. Basner and McGuire (2018), in their systematic review, concluded that night time exposure to noise from traffic, aircraft, and industrial sources leads to delayed sleep onset, increased number and duration of awakenings, and reduced deep sleep (slow-wave sleep). These findings support earlier work by Muzet (2007), who outlined the biological pathways through which noise interferes with sleep, such as through increased heart rate, blood pressure, and cortical arousals.
 
 Different types of environmental noise have been shown to affect sleep in varying degrees. Griefahn et al. (2006) and Pirrera, De Valck, and Cluydts (2010) reviewed the impacts of road, rail, and air traffic noise, noting that aircraft noise tends to be the most disruptive due to its variability and unpredictability. Basner et al. (2008) used polysomnography to demonstrate that aircraft noise exposure reduces the proportion of REM and slow-wave sleep, both critical for physical recovery and cognitive function.
 
 Recent studies have also investigated the role of individual differences in noise sensitivity. Elmenhorst et al. (2012) found that individuals with higher subjective sensitivity to noise are more prone to awakenings and have lower sleep efficiency under noisy conditions. Similarly, Riedel et al. (2022) showed that noise annoyance significantly moderates the relationship between traffic noise exposure and sleep quality, indicating that psychological factors mediate the perception and physiological impact of noise.
 
-Urbanization and socioeconomic status are additional contextual factors that modulate the effects of noise. Dzhambov et al. (2017), through meta-analysis, found that people living in urban and low-income neighborhoods are disproportionately affected by road traffic noise, suggesting environmental justice implications. Brown and van Kamp (2009) emphasized the role of subjective appraisal and context in shaping noise response, indicating that perceptions of control and expectations may alter physiological responses to the same noise level.
+Urbanization and socio-economic status are additional contextual factors that modulate the effects of noise. Dzhambov et al. (2017), through meta-analysis, found that people living in urban and low-income neighbourhoods are disproportionately affected by road traffic noise, suggesting environmental justice implications. Brown and van Kamp (2009) emphasized the role of subjective appraisal and context in shaping noise response, indicating that perceptions of control and expectations may alter physiological responses to the same noise level.
 
 The long-term consequences of chronic noise-induced sleep disruption are also well-documented. Witte et al. (2021) linked prolonged night-time noise exposure to cognitive decline in older adults, while Dratva et al. (2012) showed that noise-related sleep disturbance is associated with reduced health-related quality of life and increased psychological distress.
 
 In sum, the current body of research provides robust evidence that environmental noise impairs sleep quality through both direct physiological mechanisms and mediated psychological pathways. While regulation and mitigation strategies have been proposed, further research is needed to explore personalized interventions and to better understand vulnerable populations.
 
-As of now no study has related The Human sleep project with the Soundless dataset, this is the novelty presented in this document that will, hopefully, shed some light on the sleep quality on noisy ambients.
+To the best of our knowledge, no prior research has established a relationship between the Human Sleep Project and the Soundless dataset. This study introduces a novel methodological approach aimed at bridging these two datasets, with the objective of advancing our understanding of how environmental noise influences sleep quality.
 
 \addchapter{Analisis}
-To study the Human Sleep Project dataset the first we must try is to analise this vast and very heterogeneous dataset. The data is composed of more that 25000 electroencephalograms, each one taken with different channel configurations. The first step is the trying to understand the different montages for the electroencephalograms and try to get a common view on all the electroencephalograms so we can perform an study on it. Through all the 25000 electroencephalograms we can find 23 different configurations or montages with different channels, and within this 23 configurations (each one with the same number of channels), channels may diffe. So I conducted a study on the channel frequency of all the configurations to be able to study this dataset. 
+A critical step in this study involves understanding and preprocessing the data from the Human Sleep Project. Given the scale and complexity of this dataset, careful examination is required before any meaningful analysis can be performed.
+
+EEG montages are organized arrangements of channels, where each channel represents the potential difference between two electrodes, used to display and interpret scalp electrical activity. They are crucial for visualizing brain activity, enabling the appreciation of waveforms from different perspectives, aiding in lateralization and localization of potential sources, and facilitating artifact identification. 
+
+To study the Human Sleep Project dataset, the first task is to analyze its vast and highly heterogeneous structure. The dataset consists of over 25,000 electroencephalogram (EEG) recordings, each captured using different channel configurations. As a starting point, it is essential to understand the various EEG montages used across recordings and to develop a unified framework that allows consistent analysis across the dataset. Within the collection, there are 23 distinct montage configurations, each comprising the same number of channels but often differing in the specific channels included. To address this variability, I conducted an analysis of channel frequency across all configurations, aiming to identify a common subset that would enable a standardized and comprehensive study of the data.
 
 The study yields the following results:
 
-\begin{table}[!h]
+\begin{table}[H]
 \begin{center}
 \begin{tabular}{ |p{3cm}||p{3cm}| }
  \hline
@@ -229,9 +237,9 @@ The study yields the following results:
 \label{tab1}
 \end{table}
 
-In table \ref{tab1} we can see the most common channels in the dataset, and the associated frequency of the channel across all the electroencephalograms in the dataset. With this information we can impose that our encephalograms have, at least, this channels and we must get a representation of arround 71\% of the dataset. 
+In table \ref{tab1} we can see the most common channels in the dataset, and the associated frequency of the channel across all the electroencephalograms in the dataset. With this information we can impose that our electroencephalograms have, at least, this channels and we must get a representation of around 71\% of the dataset. 
 
-We can try to go one step further and find equivalences between channels. We define a channel equivalence as a pair of channels that, if exchanged between configurations, we obtain the same configuration. Studing the different configurations present in the dataset we obtain the following equivalences:
+Going one step further we can impose channel equivalences. We define a channel equivalence as a pair of channels that, if exchanged between configurations, we obtain the same configuration. Studying the different configurations present in the dataset we obtain the following equivalences:
 
 \newgeometry{left=1.5cm,bottom=1.5cm,top=0.5cm}
 \begin{minipage}{0.45\textwidth}
@@ -280,68 +288,14 @@ We can try to go one step further and find equivalences between channels. We def
 \end{minipage}%
 \restoregeometry
 
-In table \autoref{tab2} I sumarize the frequencies obtained when aggregating the equivalences found by the code, after all we have 18 meaningful channels to play with, however we need to take into account that most of them are not electroencephalogram channels, so looking for brain activity on those channels will make no sense, we will review this part later on. However we can try to use the 18 channels to feed a neural network as they are, as a sequence of voltages per channel over time.
+In table \autoref{tab2} I summarize the frequencies obtained when aggregating the equivalences found by the code, after all we have 18 meaningful channels to study, however we need to take into account that most of them are not related to brain activity, so looking for brain activity on those channels will make no sense. However we can try to use the 18 channels to feed a neural network as they are, as a sequence of voltages per channel over time.
 
-\addchapter{Design}
-To relate The Human Sleep project dataset and the Sounless dataset we must try to get an standardized view of the the human sleep project dataset. To achieve that we may try to predict the sleep stage of a patient in a given moment of an electroencephalogram, later on, we can use this information to compute some sleep metrics and compare the two datasets. A neural network is a good tool for that. We must try to classify each section of an encephalogram in the following classes:
-
-\begin{itemize}
-  \item \textbf{Sleep\_stage\_W:} This stage indicates that the subject is awake.
-  \item \textbf{Sleep\_stage\_N1:} This stage indicates that the subject is in the first sleep stage.
-  \item \textbf{Sleep\_stage\_N2:} This stage indicates that the subject is in the second sleep stage.
-  \item \textbf{Sleep\_stage\_N3:} This stage indicates that the subject is in the third sleep stage.
-  \item \textbf{Sleep\_stage\_R:} This stage indicates that the subject is in REM (Rapid Eye Movement) stage.
-\end{itemize}
-
-As stated in previous sections the first approach I used is to study the electroencephalograms as it are, it is, as a sequence of voltages per channel over time. To do so I used a fully convolutional neural network.
-
-\addsection{Fully Convolutional neural network (FCN)}
-Based on \href{https://arxiv.org/abs/1611.06455}{this} paper and the related work found \href{https://keras.io/examples/timeseries/eeg_signal_classification/}{here} I tried to build a fully convolutional network for timeseries classification, the architecture is as follows:
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=.1, angle=90]{figs/fcn.png}
-\caption{FCN architecture}
-\label{fig1}
-\end{figure}
-
-The input shape is (6001, 18) given that we have 18 channels and that we are annalising cropped segments of the electroencephalogram 30 seconds long. The sample frequency of the electroencephalograms is 200 Hz, so we have 6000 samples per event. Any electroencephalogram found with a different sample frequency will be discarted in this approach. Then we have a convolutional layer of 32 filters with a kernel size of 3. After that another convolutional layer with again 32 filters and a kernel size of 5. Finally we use a last convolutional layer with 64 filters and a kernel size of 5. Then we use an average pooling layer to downsample the results of convulational layers. Finally a dense layer with 5 neurons, the number of classes we would like to classificate.
-
-The activation function I'm using for the hidden layers of the network is \href{https://en.wikipedia.org/wiki/Rectifier_(neural_networks)}{ReLU}(rectified linear unit) since is very efficient and mitigates the \href{https://en.wikipedia.org/wiki/Vanishing_gradient_problem}{vanishing gradient} problem. For the output layer softmax is used, since we have a multiclass classification problem.
-
-The parameters of this neural network have been optimized by using \href{https://keras.io/keras_tuner/}{keras tuner} a tool to automate the process of selecting the hyperparameters of our network. It is not perfect for us since we are dealing with a huge dataset hosted elsewhere, so we need to tune the model with a few samples of the dataset, but is a helping tool anyway.
-
-Several options have been tried for the optimizer with this architecture. In particular Adam, SGD (Stochastic gradient descen) and AdamW with a weight decay of 1e-4. At the same time several learning rate values ranging from 1e-3 to 1e-5 have been tried and a \href{https://keras.io/api/callbacks/learning_rate_scheduler/}{LearningRateScheduler} have been applied too.
-
-After one day of training this approach could not overcome a 20\% of validation accuracy, which is not better than a random choice of one of our classes. We need to take into account that we are feeding the network with a very different selection of channels what will probably lead to a very noisy data set. After applying data scalation with MinMax scaler the accuracy improved a bit, but still not enough to make it a useful tool.
-
-To try to improve our accuracy I tried another approach based on LSTM networks.
-
-\addsubsection{LSTM}
-\href{https://en.wikipedia.org/wiki/Long_short-term_memory}{LSTM} (Long short-term memory) neural networks are a kind of recurrent neural network that are very well suited for time series classification, by using an LSTM layer instead of our 2 last convolutional layers we may get better results. The architecture proposed is as follows:
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=.1, angle=90]{figs/fcn-lstm.png}
-\caption{CN-LSTM architecture}
-\label{fig2}
-\end{figure}
-
-We keep the same input layer, with shape (6001, 18). After that we use an initial convolutional layer with 64 filters and a kernel size of 3, which is good at learning general patterns in our data after that we use a normalization layer that we connect with a ReLU activation layer, finally we use a pooling layer to downsample the results obtained in this first step. After that we connect a droput layer to avoid overfiting, this layer will "deactivate" a percentage of the neurons of the interconnected layers trying to avoid that the weights of our gradient are too much affected by noisy data. After that we plug the LSTM layer with 100 neurons and the default tanh activation function, a dropout layer is added after this one and finally we have the output layer, with 5 neurons, again the number of classes we would like to classify.
-
-For this architecture several optimizers has been tried too, particullarly Adam with learning rates ranging from 1e-3 to 1e-5 and AdamW with a weight decay of 1e-4.
-
-After several days training this architecture was not able to overcome 45\% in validation accuracy, an improvement over fully convolutional neural networks, but not enough however.
-
-\addsection{Band power aggregation}
-Until now I did not have too much success, a 45\% on validation accuracy is still not a good result. Most probably we are dealing with very noisy data not representative of the sleep stage in the subjects, as an instance ABD or IC channels does not seem a good choice to study the sleep stages of a subject. In top of that try to feed a neural network with the raw readings of an electroencephalogram seems a pretty poor choice, since there may be a lot of artifacts messing our data.
-
-We can think in an electroencephalogram as a bunch of signals, but, the brain activity is characterized by particular frequencies appearing or desapearing at different moments in the brain, if we were able to study the influence of those frequencies en each of our events we will have a much more cleaner dataset.
+Power Spectral Density (PSD) analysis is a widely used quantitative EEG (qEEG) technique for examining the spectral composition of EEG signals during sleep. It provides valuable insights into various sleep stages and can aid in the identification of potential sleep disorders by measuring the distribution of power across different frequency bands within the EEG signal.
 
 \addsubsection{Delta activity}
 Delta brainwaves, also known as delta activity, are the slowest brainwaves, typically between 0.5 and 4.5 Hz. They are primarily associated with deep, dreamless sleep, where the body is in a state of complete relaxation and the mind is minimally active. Delta waves are also observed in newborns, and can be induced in a waking state by experienced meditators.
 
-They usually show a high amplitude and are most prevalent during deep sleep stages (3), where the brain is essentially shut down for repair and regeneration. Delta waves are linked to various restorative processes, including tissue repair, muscle growth, and hormone release.They are also involved in transferring information from the hippocampus to the neocortex, aiding in long-term memory storage.
+They usually show a high amplitude and are most prevalent during deep sleep stages (3), where the brain is essentially shut down for repair and regeneration. Delta waves are linked to various restorative processes, including tissue repair, muscle growth, and hormone release.They are also involved in transferring information from the hippo campus to the neocortex, aiding in long-term memory storage.
 
 \addsubsection{Theta activity}
 Theta brainwaves, characterized by frequencies between 4.5-8.5 Hz, are associated with states of relaxation, deep meditation, and creativity. They are often observed during sleep, particularly during dream sleep, and are also linked to states of daydreaming and focused attention. Theta activity is thought to play a role in processing information, making memories, and facilitating intuitive insights. 
@@ -354,19 +308,14 @@ Alpha brainwaves, with a frequency of 8.5-11.5 Hz, are associated with a relaxed
 Alpha activity is typically strongest over the posterior areas of the head, particularly the occipital cortex. Alpha waves can be influenced by various factors, including sensory stimuli, mental activities, and even the position of the eyes (they are often more prominent with eyes closed). 
 
 \addsubsection{Sigma activity}
-Sigma activity, also known as sigma power or spindle activity, refers to brainwave activity in the frequency range of 11.5-15.5 Hz, a key component of non-REM sleep. These brainwaves are characterized by transient oscillations and are often associated with sleep-dependent memory consolidation and sleep stability. In infants, sigma activity is linked to psychomotor development and local brain maturation.
+Sigma activity, also known as sigma power or spindle activity, refers to brainwave activity in the frequency range of 11.5-15.5 Hz, a key component of non-REM sleep. These brainwaves are characterized by transient oscillations and are often associated with sleep-dependent memory consolidation and sleep stability. In infants, sigma activity is linked to psycho motor development and local brain maturation.
 
 \addsubsection{Beta activity}
 Beta activity in the brain refers to a range of brainwave frequencies, typically between 15.5 and 30 Hz, associated with alert, focused, and active mental states. These brainwaves are commonly present during waking hours and when engaged in tasks requiring concentration, problem-solving, or decision-making.
 
 An excessive beta activity can be associated with symptoms of brain over-arousal, such as anxiety, obsessiveness, and sleep difficulties, while a deficient beta activity may be linked to difficulties concentrating, problem-solving, and overall brain under-arousal.
 
-\addsection{Power Spectral Density (PSD)}
-Power Spectral Density (PSD) analysis is used to examine the spectral composition of EEG signals during sleep, providing insights into different sleep stages and potential sleep disorders. It's a quantitative EEG (qEEG) technique that measures the distribution of power across different frequency bands within the EEG signal.
-
-Inspired by \href{https://mne.tools/stable/auto_tutorials/clinical/60_sleep.html#design-a-scikit-learn-transformer-from-a-python-function}{this} article, I used the frequencies spectrum derivated from the PSD analisys of the EEGs, obtaining a vector of "features" characterizing which amount of power we find in each channel for the frequencies related to brain activity.
-
-However, the channels we were using until the moment are not the best choice to look for brain activity, hence the list of meaningfull channels we will study has been cropped into an smaller but more representative list, the channels we will use for PSD Analisys are the following:
+Motivated by findings from recent literature \cite{PSD}, we can apply PSD analysis to extract the frequency spectrum from the EEG recordings, resulting in a feature vector that quantifies the power observed in each channel across frequency bands associated with brain activity. However, upon closer examination, it became evident that the set of EEG channels initially considered was not optimal for detecting brain-related spectral features. Therefore, the list of channels used in the analysis was refined and reduced to a smaller, more representative subset. The selected channels used for PSD analysis are as follows:
 
 \begin{table}[H]
 \begin{center}
@@ -388,12 +337,81 @@ However, the channels we were using until the moment are not the best choice to 
 \label{tab3}
 \end{table}
 
-By computing the PSD of the electroencephalograms for this channels we will obtain a vector of 35 features, the amount of power in each of the brain related activity frequencies (presented above) for each of the channels, we will discard any other frequency range.
+\addchapter{Design}
+In order to establish a meaningful relationship between the Human Sleep Project dataset and the Soundless dataset, it is essential to standardize the analysis of the Human Sleep Project data. This can be achieved by predicting the sleep stage of a subject at each moment within their electroencephalogram (EEG) recording. Once sleep stages are accurately classified, relevant sleep metrics can be computed, enabling comparisons between the two datasets.
 
-This time we have a much cleaner and representative dataset, we must, however think in a new network architecture that fits better with our new dataset.
+To perform this classification, a neural network presents itself as a suitable tool due to its capacity to model complex patterns in time-series data. The goal is to classify each segment of the EEG into one of the following sleep stages:
+
+\begin{itemize}
+  \item \textbf{Sleep\_stage\_W:} This stage indicates that the subject is awake.
+  \item \textbf{Sleep\_stage\_N1:} This stage indicates that the subject is in the first sleep stage.
+  \item \textbf{Sleep\_stage\_N2:} This stage indicates that the subject is in the second sleep stage.
+  \item \textbf{Sleep\_stage\_N3:} This stage indicates that the subject is in the third sleep stage.
+  \item \textbf{Sleep\_stage\_R:} This stage indicates that the subject is in REM (Rapid Eye Movement) stage.
+\end{itemize}
+
+As stated in previous sections, the initial approach adopted was to analyze the electroencephalograms in their original form, treating them as sequences of voltage measurements recorded over time for each channel. To this end, I employed a fully convolutional neural network (FCN), which is particularly well-suited for modeling temporal dynamics and spatial relationships present within multi-channel EEG data.
+
+The choice of an FCN was motivated by its ability to efficiently extract features from time-series data without relying on traditional recurrent architectures. This approach leverages convolutional filters to capture both short-term fluctuations and longer-term dependencies within the signal, thereby enabling a comprehensive analysis of the electroencephalogram's intrinsic structure. Furthermore, FCNs have been demonstrated to perform robustly in similar biomedical applications, making them an attractive option for tasks such as sleep stage classification and signal anomaly detection.
+
+By processing the EEG recordings in their raw format, this method allows for an end-to-end feature extraction and classification framework, whereby the network learns to identify subtle patterns associated with different sleep stages directly from the voltage sequences. The following sections detail the network architecture, the training regimen, and the evaluation metrics used to assess the performance of this approach in analyzing and classifying the EEG data.
+
+\addsection{Fully Convolutional neural network (FCN)}
+Based on the paper Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline \cite{FCN} and the related work found at \cite{keras-ts} I build a fully convolutional network for time series classification, the architecture is as follows:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.1, angle=90]{figs/fcn.png}
+\caption{FCN architecture}
+\label{fig1}
+\end{figure}
+
+The input shape to the fully convolutional neural network is (6001, 18), where 18 corresponds to the number of EEG channels and 6001 to the number of time points in each segment. Each input segment represents a 30-second window of the EEG signal, sampled at 200 Hz, resulting in 6000 samples, plus one additional point depending on the indexing used during preprocessing. For consistency, only EEG recordings sampled at 200 Hz are retained; any files with a different sampling rate are excluded from this approach.
+
+The network architecture begins with a 1D convolutional layer consisting of 32 filters and a kernel size of 3, applied along the temporal axis. This is followed by a second convolutional layer, also with 32 filters, but using a kernel size of 5 to capture slightly broader temporal features. A third convolutional layer with 64 filters and a kernel size of 5 is then used to further increase the representational capacity of the network.
+
+To reduce dimensionality and extract global temporal features, an average pooling layer is applied after the convolutional blocks. Finally, the output is passed through a dense (fully connected) layer with 5 neurons, corresponding to the number of target sleep stages or classes in the classification task.
+
+The activation function used for all hidden layers in the network is the Rectified Linear Unit (ReLU), chosen for its computational efficiency and its ability to mitigate the vanishing gradient problem during training. For the output layer, a softmax activation function is applied, as the task involves multi-class classification, with the network output representing a probability distribution over the defined sleep stage classes.
+
+The hyperparameters of the neural network were optimized using Keras Tuner, a tool designed to automate the selection of optimal configurations for deep learning models. While Keras Tuner provides a structured and efficient way to explore hyperparameter spaces, its integration with this project posed certain limitations. Specifically, because the full dataset is large and hosted externally, it was not feasible to perform tuning across the entire dataset. As a result, the tuning process was conducted on a representative subset of the data. Despite this constraint, Keras Tuner proved to be a valuable aid in guiding the selection of key model parameters such as the number of filters, kernel sizes, and learning rates.
+
+Several optimization strategies were evaluated to determine the most effective training configuration for the proposed network architecture. In particular, the Adam, Stochastic Gradient Descent (SGD), and AdamW optimizers were tested. For the AdamW optimizer, a weight decay parameter of \(1*10^{-4}\) was applied to regularize the model and prevent overfitting.
+
+Additionally, a range of learning rates between \(1*10^{-3}\) and \(1*10^{-5}\) was explored during training to assess their impact on convergence and performance. A learning rate scheduler was also employed to dynamically adjust the learning rate over time, further improving training stability and efficiency.
+
+%After one day of training this approach could not overcome a 20\% of validation accuracy, which is not better than a random choice of one of our classes. We need to take into account that we are feeding the network with a very different selection of channels what will probably lead to a very noisy data set. After applying data scalation with MinMax scaler the accuracy improved a bit, but still not enough to make it a useful tool.
+
+%To try to improve our accuracy I tried another approach based on LSTM networks.
+
+\addsubsection{LSTM}
+Long Short-Term Memory (LSTM) networks \cite{LSTM} are a type of recurrent neural network (RNN) specifically designed to model and learn from sequential data. Unlike traditional RNNs, which suffer from vanishing or exploding gradients over long sequences, LSTMs incorporate memory cells and gating mechanisms that allow them to capture long-range dependencies and temporal dynamics more effectively. This makes them particularly well-suited for time series classification tasks, such as analyzing electroencephalogram (EEG) signals, where temporal patterns play a crucial role in identifying different sleep stages.
+
+Given these strengths, an alternative model architecture was developed by replacing the final two convolutional layers in the original network with one or more LSTM layers. The rationale behind this change is that while convolutional layers are effective at extracting local spatial and short-term temporal features, LSTMs may provide improved performance by explicitly modeling the temporal evolution of brain activity across the EEG signal. This hybrid approach leverages the strength of convolutional layers for feature extraction at the lower levels of the network, while utilizing LSTMs to capture higher-order temporal dependencies at later stages.
+
+The architecture proposed is as follows:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.1, angle=90]{figs/fcn-lstm.png}
+\caption{CN-LSTM architecture}
+\label{fig2}
+\end{figure}
+
+The input layer remains unchanged, with a shape of (6001, 18), corresponding to 30-second EEG segments sampled at 200 Hz across 18 channels. The network begins with an initial 1D convolutional layer consisting of 64 filters and a kernel size of 3, which is effective for capturing local temporal patterns in the data. This is followed by a normalization layer, which helps stabilize the learning process, and a ReLU activation function to introduce non-linearity. A pooling layer is then applied to downsample the feature maps and reduce computational complexity.
+
+To mitigate overfitting, a dropout layer is added next. This layer randomly deactivates a fraction of the neurons during training, helping to prevent the model from becoming too sensitive to noise in the input data and promoting generalization. Following this, a Long Short-Term Memory (LSTM) layer with 100 units is introduced, using the default tanh activation function, to capture the sequential dependencies in the EEG signal.
+
+Another dropout layer is applied after the LSTM to further regularize the model. Finally, the architecture concludes with a dense output layer containing 5 neurons, corresponding to the number of sleep stage classes in the classification task. This output layer uses a softmax activation function to produce class probabilities.
+
+For this architecture, several optimizers were evaluated, including Adam with learning rates ranging from \(1*10^{-3}\) to \(1*10^{-5}\), as well as AdamW, incorporating a weight decay parameter of \(1*10^{-4}\) to improve regularization.
+
+%After several days training this architecture was not able to overcome 45\% in validation accuracy, an improvement over %fully convolutional neural networks, but not enough however.
 
 \addsection{Multi Layer Perceptron (MLP)}
-A Multi Layer Perceptron (\href{https://en.wikipedia.org/wiki/Multilayer_perceptron}{MLP}) is a feed forward neural network, characterized for having an input layer, several hidden layers and an output layer. This kind of neural networs are very well suited for classifing tabulated data. After our PSD analisys we are getting a vector of fixed "features" representing the amount of power of each frequency associated with the brain activity for each of the channels we are studing, a simple MLP must do the job properly, this time the architecture used is the following:
+A Multi-Layer Perceptron (MLP) \cite{MLP} is a type of feedforward neural network characterized by an input layer, one or more hidden layers, and an output layer. MLPs are particularly well-suited for classification tasks involving tabular or fixed-length feature data.
+
+Following the Power Spectral Density (PSD) analysis, we obtain a fixed-length feature vector representing the power distribution across frequency bands related to brain activity for each selected EEG channel. Given this structured feature representation, a straightforward MLP architecture is an appropriate choice for classification. The specific architecture employed in this study is as follows:
 
 \begin{figure}[H]
 \centering
@@ -402,26 +420,28 @@ A Multi Layer Perceptron (\href{https://en.wikipedia.org/wiki/Multilayer_percept
 \label{fig3}
 \end{figure}
 
-We first have our input layer of shape (35), since we have 7 channels multiplied by the 5 frequencies we are interested in. The input is then connected to a first dense layer with 100 neurons and using the ReLU activation function, following another hidden layer of again 100 neurons and using the ReLU activation function. After the dense layers, the input is concatenated with the ouput of the hidden layers, so we have a deep path and a wide path for the data, this use to help the classification process when our input is very representative what we are willing to predict. Finally a dense layer with 5 neurons and an activation function of softmax is attached to the network.
+The input layer has a shape of (35), corresponding to the 7 selected EEG channels multiplied by the 5 frequency bands of interest derived from the PSD analysis. This input is first passed through a dense layer with 100 neurons and a ReLU activation function, followed by a second hidden dense layer, also with 100 neurons and ReLU activation.
 
-The optimizer used for the MLP is Adam with an initial leraning rate of 1e-3, however a \href{https://keras.io/api/callbacks/reduce_lr_on_plateau/}{ReduceLROnPlateau} is in use to reduce the learning rate when our error is not improving, allowing the network to focus more and to more stable but slow convergence.
+After these hidden layers, the original input vector is concatenated with the output of the second hidden layer, creating a model with both a deep path (through the hidden layers) and a wide path (direct input). This architecture leverages both the learned high-level features and the raw input features, which can enhance classification performance when the input features are strongly representative of the target classes.
 
-The parameters for the number of neurons and the leraning rate for this network have been optimized using \href{https://keras.io/keras_tuner/}{keras tuner}.
+Finally, the concatenated output is passed to a dense output layer with 5 neurons and a softmax activation function, corresponding to the five sleep stage classes to be predicted.
 
-Multi layer perceptrons are very sensitive to data scaling, the MLP assumes a sample centered in 0 and with a standard deviation of 1. To achieve that we first \href{https://github.com/szz-dvl/soundless/blob/main/modules/edf.py#L157}{normalize} our samples, and, afterwards we scale each sample with \href{https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html}{MinMaxScaler}. After applying MinMaxScaler the network was pretty more stable and I was able to acchieve a better accuracy.
+The optimizer selected for training the MLP is Adam, initialized with a learning rate of \(1*10^{-3}\). To enhance training stability and promote efficient convergence, a ReduceLROnPlateau learning rate scheduler is employed. This scheduler reduces the learning rate automatically when the validation error plateaus, allowing the network to focus more effectively on minimizing the loss and achieve a more stable, albeit slower, convergence.
+
+The hyper parameters, including the number of neurons and the learning rate for this network, were optimized using Keras Tuner. Multi-Layer Perceptrons are highly sensitive to data scaling, as they typically assume input features are centered around zero with a standard deviation of one. To meet this assumption, the data preprocessing pipeline first normalizes the samples to have zero mean and unit variance, followed by scaling each sample using a MinMaxScaler. This two-step scaling process significantly improved the stability of the network during training and led to a notable increase in classification accuracy.
 
 \addchapter{Implementation}
-In this section I will breafly explain the technologies used to implement the design presented above. Due to the nature of the dataset, more that 25000 files, weighting around 500MB in average, the training process of neural networks presented here is not simple, we need in a first phase to download the data, in a second stage, the data must be treated and aggregated, and finally the network shoud be trained.
+This section provides an overview of the technologies and tools used to implement the methodology described above. Given the size and complexity of the dataset, comprising over 25,000 files, each averaging approximately 500 MB, the neural network training process is non-trivial. It involves multiple stages: first, downloading the data; second, preprocessing and aggregating the data; and finally, training the neural network models.
 
-The whole \href{https://github.com/szz-dvl/soundless/tree/main}{implementation} is coded in python, a friendly language for IA related tasks, having great libraries such as keras, tensorflow and scikit learn, that we will use extensively.
+The entire implementation is developed in Python, a widely-used programming language for artificial intelligence and machine learning tasks. Python’s rich ecosystem of libraries, including Keras, TensorFlow, and scikit-learn, are leveraged extensively throughout this project.
 
-For the download process, \href{https://pypi.org/project/boto3/}{boto3} library is used to interactuate with AWS s3 instances hosting the data.
+For the data acquisition phase, the boto3 library is utilized to interface with AWS S3 storage services, from which the dataset files are downloaded.
 
-To treat the data, \href{https://mne.tools/stable/index.html}{MNE} library is used, this one comes in handy to deal with .edf files, allowing us to get the epochs of an electroencephalogram related to a particular annotation and computing the PSDs associated with each event.
+Data preprocessing is facilitated by the MNE library, which is specifically designed for handling electrophysiological data formats such as .edf files. MNE enables efficient extraction of EEG epochs corresponding to specific annotations and the computation of Power Spectral Densities (PSDs) for each event.
 
-To aggregate the data a \href{https://www.postgresql.org/}{postgreSQL} DDBB have been used, when the data is downloaded and treated is aggregated in different batches and saved into a relational database, the neural network will read those chunks of data for the training process.
+To manage and organize the processed data, a PostgreSQL relational database is employed. Preprocessed data is aggregated into batches and stored within this database, allowing the neural network training routines to efficiently access and load data in manageable chunks.
 
-Finally to create the neural networks proposed here \href{https://keras.io/}{keras} is used. This is a great library abstracting the tough part of neural networks and allowing for quick prototipe a neural network. 
+Finally, the neural networks themselves are implemented using Keras, a high-level deep learning library that abstracts the complexities of model creation and training, enabling rapid prototyping and experimentation.
 
 \addchapter{Evaluation}
 At the moment of writing, the MLP has been trained with 1437 subjects, with, in average, around 850 events each patient what results in more that 1.2M events. We are reaching an accuracy of nearly a 70\% in the validation phase. Now, the \href{https://github.com/szz-dvl/soundless/blob/main/mlp_test.py}{tests} have been performed in 124 subjects taken randomly from the dataset, with about 102000 events, those subjects are nod feed into the neural network at training stage.
@@ -452,7 +472,7 @@ The \href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.clas
 
 As we can see, our main problem is with class Sleep\_stage\_N1, where we get a precision of 33\%, if we look closely into the classification report we observe that the class is the class with less support, probably applying some data augmentation techniques, like \href{https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html}{SMOTE} will help the neural network to predict better for this class.
 
-The confusion matrix obtained in the trainning is the following:
+The confusion matrix obtained in the training is the following:
 
 \begin{figure}[H]
 \hspace*{-4cm}\includegraphics[scale=.5]{figs/cm.png}
@@ -460,29 +480,29 @@ The confusion matrix obtained in the trainning is the following:
 \label{fig4}
 \end{figure}
 
-Here we can appreciate that our classifier is not performing well for the Sleep\_stage\_N1 class, being confused mainly with the class Sleep\_stage\_R and Sleep\_stage\_N2. The rest of the classes shows a better perfomance, being Sleep\_stage\_N2, Sleep\_stage\_N3 and Sleep\_stage\_R above the 70\% of success in the prediction.
+Here we can appreciate that our classifier is not performing well for the Sleep\_stage\_N1 class, being confused mainly with the class Sleep\_stage\_R and Sleep\_stage\_N2. The rest of the classes shows a better performance, being Sleep\_stage\_N2, Sleep\_stage\_N3 and Sleep\_stage\_R above the 70\% of success in the prediction.
 
 \addsection{Data augmentation}
 Data augmentation or oversampling is a technique that generates synthetic samples for a given dataset, this synthetic samples are generated according to the samples we already have from the target class. To try to mitigate the problem found in the evaluation section with the class Sleep\_stage\_N1 I'm generating synthetic samples exclusively for this class to see if the network performance can be improved for this events.
 
-Three approaches have been employed regarding data augmentation, the first one is to generate synthetic samples for the class Sleep\_Stage\_N1 to equiparate the number of samples of this class to the number of classes of the majority class, usually Sleep\_Stage\_N2, the confusion matrix obtained for this approach is the following:
+Three approaches have been employed regarding data augmentation, the first one is to generate synthetic samples for the class Sleep\_Stage\_N1 to equate the number of samples of this class to the number of classes of the majority class, usually Sleep\_Stage\_N2, the confusion matrix obtained for this approach is the following:
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=.5]{figs/cm-da-max.png}
-\caption{Confussion matrix oversampling N1 to equiparate the majority class}
+\caption{Confusion matrix oversampling N1 to equate the majority class}
 \label{fig5}
 \end{figure}
 
 As we can see in figure \ref{fig5}, we improve the classification for Sleep\_stage\_N1 to the detriment of other classes, this is no ideal but all the classes but Sleep\_stage\_W are above the 50\%.
 
 \newpage
-In the next approach I computed the mean of the elements for all classes, if Sleep\_stage\_N1 number of elements was below that number, the class is oversamplet to achieve that number, the confusion matrix is the following:
+In the next approach I computed the mean of the elements for all classes, if Sleep\_stage\_N1 number of elements was below that number, the class is oversampled to achieve that number, the confusion matrix is the following:
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=.5]{figs/cm-da-mean.png}
-\caption{Confussion matrix oversampling N1 to achieve the mean}
+\caption{Confusion matrix oversampling N1 to achieve the mean}
 \label{fig6}
 \end{figure}
 
@@ -498,7 +518,7 @@ As we can see in figure \ref{fig6} this approach is more similar to the one obta
 As we can see in figure \ref{fig7}, the overall accuracy is reduced, and, in this case we do not improve Sleep\_stage\_N1 that much, which was the first goal of oversampling at all.
 
 \addsection{Class clustering}
-Oversampling did not suceed as expected, another technique we can apply here is to cluster the class Sleep\_stage\_N1 and Sleep\_stage\_N2. We loose precision in the results obtained, but we may be more accurate predicting a the satges of sleep. By applying this technique the model was trained on 1371 subjects with a mean of 850 samples per subject, giving a result of 1.16M samples. The same test set used for the previous sections is used here, the classification report obttained in this case is the following:
+Oversampling did not succeed as expected, another technique we can apply here is to cluster the class Sleep\_stage\_N1 and Sleep\_stage\_N2. We loose precision in the results obtained, but we may be more accurate predicting a the stages of sleep. By applying this technique the model was trained on 1371 subjects with a mean of 850 samples per subject, giving a result of 1.16M samples. The same test set used for the previous sections is used here, the classification report obtained in this case is the following:
 
 \begin{table}[H]
 \begin{center}
@@ -521,23 +541,23 @@ Oversampling did not suceed as expected, another technique we can apply here is 
 \label{tab4}
 \end{table}
 
-And the confussion matrix obtained is:
+And the confusion matrix obtained is:
 
 \begin{figure}[H]
 \centering
 \hspace*{-1cm}\includegraphics[scale=.42]{figs/cm-clustering.png}
-\caption{Confussion matrix clustering N1/N2}
+\caption{Confusion matrix clustering N1/N2}
 \label{fig8}
 \end{figure}
 
-This time the results are pretty more solid, we will be able to classify the different sleep stages and, particullarly we will be able to know when a subject is awake or not. With this kind of data we can carry on and try to link our data set to sounless dataset.
+This time the results are pretty more solid, we will be able to classify the different sleep stages and, particularly we will be able to know when a subject is awake or not. With this kind of data we can carry on and try to link our data set to Soundless dataset.
 
 \addchapter{Soundless}
 The \href{https://soundless.app/soundless\_final\_report\_en.pdf}{soundless} project carried out by the Universitat Rovira i Virgili (Tarragona, Spain) aims to be a citizen science platform to study how noise affect rest in different neighbourhoods of the city of Tarragona. 
 
-The soundless project gathered 40 neighbours of the city of Tarragona living in the neighborhoods of El Serrallo and Barri del port an conducted a study on how the sleep is disturbed by train lines noise. Tarragona is a port city located in northeast Spain (Catalonia) by the Mediterranean Sea. A major problem is that railway tracks create a barrier between the city and the sea (beach, port). Apartment blocks are located just at 2-5 meters of distance from the tracks without any acoustic barriers.
+The soundless project gathered 40 neighbours of the city of Tarragona living in the neighbourhoods of El Serrallo and Barri del port an conducted a study on how the sleep is disturbed by train lines noise. Tarragona is a port city located in north-east Spain (Catalonia) by the Mediterranean Sea. A major problem is that railway tracks create a barrier between the city and the sea (beach, port). Apartment blocks are located just at 2-5 meters of distance from the tracks without any acoustic barriers.
 
-The first challenge of the Sounless project is to gather the data to conduct an study on sleep quality. To do so they used a FitBit (an intelligent bracelet) able to capture the vital sings of an individual, such as the heart rate, the oxigen saturation, etc. Once the data is gathered the next step is to detect an incidence in a relaiable manner, here we define a sleep incident as when a person moves from a deep sleep phase to being completely awake due to excessive noise. To do so several algorithms are applied to the data in order to detect anomalies in sleep related to noise in the ambient. A first approach was to use direct mathematical correlation between hear rate and noise, some factors affected this mesurement however:
+The first challenge of the Sounless project is to gather the data to conduct an study on sleep quality. To do so they used a FitBit (an intelligent bracelet) able to capture the vital sings of an individual, such as the heart rate, the oxygen saturation, etc. Once the data is gathered the next step is to detect an incidence in a reliable manner, here we define a sleep incident as when a person moves from a deep sleep phase to being completely awake due to excessive noise. To do so several algorithms are applied to the data in order to detect anomalies in sleep related to noise in the ambient. A first approach was to use direct mathematical correlation between hear rate and noise, some factors affected this measurement however:
 
 \begin{itemize}
 	\item Individual Variability: Participants exhibited diverse heart rate patterns and sensitivities to noise.
@@ -547,26 +567,26 @@ The first challenge of the Sounless project is to gather the data to conduct an 
 	\item Sleep Stage Influences: Natural heart rate variations during different sleep stages added another layer of complexity.
 \end{itemize}
 
-What leaded the soundless team to adopt z-scores algorithm. With this approach they were successfully able to detect incidents in heart rate and in sound mesurements, and, afterwards relate the incidents in heart rate to incidents in sound. They results show that the legal limit set by the World Health Organization (WHO) of 45 decibels was exceeded on 98\% of nights with recordings. Additionally they show that each and every user have, in average, 12 sound incidents during the night and half of the nights that a recording was taken an incident in their heart rate is detected. Additionally one in five nights each user has been woken up due to a hight level on ambient noise.
+What leaded the soundless team to adopt z-scores algorithm. With this approach they were successfully able to detect incidents in heart rate and in sound measurements, and, afterwards relate the incidents in heart rate to incidents in sound. They results show that the legal limit set by the World Health Organization (WHO) of 45 decibels was exceeded on 98\% of nights with recordings. Additionally they show that each and every user have, in average, 12 sound incidents during the night and half of the nights that a recording was taken an incident in their heart rate is detected. Additionally one in five nights each user has been woken up due to a hight level on ambient noise.
 
-Soundless study carry on trying to detect individuals with a higher sensitivity to noise in the ambient, having individuals with values close to 38 dB to have a disturbance and others that requires louder noises. Particullarly, they show that 70.59\% of the times a sleep disturbance has been detected, it has occurred in people with a higher sensitivity to noise, in this case, a sensitivity less than 45 decibels. On the other hand, people with lower sensitivity to this type of situation have only registered 29.41\% of the sleep disturbances caused by noise. After the study on individual persons they examine general sensitivity to noise in the ambient, where they find that values between 40 and 50 dB are able to create incidences in the heart rate and in the sleep process of almost any individual.
+Soundless study carry on trying to detect individuals with a higher sensitivity to noise in the ambient, having individuals with values close to 38 dB to have a disturbance and others that requires louder noises. Particularly, they show that 70.59\% of the times a sleep disturbance has been detected, it has occurred in people with a higher sensitivity to noise, in this case, a sensitivity less than 45 decibels. On the other hand, people with lower sensitivity to this type of situation have only registered 29.41\% of the sleep disturbances caused by noise. After the study on individual persons they examine general sensitivity to noise in the ambient, where they find that values between 40 and 50 dB are able to create incidences in the heart rate and in the sleep process of almost any individual.
 
 The study concludes that the night noise produced by freight trains in the seaside of Tarragona is far beyond legal limits (>45dB) –and up to 80dB– during all nights. Furthermore, they consistently detected the impact of noise in health variables like heart rates and sleep modes, which affected most users in the study during all nights. This disturbances during sleep are causing irregular heart rates, sudden awakenings, and noticeable impacts in sleep quality in the citizens.
 
-With Soundless data, we can try to compare the users in HSP project and in Soundless dataset to see if noise is affecting the sleep quality of the patiens.
+With Soundless data, we can try to compare the users in HSP project and in Soundless dataset to see if noise is affecting the sleep quality of the subjects.
 
 \addchapter{Sleep Metrics}
 When looking for sensitivity to external stimuli is often good to stick to some well known metrics. The main metric is \href{https://en.wikipedia.org/wiki/Sleep_efficiency}{sleep efficiency}, defined as:
 
 \[ SE = TST / TIB \]
 
-Where TST is the total time sleeping in bed, and TIB is the total time in bed. Now that we can classify our electroencephalograms slices into the different sleep stages, we can compute the sleep efficiency of a subject, with such metric we will be able to compare soundless users with patiens which recordings have been taken in a very controled environment, allowing us to dilucidate if a recording has been altered by external noise given a user profile.
+Where TST is the total time sleeping in bed, and TIB is the total time in bed. Now that we can classify our electroencephalograms slices into the different sleep stages, we can compute the sleep efficiency of a subject, with such metric we will be able to compare soundless users with subjects which recordings have been taken in a very controlled environment, allowing us to elucidate if a recording has been altered by external noise given a user profile.
 
-Taking into account the different sleep phases of the different subjjects we can try to tune up even more our study. Deep sleep, also known as slow-wave sleep or stage N3, is a crucial phase of the sleep cycle characterized by its restorative properties. It's the deepest stage of non-REM sleep, where the body and mind engage in restorative processes. During deep sleep, brain waves slow down, and the body experiences a significant decrease in heart rate, breathing rate, and muscle tension. This stage is essential for physical recovery, immune system strengthening, memory consolidation, and hormone regulation. REM (Rapid Eye Movement) sleep is the final stage of a sleep cycle, characterized by intense brain activity, vivid dreams, and temporary paralysis of the limbs. It typically begins about 90 minutes after falling asleep and recurs in cycles throughout the night, with later cycles becoming longer. REM sleep is believed to be crucial for cognitive functions like memory consolidation, learning, and emotional processing.
+Taking into account the different sleep phases of the different subjects we can try to tune up even more our study. Deep sleep, also known as slow-wave sleep or stage N3, is a crucial phase of the sleep cycle characterized by its restorative properties. It's the deepest stage of non-REM sleep, where the body and mind engage in restorative processes. During deep sleep, brain waves slow down, and the body experiences a significant decrease in heart rate, breathing rate, and muscle tension. This stage is essential for physical recovery, immune system strengthening, memory consolidation, and hormone regulation. REM (Rapid Eye Movement) sleep is the final stage of a sleep cycle, characterized by intense brain activity, vivid dreams, and temporary paralysis of the limbs. It typically begins about 90 minutes after falling asleep and recurs in cycles throughout the night, with later cycles becoming longer. REM sleep is believed to be crucial for cognitive functions like memory consolidation, learning, and emotional processing.
 
 In addition to the sleep efficiency we will compute the percentage of the night a subject is in light sleep stage (stages N1 and N2), deep sleep stage (stage N3) or REM sleep stage. With this values we can try to aggregate all the users from soundless dataset and The Human Sleep Project and estimate clusters of users. We will work with around 12m sessions of The Human Sleep project and the 362 sessions of soundless dataset.
 
-We will use the well known KMeans algorithm for the clustering. Before clustering the subjects a PCA analisis to reduce the variable space is performed, using two components for the four variables we are studing, the sleep efficiency, the percentage of time in light sleep, the percentage of time in deep sleeep and the percentage of time in REM sleep. Further on, performing a \href{https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html#sphx-glr-auto-examples-cluster-plot-kmeans-silhouette-analysis-py}{silhouette score} study on the data for 2, 3, 4, 5 and 6 clusters we obtain that three clusters is the optimum with an score of 0.392, the graphic is as follows:
+We will use the well known KMeans algorithm for the clustering. Before clustering the subjects a PCA analysis to reduce the variable space is performed, using two components for the four variables we are studying, the sleep efficiency, the percentage of time in light sleep, the percentage of time in deep sleep and the percentage of time in REM sleep. Further on, performing a \href{https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html#sphx-glr-auto-examples-cluster-plot-kmeans-silhouette-analysis-py}{silhouette score} study on the data for 2, 3, 4, 5 and 6 clusters we obtain that three clusters is the optimum with an score of 0.392, the graphic is as follows:
 
 \begin{figure}[H]
 \centering
@@ -575,7 +595,9 @@ We will use the well known KMeans algorithm for the clustering. Before clusterin
 \label{fig9}
 \end{figure}
 
-The graphics for 2, 4, 5 and 6 clusters are not included in this document for the sake of brevity. With this information we can carry on our study, we perform a KMeans clustering for three clusters and study the sleep efficiency en each cluster, the results are as follows:
+The graphics for 2, 4, 5 and 6 clusters are not included in this document for the sake of brevity. 
+
+With this information we can carry on our study, performing a KMeans clustering for three clusters we can study the sleep efficiency en each cluster, the results are the following:
 
 \begin{figure}[H]
 \centering
@@ -584,7 +606,7 @@ The graphics for 2, 4, 5 and 6 clusters are not included in this document for th
 \label{fig10}
 \end{figure}
 
-In figure \ref{fig10} we can see three diferent user "profiles". In the first cluster people have a poor sleep efficiency with a median around 0.54 and the lower quartile falling up to 0.13 aproximatelly. This seems to indicate that people in the first cluster is the people having more trouble sleeping, showing a poor sleep quality. For the second cluster we have a median sleep efficiency of 0.9, which is good, however a lot of outliers below the lower quartile (arround 0.75) are present. Finally, the third cluster shows a median of around 0.87 which is a good sleep efficiency, we have no outliers and the lower quartile is around 0.65 which is low but not terrible.
+In figure \ref{fig10} we can see three different user "profiles". In the first cluster people have a poor sleep efficiency with a median around 0.54 and the lower quartile falling up to 0.13 approximately. This seems to indicate that people in the first cluster is the people having more trouble sleeping, showing a poor sleep efficiency. For the second cluster we have a median sleep efficiency of 0.9, which is good, however a lot of outliers below the lower quartile (around 0.75) are present. Finally, the third cluster shows a median of around 0.87 which is a good sleep efficiency, we have no outliers and the lower quartile is around 0.65 which is low but not terrible.
 
 Of the 362 soundless sessions taken in consideration in the study, 293 are in cluster 1, 55 are in cluster 2 and 14 are in cluster 3. This is a first indicator that people exposed to noise in the ambient is affected severely in the sleep quality.
 
@@ -598,9 +620,9 @@ Lets now get deeper into the data and take a look at how many time the subjects 
 
 The graphic in \ref{fig11} is more explicative taking into account that light sleep, particularly Stage 2 (N2), makes up approximately 50\% of an adult's total sleep time, though this can vary slightly based on individual factors like age and overall health. While Stage 1 (N1) is the very lightest phase where a subject initially drift off, Stage 2 is a more sustained period of light sleep with gradual relaxation and slowed bodily functions. Deep sleep must be around 10\% and 25\% of the night and REM phase must be in around 20\% and 25\% of the night.  
 
-In the cluster 0 we have the median of light sleep percentage in around 75\% which is above the expected percentage, as exptected from the grafic \ref{fig10}. Deep sleep for subjects in cluster 1 is around 12\% in median, while REM sleep is around 10\% what is indicating that subjects that have a worst sleep efficiency have problems too reaching REM sleep phase during the night, either because they are affected by some sleep pathology or are exposed to loud noise in the night.
+In the cluster 0 we have the median of light sleep percentage in around 75\% which is above the expected percentage, as expected from the graphic \ref{fig10}. Deep sleep for subjects in cluster 1 is around 12\% in median, while REM sleep is around 10\% what is indicating that subjects that have a worst sleep efficiency have problems too reaching REM sleep phase during the night, either because they are affected by some sleep pathology or are exposed to loud noise in the night.
 
-For cluster 1 we have a median for light sleep time of around a 58\%, with a lot of outliers under the the lower quartile, indicatiing that people in this group is having a better quality in sleep than the previous group, as we can confirm in the graphics for deep sleep percentage (with a median of arround 22\%) and REM sleep phase which is around 20\%.
+For cluster 1 we have a median for light sleep time of around a 58\%, with a lot of outliers below the the lower quartile, indicating that people in this group is having a better quality in sleep than the previous group, as we can confirm in the graphics for deep sleep percentage (with a median of around 22\%) and REM sleep phase which is around 20\%.
 
 Finally cluster 2 is kind of a medium group of people, in this group we have people that spend around the 77\% of the night in light sleep, only arrive to deep sleep in the 7\% of the sleep time and reach REM sleep the 12\% of the night. This group is mostly formed of people with some sleep pathology, since only 14 soundless sessions fall into this category.
 
@@ -612,32 +634,61 @@ To confirm our findings we can plot the decibels that the Soundless subjects are
 \label{fig12}
 \end{figure}
 
-In the first cluster, lets rememeber, the one with more people with trouble on sleep we have a median in decibels of around 32 dB which is a pretty moderated noise, but the upper quartile is above 48 dB and we find a lot of outliers above the upper quartile, 293 soundless sessions fall into this category. The second cluster, this is the one that is able to achieve deep and REM sleep phases a correct percentage of the night, we have a median of around 33 dB an no outliers above the upper quartile (which is around 58 dB), 55 soundless sessions fall into thihs category. Finally for cluster 2, where we only have 14 Soundless users, the decibels are in median around 31 with an upper quartile of around 39 dB.
+In the first cluster, lets remember, the one with more people with trouble on sleep we have a median in decibels of around 32 dB which is a pretty moderated noise, but the upper quartile is above 48 dB and we find a lot of outliers above the upper quartile, 293 soundless sessions fall into this category. The second cluster, this is the one that is able to achieve deep and REM sleep phases a correct percentage of the night, we have a median of around 33 dB an no outliers above the upper quartile (which is around 58 dB), 55 soundless sessions fall into this category. Finally for cluster 2, where we only have 14 Soundless sessions, the decibels are in median around 31 with an upper quartile of around 39 dB.
 
-This seems to confirm that noise in the ambient is not only affecting the sleep efficiency of the subjects, but the sleep quality too. Most of the subjects exposed to loud noise in the night are not able to achieve deep sleep and REM phases a healthy percentage of the night.
+This seems to confirm that noise in the ambient is not only affecting the sleep efficiency of the subjects, but the sleep quality too. Most of the subjects exposed to loud noise in the night are not able to achieve deep sleep and REM phases a healthy percentage of the night. Particularly in the current study we've found that:
+
+\begin{itemize}
+	\item People exposed to noise can't sleep a healthy percentage of the night.
+	\item People exposed to noise can't reach deep sleep and REM stages a healthy percentage of the night.
+	\item People exposed to noise may be equated to those having an sleep pathology.
+\end{itemize} 
 
 \addchapter{Conclusion}
-Sleep study is a complex topic, and how noise affects sleep increases the complexity of such an study. Some people may be more sensible to noise than another one and sleep quality itself may vary between subjects for many different reasons. Additionally, one subject can be affected by sounds at different frequencies that does not disturb other people. In this document however, we applied a set of techniques that allow us to predict the sleep stage of a subject given an electroencephalogram. This techniques can be adapted or extended to study the noise disturbance on a subject while sleeping. As an instance we could categorize and classify the different arousals found in an electroencephalogram and compare the results with a recording with an standard microphone. The dataset from the Human Sleep Project contains electroencephalograms of subjects with some pathology, it would be nice to have a dataset of healthy patiens to try to expand further our conclusions.
+Sleep study is a complex topic, and how noise affects sleep increases the complexity of such an study. Some people may be more sensible to noise than another one and sleep quality itself may vary between subjects for many different reasons. Additionally, one subject can be affected by sounds at different frequencies that does not disturb other people. In this document however, we applied a set of techniques that allow us to predict the sleep stage of a subject given an electroencephalogram. This techniques can be adapted or extended to study the noise disturbance on a subject while sleeping. As an instance we could categorize and classify the different arousals found in an electroencephalogram and compare the results with a recording with an standard microphone. The dataset from the Human Sleep Project contains electroencephalograms of subjects with some pathology, it would be nice to have a dataset of healthy subjects to try to expand further our conclusions.
 
 Ideally, with similar montages we can achieve what we want, exposing the subjects to sounds at different frequencies and amplitudes we may get a desirable result for this study. World is not ideal, neither is the data, so with the working dataset of the The Human Sleep project this is a first step towards gaining some knowledge on how the noise affect the sleep quality.
 
-Regarding the soundless dataset, we can say that noise seems to be a crucial factor in sleep quality. People exposed to higher decibels is not able to sleep the most of the night, and people who has been exposed to noise regularly tend to show a lower sleep efficiency than people that does not.
+Regarding the soundless dataset, we can say that noise seems to be a crucial factor in sleep quality. People exposed to higher decibels is not able to sleep the most of the night, and people who has been exposed to noise regularly tend to show a lower sleep efficiency than people that does not. Noise is closely related to sleep quality as well, people exposed to noise during the night is not able to reach deep or REM sleep phases a healthy percentage of the time they spend sleeping.
 
-We can conclude then that noise seems a determining factor for sleep quality, as presented in this study sounds above 45 dB are enough to disturb a subject enough to not be able to sleep efficiently enough most of the nights, and, we can say too that people exposed to noise regularly may develop an sleep pathology if exposed to noise too much time. Or, in other words, that people exposed to noise while sleeping too many time may show an effectiveness in sleep even lower that people that suffers of an sleep pathology, chronic pain and other sleep disorders.
+From the 362 Soundless sessions taken in consideration for this study, 293 belong to the worst group studied, the group of people that is not able to sleep most of the time they stay in bed and, when they do, they do not reach deep or REM phases a correct percentage of the time.
+
+We can conclude then that noise seems a determining factor for sleep quality, as presented in this study sounds above 45 dB are enough to disturb a subject enough to not be able to sleep efficiently enough most of the nights, and, we can say too that people exposed to noise regularly may develop an sleep pathology if exposed to noise too much time. Or, in other words, that people exposed to noise while sleeping too many time may show an effectiveness and quality in sleep even lower that people that suffers of an sleep pathology, chronic pain and other sleep disorders.
 
 \addchapter{Future work}
-As concluded above, the techniques used in this study may be a first step towards gaining some knowledge on how the noise affects the sleep quality. By classifing the sleep stages of a subject given an electroencephalogram we can stablish in which period the noise affects more or less a subject. Besides, the gerealization on sleep stage classification, it is, being able to predict the sleep stage of a subject given other subjects data is a great capability, the way we predict sleep stages we can predict arousals given another subject data. Arousal prediction will be another step forward to gain knowledge on how noise affects the sleep quality. 
+As concluded above, the techniques used in this study may be a first step towards gaining some knowledge on how the noise affects the sleep quality. By classifying the sleep stages of a subject given an electroencephalogram we can stablish in which period the noise affects more or less a subject. Besides, the generalization on sleep stage classification, it is, being able to predict the sleep stage of a subject given other subjects data is a great capability, the way we predict sleep stages we can predict arousals given another subject data. Arousal prediction will be another step forward to gain knowledge on how noise affects the sleep quality. 
 
-With a bigger dataset we could use soundless data to make a deeper study on the noise in the ambient, probably by taking the power of sound at different frequencies and trying to detect abnormalities in the signals registered by the bracalet, however, an electroencephalogarm is ideal to study how sleep occurs during the resting hours. 
+With a bigger dataset we could use soundless data to make a deeper study on the noise in the ambient, probably by taking the power of sound at different frequencies and trying to detect abnormalities in the signals registered by the bracelet, however, an electroencephalogram is ideal to study how sleep occurs during the resting hours. 
 
-Further steps from this study may include growing the sounless dataset, detecting arousals from vital signals and trying to stablish a relationship between soundless data and electroencephalogram data. Morover, the dataset from The Human Sleep Project provides, in some cases, a pre-sleep questionary. This questionary could be used to create a user profile, so if soundless users are willing to respond a questionary similar to those provided by The Human Sleep Project it will be a good point to start to relate data between the two datasets.  
+Further steps from this study may include growing the Soundless dataset, detecting arousals from vital signals and trying to stablish a relationship between soundless data and electroencephalogram data. Moreover, the dataset from The Human Sleep Project provides, in some cases, a pre-sleep form. This form could be used to create a user profile, so if soundless users are willing to respond a form similar to those provided by The Human Sleep Project it will be a good point to start to relate data between the two datasets.  
 
 \addchapter{Acknowledgements}
-I would like to give thanks specialy to Prof. Pedro Garc\'ia L\'opez for all the guidance and time spent with the project and to the UOC and URV for the material shared without wich I wouldn't have been able to write this study. I would like to thank Dra. Mirea Lecina for her assistance at understanding electroencephalograms. Aditionally I would like to thank Daniel Alejandro Coll for his assistance.
+I would like to give thanks specially to Prof. Pedro Garc\'ia L\'opez for all the guidance and time spent with the project and to the UOC and URV for the material shared without which I wouldn't have been able to write this study. I would like to thank Dra. Mirea Lecina for her assistance at understanding electroencephalograms. Additionally I would like to thank Daniel Alejandro Coll for his assistance.
 
 
 \addcontentsline{toc}{section}{Bibliography}
 \begin{thebibliography}{9}
+\bibitem{soundless}
+Soundless, available at: https://soundless.app
+
+\bibitem{hsp}
+The Human Sleep Project, available at: https://bdsp.io/content/hsp/2.0/
+
+\bibitem{PSD}
+Power Spectral Density, available at: https://mne.tools/stable/auto\_tutorials/clinical/60\_sleep.html\#design-a-scikit-learn-transformer-from-a-python-function
+
+\bibitem{FCN}
+Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline, available at: https://arxiv.org/abs/1611.06455
+
+\bibitem{keras-ts}
+Time series classification, available at: https://keras.io/examples/timeseries/eeg\_signal\_classification/
+
+\bibitem{LSTM}
+Long short-term memory, Wikipedia, available at: https://en.wikipedia.org/wiki/Long\_short-term\_memory
+
+\bibitem{MLP}
+Multi Layer Perceptron, Wikipedia, available at: https://en.wikipedia.org/wiki/Multilayer\_perceptron
+
 \bibitem{who}
 Basner, M., \& McGuire, S. (2018). WHO environmental noise guidelines for the European region: A systematic review on environmental noise and effects on sleep. International Journal of Environmental Research and Public Health, 15(3), 519.
 
