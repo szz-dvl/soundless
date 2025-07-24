@@ -163,6 +163,29 @@
 
 
 \tableofcontents
+\addchapter{Abstract}
+
+The Soundless \cite{soundless} project carried out by the Universitat Rovira i Virgili (Tarragona, Spain) aims to be a citizen science platform to study how noise affect rest in different neighbourhoods of the city of Tarragona. 
+
+The soundless project gathered 40 neighbours of the city of Tarragona living in the neighbourhoods of El Serrallo and Barri del port an conducted a study on how the sleep is disturbed by train lines noise. Tarragona is a port city located in north-east Spain (Catalonia) by the Mediterranean Sea. A major problem is that railway tracks create a barrier between the city and the sea (beach, port). Apartment blocks are located just at 2-5 meters of distance from the tracks without any acoustic barriers.
+
+The first challenge of the Sounless project is to gather the data to conduct an study on sleep quality. To do so they used a FitBit (an intelligent bracelet) able to capture the vital sings of an individual, such as the heart rate, the oxygen saturation, etc. Once the data is gathered the next step is to detect an incidence in a reliable manner, here we define a sleep incident as when a person moves from a deep sleep phase to being completely awake due to excessive noise. To do so several algorithms are applied to the data in order to detect anomalies in sleep related to noise in the ambient. A first approach was to use direct mathematical correlation between hear rate and noise, some factors affected this measurement however:
+
+\begin{itemize}
+	\item Individual Variability: Participants exhibited diverse heart rate patterns and sensitivities to noise.
+	\item Data Complexity: Recordings contained inherent noise even after filtering, adding to the challenge of isolating the influence of sound incidents.
+	\item Reaction Time Differences: Individual response times to noise varied considerably, ranging from 10 to 40 seconds, further complicating correlation analysis.
+	\item Sensitivity Fluctuations: Individual sensitivity to noise appeared to fluctuate, with inconsistent reactions even within the same participant
+	\item Sleep Stage Influences: Natural heart rate variations during different sleep stages added another layer of complexity.
+\end{itemize}
+
+What leaded the soundless team to adopt z-scores algorithm. With this approach they were successfully able to detect incidents in heart rate and in sound measurements, and, afterwards relate the incidents in heart rate to incidents in sound. They results show that the legal limit set by the World Health Organization (WHO) of 45 decibels was exceeded on 98\% of nights with recordings. Additionally they show that each and every user have, in average, 12 sound incidents during the night and half of the nights that a recording was taken an incident in their heart rate is detected. Additionally one in five nights each user has been woken up due to a hight level on ambient noise.
+
+Soundless study carry on trying to detect individuals with a higher sensitivity to noise in the ambient, having individuals with values close to 38 dB to have a disturbance and others that requires louder noises. Particularly, they show that 70.59\% of the times a sleep disturbance has been detected, it has occurred in people with a higher sensitivity to noise, in this case, a sensitivity less than 45 decibels. On the other hand, people with lower sensitivity to this type of situation have only registered 29.41\% of the sleep disturbances caused by noise. After the study on individual persons they examine general sensitivity to noise in the ambient, where they find that values between 40 and 50 dB are able to create incidences in the heart rate and in the sleep process of almost any individual.
+
+The study concludes that the night noise produced by freight trains in the seaside of Tarragona is far beyond legal limits (>45dB) –and up to 80dB– during all nights. Furthermore, they consistently detected the impact of noise in health variables like heart rates and sleep modes, which affected most users in the study during all nights. This disturbances during sleep are causing irregular heart rates, sudden awakenings, and noticeable impacts in sleep quality in the citizens.
+
+%With Soundless data, we can try to compare the users in HSP project and in Soundless dataset to see if noise is affecting the sleep quality of the subjects.
 
 \addchapter{Introduction}
 Sleep quality is a crucial factor in maintaining overall health. In today’s world, where a significant portion of the population resides in densely populated urban areas (megalopolises), people are continuously exposed to noise pollution. This constant exposure to ambient noise—day and night—raises concerns about its potential impact on sleep. Investigating how environmental noise affects sleep quality is therefore a highly relevant topic. In this document, we present a study focused on this issue, primarily through the analysis of existing datasets.
@@ -444,9 +467,17 @@ To manage and organize the processed data, a PostgreSQL relational database is e
 Finally, the neural networks themselves are implemented using Keras, a high-level deep learning library that abstracts the complexities of model creation and training, enabling rapid prototyping and experimentation.
 
 \addchapter{Evaluation}
-At the moment of writing, the MLP has been trained with 1437 subjects, with, in average, around 850 events each patient what results in more that 1.2M events. We are reaching an accuracy of nearly a 70\% in the validation phase. Now, the \href{https://github.com/szz-dvl/soundless/blob/main/mlp_test.py}{tests} have been performed in 124 subjects taken randomly from the dataset, with about 102000 events, those subjects are nod feed into the neural network at training stage.
+Among the three approaches presented in the Design chapter, namely the Fully Convolutional Network (FCN), the FCN combined with a Long Short-Term Memory (LSTM) layer, and the Multi-Layer Perceptron (MLP), only the MLP architecture produced meaningful results. Despite efforts to enhance performance, the FCN, even when augmented with an LSTM layer to better capture temporal dependencies, consistently yielded poor classification outcomes. Specifically, the best validation accuracy achieved by this hybrid architecture hovered around 45\%, which, although better than random guessing in a five-class setting, remains insufficient for reliable sleep stage classification.
 
-The \href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html}{classification report} obtained for the predictions computed with the resulting model is the following:
+These results suggest that the convolutional and recurrent models struggled to generalize well on the available data, potentially due to factors such as high variability in EEG channel configurations, noise in the recordings, or insufficient temporal context learned by the network. In contrast, the MLP, trained on well-structured and aggregated frequency-domain features obtained through PSD analysis, demonstrated a more stable and effective learning process.
+
+Given this outcome, the focus of this section will be on analyzing the results obtained using the MLP model. We will explore its classification performance in detail, including accuracy, confusion matrix, and other relevant evaluation metrics, to assess its effectiveness in predicting sleep stages from EEG-derived features.
+
+The Multi-Layer Perceptron (MLP) model was trained on data from 1,437 subjects, each contributing an average of approximately 850 annotated events, resulting in a total of over 1.2 million events used during the training phase. The model achieved a validation accuracy of nearly 70\%, indicating a strong ability to generalize to unseen data within the validation set.
+
+To further evaluate the model's performance, a separate test set was constructed using data from 124 subjects randomly selected from the dataset. Importantly, these subjects were excluded from the training phase, ensuring that the test results reflect the model's ability to generalize to entirely new individuals. The test set comprised approximately 102,000 events, and serves as a robust benchmark for assessing the real-world applicability of the trained MLP model.
+
+The classification report obtained for the predictions computed with the resulting model is the following:
 
 \begin{table}[H]
 \begin{center}
@@ -470,9 +501,11 @@ The \href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.clas
 \label{tab4}
 \end{table}
 
-As we can see, our main problem is with class Sleep\_stage\_N1, where we get a precision of 33\%, if we look closely into the classification report we observe that the class is the class with less support, probably applying some data augmentation techniques, like \href{https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html}{SMOTE} will help the neural network to predict better for this class.
+As shown in the classification report, the model's primary weakness lies in its performance on the Sleep\_stage\_N1 class, where it achieves a precision of only 33\%. Upon closer examination, it becomes evident that this class also has the lowest support among all classes, indicating a significant class imbalance in the dataset. This imbalance likely hinders the model's ability to learn distinguishing features for N1-stage events, resulting in poor generalization and increased misclassification.
 
-The confusion matrix obtained in the training is the following:
+To address this issue, the application of data augmentation techniques, such as SMOTE (Synthetic Minority Over-sampling Technique), could help balance the class distribution by generating synthetic examples of underrepresented classes. This, in turn, may improve the model's sensitivity and predictive performance for Sleep\_stage\_N1 in future iterations.
+
+The confusion matrix obtained during evaluation is shown below:
 
 \begin{figure}[H]
 \hspace*{-4cm}\includegraphics[scale=.5]{figs/cm.png}
@@ -480,12 +513,16 @@ The confusion matrix obtained in the training is the following:
 \label{fig4}
 \end{figure}
 
-Here we can appreciate that our classifier is not performing well for the Sleep\_stage\_N1 class, being confused mainly with the class Sleep\_stage\_R and Sleep\_stage\_N2. The rest of the classes shows a better performance, being Sleep\_stage\_N2, Sleep\_stage\_N3 and Sleep\_stage\_R above the 70\% of success in the prediction.
+The confusion matrix clearly illustrates that the classifier struggles with the Sleep\_stage\_N1 class, which is frequently misclassified as either Sleep\_stage\_R or Sleep\_stage\_N2. This overlap is expected, as these stages share similar EEG characteristics and transitions between them can be subtle, especially in noisy or low-resolution data. In contrast, the remaining classes, Sleep\_stage\_N2, Sleep\_stage\_N3, and Sleep\_stage\_R, demonstrate significantly better performance, each achieving over 70\% prediction accuracy. These results suggest that while the model is effective at distinguishing more clearly defined sleep stages, additional techniques are needed to improve its sensitivity to less distinctive stages like N1.
 
 \addsection{Data augmentation}
-Data augmentation or oversampling is a technique that generates synthetic samples for a given dataset, this synthetic samples are generated according to the samples we already have from the target class. To try to mitigate the problem found in the evaluation section with the class Sleep\_stage\_N1 I'm generating synthetic samples exclusively for this class to see if the network performance can be improved for this events.
+Data augmentation or oversampling is a technique used to generate synthetic samples in order to balance class distributions within a dataset. These synthetic samples are typically created based on the existing instances of the target class, aiming to enhance the model's ability to learn from underrepresented data.
 
-Three approaches have been employed regarding data augmentation, the first one is to generate synthetic samples for the class Sleep\_Stage\_N1 to equate the number of samples of this class to the number of classes of the majority class, usually Sleep\_Stage\_N2, the confusion matrix obtained for this approach is the following:
+To address the issue identified in the previous section, specifically, the poor performance of the classifier on the Sleep\_stage\_N1 class, synthetic samples have been generated exclusively for this class. The goal is to increase its representation during training and assess whether this targeted oversampling can improve the network's ability to correctly classify Sleep\_stage\_N1 events, thereby reducing misclassification and improving overall model performance.
+
+%Three approaches have been employed regarding data augmentation, the first one is to generate synthetic samples for the class Sleep\_Stage\_N1 to equate the number of samples of this class to the number of classes of the majority class, usually Sleep\_Stage\_N2, 
+
+The confusion matrix obtained for this approach is the following:
 
 \begin{figure}[H]
 \centering
@@ -494,10 +531,9 @@ Three approaches have been employed regarding data augmentation, the first one i
 \label{fig5}
 \end{figure}
 
-As we can see in figure \ref{fig5}, we improve the classification for Sleep\_stage\_N1 to the detriment of other classes, this is no ideal but all the classes but Sleep\_stage\_W are above the 50\%.
+As shown in Figure \ref{fig5}, the classification performance for Sleep\_stage\_N1 improves following the application of oversampling; however, this enhancement comes at the expense of reduced accuracy in some of the other classes. While this trade-off is not ideal, it is worth noting that all classes except Sleep\_stage\_W maintain classification accuracies above 50\%, indicating a generally acceptable level of performance across the majority of sleep stages.
 
-\newpage
-In the next approach I computed the mean of the elements for all classes, if Sleep\_stage\_N1 number of elements was below that number, the class is oversampled to achieve that number, the confusion matrix is the following:
+In the following approach, a simple class balancing strategy was employed to address the issue of class imbalance observed in the dataset. Specifically, the mean number of samples across all sleep stage classes was computed to serve as a reference threshold. If the number of samples in Sleep\_stage\_N1 fell below this average, the class was oversampled, through synthetic data generation, until it reached the same number of instances as the calculated mean. This method aims to equalize class representation, thereby reducing model bias toward majority classes and improving the classifier's ability to learn from underrepresented sleep stages. The confusion matrix obtained is the following:
 
 \begin{figure}[H]
 \centering
@@ -506,7 +542,9 @@ In the next approach I computed the mean of the elements for all classes, if Sle
 \label{fig6}
 \end{figure}
 
-As we can see in figure \ref{fig6} this approach is more similar to the one obtained without any oversampling at all, however Sleep\_stage\_N1 success rate is improved by over a 15\%, again in detriment to the other classes. If we oversample just one class, we hurt the rest of the classes, no matter what we do. The third approach that has been tried here is to oversample all the minority classes to match the majority class, it is: the default configuration for SMOTE. The confusion matrix obtained in this case is the following:
+As shown in Figure \ref{fig6}, this approach yields results that closely resemble those obtained without any oversampling. However, it does lead to a notable improvement in the classification performance of Sleep\_stage\_N1, with its success rate increasing by over 15\%. This gain, unfortunately, comes at the cost of reduced accuracy in other classes, highlighting a consistent trade-off observed across the experiments: oversampling a single class tends to negatively impact the classifier’s performance on the remaining classes.
+
+To address this limitation, a third approach was tested: oversampling all minority classes to match the sample size of the majority class. This method corresponds to the default configuration of the SMOTE (Synthetic Minority Over-sampling Technique) algorithm and aims to create a more balanced dataset overall, thereby reducing the model's bias and improving generalization across all classes. The confusion matrix obtained in this case is the following:
 
 \begin{figure}[H]
 \centering
@@ -515,14 +553,16 @@ As we can see in figure \ref{fig6} this approach is more similar to the one obta
 \label{fig7}
 \end{figure}
 
-As we can see in figure \ref{fig7}, the overall accuracy is reduced, and, in this case we do not improve Sleep\_stage\_N1 that much, which was the first goal of oversampling at all.
+As illustrated in Figure \ref{fig7}, this approach results in a reduction in overall classification accuracy. Moreover, the improvement in Sleep\_stage\_N1 detection is marginal, falling short of the initial objective of oversampling, which was to significantly enhance the model's performance on this underrepresented class. These results suggest that while global oversampling may help balance the dataset, it does not necessarily translate into improved classification for the most challenging classes.
+
+Since oversampling did not yield the expected improvements, an alternative strategy was considered: merging the classes Sleep\_stage\_N1 and Sleep\_stage\_N2 into a single cluster. While this approach sacrifices some granularity and precision in the classification results, it may lead to more robust and accurate predictions of the broader sleep stages. By reducing the number of classes, the model is expected to perform better in distinguishing between meaningful transitions in sleep, particularly in cases where the boundaries between N1 and N2 stages are subtle and frequently confused, even by human experts.
 
 \addsection{Class clustering}
-Oversampling did not succeed as expected, another technique we can apply here is to cluster the class Sleep\_stage\_N1 and Sleep\_stage\_N2. We loose precision in the results obtained, but we may be more accurate predicting a the stages of sleep. By applying this technique the model was trained on 1371 subjects with a mean of 850 samples per subject, giving a result of 1.16M samples. The same test set used for the previous sections is used here, the classification report obtained in this case is the following:
+By applying the class clustering technique, merging Sleep\_stage\_N1 and Sleep\_stage\_N2 into a single class, the model was trained on data from 1,371 subjects, each contributing an average of 850 samples, resulting in approximately 1.16 million samples in total. For evaluation, the same test set used in previous experiments was employed to ensure consistency and comparability of results. The classification report generated from this clustered model is presented below, providing insight into the impact of class merging on overall and per-class performance.
 
 \begin{table}[H]
 \begin{center}
-\begin{tabular}{ |p{3cm}||p{2cm}||p{2cm}||p{2cm}||p{2cm}| }
+\begin{tabular}{ |p{3.5cm}||p{2cm}||p{2cm}||p{2cm}||p{2cm}| }
  \hline
  & precision & recall & f1-score & support\\
  \hline  
@@ -550,43 +590,26 @@ And the confusion matrix obtained is:
 \label{fig8}
 \end{figure}
 
-This time the results are pretty more solid, we will be able to classify the different sleep stages and, particularly we will be able to know when a subject is awake or not. With this kind of data we can carry on and try to link our data set to Soundless dataset.
-
-\addchapter{Soundless}
-The \href{https://soundless.app/soundless\_final\_report\_en.pdf}{soundless} project carried out by the Universitat Rovira i Virgili (Tarragona, Spain) aims to be a citizen science platform to study how noise affect rest in different neighbourhoods of the city of Tarragona. 
-
-The soundless project gathered 40 neighbours of the city of Tarragona living in the neighbourhoods of El Serrallo and Barri del port an conducted a study on how the sleep is disturbed by train lines noise. Tarragona is a port city located in north-east Spain (Catalonia) by the Mediterranean Sea. A major problem is that railway tracks create a barrier between the city and the sea (beach, port). Apartment blocks are located just at 2-5 meters of distance from the tracks without any acoustic barriers.
-
-The first challenge of the Sounless project is to gather the data to conduct an study on sleep quality. To do so they used a FitBit (an intelligent bracelet) able to capture the vital sings of an individual, such as the heart rate, the oxygen saturation, etc. Once the data is gathered the next step is to detect an incidence in a reliable manner, here we define a sleep incident as when a person moves from a deep sleep phase to being completely awake due to excessive noise. To do so several algorithms are applied to the data in order to detect anomalies in sleep related to noise in the ambient. A first approach was to use direct mathematical correlation between hear rate and noise, some factors affected this measurement however:
-
-\begin{itemize}
-	\item Individual Variability: Participants exhibited diverse heart rate patterns and sensitivities to noise.
-	\item Data Complexity: Recordings contained inherent noise even after filtering, adding to the challenge of isolating the influence of sound incidents.
-	\item Reaction Time Differences: Individual response times to noise varied considerably, ranging from 10 to 40 seconds, further complicating correlation analysis.
-	\item Sensitivity Fluctuations: Individual sensitivity to noise appeared to fluctuate, with inconsistent reactions even within the same participant
-	\item Sleep Stage Influences: Natural heart rate variations during different sleep stages added another layer of complexity.
-\end{itemize}
-
-What leaded the soundless team to adopt z-scores algorithm. With this approach they were successfully able to detect incidents in heart rate and in sound measurements, and, afterwards relate the incidents in heart rate to incidents in sound. They results show that the legal limit set by the World Health Organization (WHO) of 45 decibels was exceeded on 98\% of nights with recordings. Additionally they show that each and every user have, in average, 12 sound incidents during the night and half of the nights that a recording was taken an incident in their heart rate is detected. Additionally one in five nights each user has been woken up due to a hight level on ambient noise.
-
-Soundless study carry on trying to detect individuals with a higher sensitivity to noise in the ambient, having individuals with values close to 38 dB to have a disturbance and others that requires louder noises. Particularly, they show that 70.59\% of the times a sleep disturbance has been detected, it has occurred in people with a higher sensitivity to noise, in this case, a sensitivity less than 45 decibels. On the other hand, people with lower sensitivity to this type of situation have only registered 29.41\% of the sleep disturbances caused by noise. After the study on individual persons they examine general sensitivity to noise in the ambient, where they find that values between 40 and 50 dB are able to create incidences in the heart rate and in the sleep process of almost any individual.
-
-The study concludes that the night noise produced by freight trains in the seaside of Tarragona is far beyond legal limits (>45dB) –and up to 80dB– during all nights. Furthermore, they consistently detected the impact of noise in health variables like heart rates and sleep modes, which affected most users in the study during all nights. This disturbances during sleep are causing irregular heart rates, sudden awakenings, and noticeable impacts in sleep quality in the citizens.
-
-With Soundless data, we can try to compare the users in HSP project and in Soundless dataset to see if noise is affecting the sleep quality of the subjects.
+This time, the results are considerably more robust, enabling reliable classification of the different sleep stages. In particular, the model demonstrates strong capability in distinguishing between awake and asleep states. With this improved level of accuracy, we are now well-positioned to proceed with our primary objective: establishing meaningful connections between the Human Sleep Project dataset and the Soundless dataset.
 
 \addchapter{Sleep Metrics}
-When looking for sensitivity to external stimuli is often good to stick to some well known metrics. The main metric is \href{https://en.wikipedia.org/wiki/Sleep_efficiency}{sleep efficiency}, defined as:
+When investigating sensitivity to external stimuli during sleep, it is often beneficial to rely on well-established metrics to ensure consistency and comparability with existing research. One of the most widely used and informative metrics is sleep efficiency \cite{efficiency}, which is defined as follows:
 
 \[ SE = TST / TIB \]
 
-Where TST is the total time sleeping in bed, and TIB is the total time in bed. Now that we can classify our electroencephalograms slices into the different sleep stages, we can compute the sleep efficiency of a subject, with such metric we will be able to compare soundless users with subjects which recordings have been taken in a very controlled environment, allowing us to elucidate if a recording has been altered by external noise given a user profile.
+Where TST represents the total sleep time, and TIB denotes the total time spent in bed. Now that we are able to classify segments of electroencephalogram recordings into distinct sleep stages, we can compute the sleep efficiency for each subject. This metric enables us to quantitatively compare participants from the Soundless dataset, who sleep in real-world, potentially noisy environments, with subjects from the Human Sleep Project, whose recordings were obtained in highly controlled settings. By doing so, we aim to assess whether external noise significantly alters sleep quality for individuals with similar profiles.
 
-Taking into account the different sleep phases of the different subjects we can try to tune up even more our study. Deep sleep, also known as slow-wave sleep or stage N3, is a crucial phase of the sleep cycle characterized by its restorative properties. It's the deepest stage of non-REM sleep, where the body and mind engage in restorative processes. During deep sleep, brain waves slow down, and the body experiences a significant decrease in heart rate, breathing rate, and muscle tension. This stage is essential for physical recovery, immune system strengthening, memory consolidation, and hormone regulation. REM (Rapid Eye Movement) sleep is the final stage of a sleep cycle, characterized by intense brain activity, vivid dreams, and temporary paralysis of the limbs. It typically begins about 90 minutes after falling asleep and recurs in cycles throughout the night, with later cycles becoming longer. REM sleep is believed to be crucial for cognitive functions like memory consolidation, learning, and emotional processing.
+Taking into account the different sleep phases of the subjects allows us to further refine our analysis. Deep sleep, also known as slow-wave sleep or stage N3, represents a critical phase of the sleep cycle due to its restorative functions. It is the deepest stage of non-REM sleep, characterized by slow brain waves (delta waves) and a marked reduction in physiological activity, including decreased heart rate, breathing rate, and muscle tone. This stage plays a vital role in physical recovery, immune system strengthening, memory consolidation, and hormone regulation.
 
-In addition to the sleep efficiency we will compute the percentage of the night a subject is in light sleep stage (stages N1 and N2), deep sleep stage (stage N3) or REM sleep stage. With this values we can try to aggregate all the users from soundless dataset and The Human Sleep Project and estimate clusters of users. We will work with around 12m sessions of The Human Sleep project and the 362 sessions of soundless dataset.
+In contrast, REM (Rapid Eye Movement) sleep is the final stage of the sleep cycle, distinguished by intense brain activity, vivid dreaming, and temporary muscle atonia (limb paralysis). REM sleep typically begins approximately 90 minutes after sleep onset and recurs in cycles throughout the night, with later cycles becoming progressively longer. This stage is widely believed to be essential for cognitive processes such as memory consolidation, learning, and emotional regulation.
 
-We will use the well known KMeans algorithm for the clustering. Before clustering the subjects a PCA analysis to reduce the variable space is performed, using two components for the four variables we are studying, the sleep efficiency, the percentage of time in light sleep, the percentage of time in deep sleep and the percentage of time in REM sleep. Further on, performing a \href{https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html#sphx-glr-auto-examples-cluster-plot-kmeans-silhouette-analysis-py}{silhouette score} study on the data for 2, 3, 4, 5 and 6 clusters we obtain that three clusters is the optimum with an score of 0.392, the graphic is as follows:
+By differentiating these stages in our data, we can better understand how external factors, such as ambient noise, may uniquely impact the restorative and cognitive functions associated with deep and REM sleep.
+
+In addition to sleep efficiency, we will compute the percentage of the night that each subject spends in different sleep stages: light sleep (stages N1 and N2), deep sleep (stage N3), and REM sleep. These metrics will enable us to characterize the overall sleep architecture of each individual. Using these values, we plan to aggregate sessions from both the Soundless dataset and The Human Sleep Project to perform cluster analysis. This approach will help us identify distinct patterns or groupings in sleep behavior across different environments. Our analysis will encompass approximately 12 thousand sessions from The Human Sleep Project and 362 sessions from the Soundless dataset.
+
+For the clustering analysis, we will employ the well-established KMeans algorithm. Prior to clustering, a Principal Component Analysis (PCA) is conducted to reduce the dimensionality of our variable space. Specifically, we reduce the four variables under study: sleep efficiency, percentage of time in light sleep, deep sleep, and REM sleep, into two principal components.
+
+To determine the optimal number of clusters, we evaluate the clustering performance using the silhouette score across cluster counts ranging from 2 to 6. The analysis indicates that three clusters is the optimal choice, yielding a silhouette score of 0.392. The corresponding graphical representation is shown below:
 
 \begin{figure}[H]
 \centering
@@ -597,70 +620,152 @@ We will use the well known KMeans algorithm for the clustering. Before clusterin
 
 The graphics for 2, 4, 5 and 6 clusters are not included in this document for the sake of brevity. 
 
-With this information we can carry on our study, performing a KMeans clustering for three clusters we can study the sleep efficiency en each cluster, the results are the following:
+With this information, we proceed with our study by performing KMeans clustering using the three identified clusters. This allows us to analyse and compare the sleep efficiency within each cluster. The results are summarized as follows:
 
 \begin{figure}[H]
 \centering
-\vspace{-5cm}\includegraphics[scale=.5, angle=90]{figs/se_clusters.png}
+\vspace{-5cm}\includegraphics[scale=.4, angle=90]{figs/se_clusters.png}
 \caption{Sleep efficiency for 3 clusters}
 \label{fig10}
 \end{figure}
 
-In figure \ref{fig10} we can see three different user "profiles". In the first cluster people have a poor sleep efficiency with a median around 0.54 and the lower quartile falling up to 0.13 approximately. This seems to indicate that people in the first cluster is the people having more trouble sleeping, showing a poor sleep efficiency. For the second cluster we have a median sleep efficiency of 0.9, which is good, however a lot of outliers below the lower quartile (around 0.75) are present. Finally, the third cluster shows a median of around 0.87 which is a good sleep efficiency, we have no outliers and the lower quartile is around 0.65 which is low but not terrible.
+As shown in Figure \ref{fig10}, we can clearly distinguish three distinct user profiles based on sleep efficiency:
 
-Of the 362 soundless sessions taken in consideration in the study, 293 are in cluster 1, 55 are in cluster 2 and 14 are in cluster 3. This is a first indicator that people exposed to noise in the ambient is affected severely in the sleep quality.
+\begin{itemize}
+	\item Cluster 1 exhibits a low sleep efficiency, with a median around 0.54 and a lower quartile near 0.13. This suggests that subjects in this cluster experience significant sleep disturbances or fragmentation, pointing to severe difficulties maintaining sleep.
+	\item Cluster 2 shows a median sleep efficiency of approximately 0.90, indicating generally good sleep quality. However, the presence of numerous outliers below the lower quartile (around 0.75) suggests that some subjects in this group still experience poor sleep episodes, potentially intermittently.
+	\item Cluster 3 presents a median sleep efficiency around 0.87, also reflecting good sleep quality. Notably, this cluster contains no significant outliers, and its lower quartile of approximately 0.65 is relatively acceptable, indicating more consistent sleep patterns across subjects.
+\end{itemize}
 
-Lets now get deeper into the data and take a look at how many time the subjects in different clusters are in the different sleep stages:
+Regarding the distribution of Soundless sessions across clusters:
+
+\begin{itemize}
+	\item 293 out of 362 sessions fall into Cluster 1,
+	\item 55 sessions into Cluster 2, and
+	\item only 14 sessions into Cluster 3.
+\end{itemize}
+
+This distribution strongly suggests that exposure to environmental noise, as captured in the Soundless dataset, negatively impacts sleep quality, with the majority of these subjects classified in the poorest sleep efficiency cluster.
+
+We now delve further into the analysis by examining the distribution of sleep stages (light sleep, deep sleep, and REM) within each cluster to gain deeper insights into how sleep architecture is altered across the different user profiles:
 
 \begin{figure}[H]
-\vspace*{-6cm}\includegraphics[scale=.3, angle=90]{figs/sleep_percentages.png}
+\vspace*{-4cm}\includegraphics[scale=.3, angle=90]{figs/sleep_percentages.png}
 \caption{Sleep stages percentages for 3 clusters}
 \label{fig11}
 \end{figure}
 
-The graphic in \ref{fig11} is more explicative taking into account that light sleep, particularly Stage 2 (N2), makes up approximately 50\% of an adult's total sleep time, though this can vary slightly based on individual factors like age and overall health. While Stage 1 (N1) is the very lightest phase where a subject initially drift off, Stage 2 is a more sustained period of light sleep with gradual relaxation and slowed bodily functions. Deep sleep must be around 10\% and 25\% of the night and REM phase must be in around 20\% and 25\% of the night.  
+The graphic in Figure \ref{fig11} provides further insight into the distribution of sleep stages across clusters. For reference, in healthy adults:
 
-In the cluster 0 we have the median of light sleep percentage in around 75\% which is above the expected percentage, as expected from the graphic \ref{fig10}. Deep sleep for subjects in cluster 1 is around 12\% in median, while REM sleep is around 10\% what is indicating that subjects that have a worst sleep efficiency have problems too reaching REM sleep phase during the night, either because they are affected by some sleep pathology or are exposed to loud noise in the night.
+\begin{itemize}
+	\item Light sleep, particularly Stage N2, typically comprises around 50\% of total sleep time.
+	\item Stage N1, the initial transition into sleep, is very brief.
+	\item Deep sleep (Stage N3) generally ranges from 10\% to 25\% of the night.
+	\item REM sleep accounts for approximately 20\% to 25\% of total sleep.
+\end{itemize}
 
-For cluster 1 we have a median for light sleep time of around a 58\%, with a lot of outliers below the the lower quartile, indicating that people in this group is having a better quality in sleep than the previous group, as we can confirm in the graphics for deep sleep percentage (with a median of around 22\%) and REM sleep phase which is around 20\%.
+Subjects in the first cluster, previously identified as having low sleep efficiency, show a median light sleep percentage of around 75\%, significantly above the expected range. This aligns with the earlier observation in Figure \ref{fig10}, where the same group demonstrated fragmented or non-restorative sleep.
 
-Finally cluster 2 is kind of a medium group of people, in this group we have people that spend around the 77\% of the night in light sleep, only arrive to deep sleep in the 7\% of the sleep time and reach REM sleep the 12\% of the night. This group is mostly formed of people with some sleep pathology, since only 14 soundless sessions fall into this category.
+In this cluster:
 
-To confirm our findings we can plot the decibels that the Soundless subjects are exposed to in the different sessions and for the different clusters found:
+\begin{itemize}
+	\item Deep sleep has a median value around 12\%.
+	\item REM sleep is even lower, at approximately 10\%.
+\end{itemize}
+
+These metrics suggest that individuals in the first cluster not only struggle to maintain efficient sleep but also have difficulty entering and sustaining deep or REM sleep, potentially due to environmental disturbances (e.g., noise) or underlying sleep disorders.
+
+In the second cluster, subjects exhibit a median light sleep percentage of approximately 58\%, much closer to typical values. The presence of numerous outliers below the lower quartile implies that many individuals in this group achieve even more restorative sleep.
+
+Supporting this interpretation:
+
+\begin{itemize}
+	\item Deep sleep median is around 22\%.
+	\item REM sleep median is close to 20\%.
+\end{itemize}
+
+These figures align well with expected distributions in healthy sleep, indicating better sleep quality compared to the first cluster.
+
+The third cluster appears to represent a transitional group with intermediate characteristics. In this group:
+
+\begin{itemize}
+	\item Light sleep accounts for a median of 77\%, which is unusually high.
+	\item Deep sleep is only around 7\%, significantly below normal.
+	\item REM sleep is approximately 12\%.
+\end{itemize}
+
+Such patterns may suggest the presence of underlying sleep pathologies or conditions that hinder restorative sleep. Supporting this interpretation is the fact that only 14 sessions from the Soundless dataset fall into this cluster, indicating that it may represent a more clinically affected subgroup within the broader population.
+
+To further validate our findings, we analyse the environmental noise exposure by plotting the distribution of sound pressure levels (in decibels) recorded during the Soundless sessions, grouped by the clusters previously identified. This visualization enables us to assess whether higher ambient noise levels correlate with poorer sleep efficiency and altered sleep stage distributions, thereby providing additional evidence for the hypothesis that environmental noise negatively impacts sleep quality.
 
 \begin{figure}[H]
+\centering
 \vspace*{-5cm}\includegraphics[scale=.5, angle=90]{figs/db_clusters.png}
 \caption{Decibels for soundless users for 3 clusters}
 \label{fig12}
 \end{figure}
 
-In the first cluster, lets remember, the one with more people with trouble on sleep we have a median in decibels of around 32 dB which is a pretty moderated noise, but the upper quartile is above 48 dB and we find a lot of outliers above the upper quartile, 293 soundless sessions fall into this category. The second cluster, this is the one that is able to achieve deep and REM sleep phases a correct percentage of the night, we have a median of around 33 dB an no outliers above the upper quartile (which is around 58 dB), 55 soundless sessions fall into this category. Finally for cluster 2, where we only have 14 Soundless sessions, the decibels are in median around 31 with an upper quartile of around 39 dB.
+In Figure \ref{fig12}, we observe that the first cluster, which, as previously discussed, includes the majority of individuals experiencing poor sleep quality, exhibits a median ambient noise level of approximately 32 dB. While this median might suggest moderate noise exposure, the upper quartile exceeds 48 dB, and numerous outliers surpass this threshold, indicating that a significant subset of these sessions involved exposure to elevated noise levels. Notably, 293 Soundless sessions fall into this cluster.
 
-This seems to confirm that noise in the ambient is not only affecting the sleep efficiency of the subjects, but the sleep quality too. Most of the subjects exposed to loud noise in the night are not able to achieve deep sleep and REM phases a healthy percentage of the night. Particularly in the current study we've found that:
+In the second cluster, which includes subjects that display a healthier sleep pattern, with consistent entry into deep and REM sleep stages, the median noise level is slightly higher at 33 dB, but the distribution is more compact, with no significant outliers beyond the upper quartile of 38 dB. Fifty-five Soundless sessions are included in this cluster.
+
+In the third cluster, the smallest group with only 14 Soundless sessions, shows a median ambient noise level around 31 dB, with an upper quartile near 39 dB, indicating relatively low environmental noise exposure.
+
+These findings support the hypothesis that ambient noise not only impacts overall sleep efficiency but also the physiological quality of sleep, particularly the ability to transition into and sustain deep sleep and REM stages. Subjects exposed to higher levels of environmental noise show sleep patterns that are qualitatively similar to those observed in individuals with diagnosed sleep pathologies.
+
+In summary, the study presents the following conclusions:
 
 \begin{itemize}
-	\item People exposed to noise can't sleep a healthy percentage of the night.
-	\item People exposed to noise can't reach deep sleep and REM stages a healthy percentage of the night.
-	\item People exposed to noise may be equated to those having an sleep pathology.
-\end{itemize} 
+	\item Individuals exposed to elevated night time noise levels tend to have reduced sleep efficiency.
+	\item Noise exposure negatively affects the proportion of time spent in restorative sleep stages, such as deep sleep (N3) and REM.
+	\item The impact of chronic noise exposure on sleep architecture can mimic the effects of clinical sleep disorders.
+\end{itemize}
 
 \addchapter{Conclusion}
-Sleep study is a complex topic, and how noise affects sleep increases the complexity of such an study. Some people may be more sensible to noise than another one and sleep quality itself may vary between subjects for many different reasons. Additionally, one subject can be affected by sounds at different frequencies that does not disturb other people. In this document however, we applied a set of techniques that allow us to predict the sleep stage of a subject given an electroencephalogram. This techniques can be adapted or extended to study the noise disturbance on a subject while sleeping. As an instance we could categorize and classify the different arousals found in an electroencephalogram and compare the results with a recording with an standard microphone. The dataset from the Human Sleep Project contains electroencephalograms of subjects with some pathology, it would be nice to have a dataset of healthy subjects to try to expand further our conclusions.
+Sleep research is inherently complex, and introducing the variable of environmental noise adds an additional layer of intricacy. Individual variability plays a significant role in how noise affects sleep: some people are naturally more sensitive to sound, while others may remain undisturbed even under relatively noisy conditions. Factors such as age, stress levels, overall health, and personal noise tolerance contribute to the wide variability in sleep quality across individuals. Moreover, certain frequencies or sound patterns might disrupt one person's sleep while having no noticeable effect on another's.
 
-Ideally, with similar montages we can achieve what we want, exposing the subjects to sounds at different frequencies and amplitudes we may get a desirable result for this study. World is not ideal, neither is the data, so with the working dataset of the The Human Sleep project this is a first step towards gaining some knowledge on how the noise affect the sleep quality.
+Despite these challenges, this study has demonstrated that it is possible to model and predict sleep stages using EEG recordings through machine learning techniques, specifically a Multi-Layer Perceptron (MLP) architecture trained on power spectral density (PSD) features. This model provides a valuable framework for analysing how external factors, such as ambient noise, influence sleep architecture. These methods could also be adapted further to detect and classify arousals during sleep, enabling the correlation of noise events (recorded via environmental microphones) with disturbances in sleep stages.
 
-Regarding the soundless dataset, we can say that noise seems to be a crucial factor in sleep quality. People exposed to higher decibels is not able to sleep the most of the night, and people who has been exposed to noise regularly tend to show a lower sleep efficiency than people that does not. Noise is closely related to sleep quality as well, people exposed to noise during the night is not able to reach deep or REM sleep phases a healthy percentage of the time they spend sleeping.
+The Human Sleep Project dataset, used extensively in this study, includes EEG data from subjects with known sleep pathologies. While this has allowed for robust testing of the proposed model, future studies would benefit from incorporating data from healthy individuals to better understand the full spectrum of sleep behaviour and to establish a baseline for what constitutes "normal" sleep unaffected by pathology or noise.
 
-From the 362 Soundless sessions taken in consideration for this study, 293 belong to the worst group studied, the group of people that is not able to sleep most of the time they stay in bed and, when they do, they do not reach deep or REM phases a correct percentage of the time.
+In a perfect experimental set-up, we would be able to design a controlled study where subjects are deliberately exposed to sounds of varying frequencies and amplitudes, allowing for precise measurement of thresholds at which sleep quality deteriorates. While such an ideal dataset is currently unavailable, the real-world data from the Human Sleep Project has allowed us to take a valuable first step in understanding how noise impacts sleep quality in more naturalistic conditions.
 
-We can conclude then that noise seems a determining factor for sleep quality, as presented in this study sounds above 45 dB are enough to disturb a subject enough to not be able to sleep efficiently enough most of the nights, and, we can say too that people exposed to noise regularly may develop an sleep pathology if exposed to noise too much time. Or, in other words, that people exposed to noise while sleeping too many time may show an effectiveness and quality in sleep even lower that people that suffers of an sleep pathology, chronic pain and other sleep disorders.
+Turning to the Soundless dataset, which comprises data collected from real-world environments with varying noise levels, our findings are particularly compelling. The analysis revealed that noise is a significant factor influencing both sleep efficiency and sleep architecture. Individuals exposed to higher levels of ambient noise, particularly above 45 dB, consistently displayed:
+
+\begin{itemize}
+	\item Lower sleep efficiency (i.e., spending less of their time in bed actually sleeping),
+	\item Reduced time spent in deep sleep (N3) and REM sleep, which are both critical for cognitive and physical restoration.
+\end{itemize}
+
+Out of the 362 Soundless sessions evaluated, 293 were categorized into the worst-performing cluster, marked by low sleep efficiency and minimal time spent in the restorative stages of sleep. In contrast, only 14 sessions fell into the best-performing cluster, where participants demonstrated healthy proportions of deep and REM sleep alongside higher sleep efficiency. This imbalance strongly suggests that noise exposure is not only prevalent but also detrimental to the quality of sleep for the majority of Soundless users.
+
+From this, we can conclude that environmental noise is a determining factor in sleep degradation. Prolonged or frequent exposure to sound levels exceeding 45 dB appears sufficient to prevent individuals from achieving healthy sleep, both in quantity and quality. More alarmingly, the data indicates that individuals exposed to chronic night time noise may exhibit worse sleep patterns than those suffering from clinical sleep disorders, such as insomnia or chronic pain. In other words, noise pollution, often overlooked as a minor inconvenience, may pose a serious threat to public health by inducing sleep patterns consistent with medical pathology.
+
+This study not only highlights the importance of protecting sleep environments from ambient noise but also opens the door to future research aimed at further quantifying the relationship between sound and sleep, potentially leading to the development of noise mitigation strategies, personalized sleep health tools, and policy recommendations for urban sound management.
 
 \addchapter{Future work}
-As concluded above, the techniques used in this study may be a first step towards gaining some knowledge on how the noise affects the sleep quality. By classifying the sleep stages of a subject given an electroencephalogram we can stablish in which period the noise affects more or less a subject. Besides, the generalization on sleep stage classification, it is, being able to predict the sleep stage of a subject given other subjects data is a great capability, the way we predict sleep stages we can predict arousals given another subject data. Arousal prediction will be another step forward to gain knowledge on how noise affects the sleep quality. 
+As outlined in the conclusion, the methods developed in this study serve as a foundational step toward understanding how environmental noise influences sleep quality. The ability to classify sleep stages from EEG signals provides a powerful tool for identifying when, during the sleep cycle, noise has the most pronounced impact. Beyond sleep stage classification, a promising avenue for future exploration is the prediction of arousals (brief awakenings or disturbances during sleep) which can be correlated with external stimuli such as sound events.
 
-With a bigger dataset we could use soundless data to make a deeper study on the noise in the ambient, probably by taking the power of sound at different frequencies and trying to detect abnormalities in the signals registered by the bracelet, however, an electroencephalogram is ideal to study how sleep occurs during the resting hours. 
+One key area for future research is leveraging cross-subject generalization. In this study, we demonstrated that it is feasible to predict the sleep stage of a subject using a model trained on data from other individuals. Extending this approach to arousal prediction could yield valuable insights into how noise disrupts sleep patterns across a population. Detecting arousals from EEG signals and correlating them with concurrent noise events could provide a finer-grained understanding of sleep disruption.
 
-Further steps from this study may include growing the Soundless dataset, detecting arousals from vital signals and trying to stablish a relationship between soundless data and electroencephalogram data. Moreover, the dataset from The Human Sleep Project provides, in some cases, a pre-sleep form. This form could be used to create a user profile, so if soundless users are willing to respond a form similar to those provided by The Human Sleep Project it will be a good point to start to relate data between the two datasets.  
+Another direction for future work involves expanding and enriching the Soundless dataset. With a larger and more diverse dataset, it would be possible to perform more granular analyses of how different frequencies and intensities of noise affect sleep. For example, isolating power across frequency bands (e.g., low-frequency hums vs. high-pitched sounds) may help identify which types of noise are most disruptive. Additionally, investigating whether noise-induced disruptions are detectable in the physiological signals captured by wearable devices, such as heart rate variability, skin conductance, or motion, could open up non-invasive methods for sleep disturbance detection.
+
+While EEG remains the gold standard for sleep analysis, integrating wearable sensor data from Soundless devices with EEG-derived information from datasets like The Human Sleep Project may offer a practical pathway to scalable sleep monitoring. Bridging these datasets could enable the training of multimodal models capable of predicting sleep quality or disruptions using only wearable data, a major advancement in real-world sleep research.
+
+A particularly promising idea is to link user profiles across datasets. The Human Sleep Project includes pre-sleep questionnaires in many cases, offering valuable metadata about the subject's health, lifestyle, and subjective sleep quality. Encouraging Soundless users to complete a similar form would enable a deeper comparative analysis between datasets. This could facilitate clustering subjects based not only on physiological data but also on personal characteristics and behaviours, potentially improving model performance and interpretability.
+
+In summary, the future directions for this research include:
+
+\begin{itemize}
+	\item Developing arousal detection models and studying their correlation with noise exposure.
+	\item Expanding the Soundless dataset to include more sessions and a wider range of acoustic environments.
+	\item Analysing frequency-specific noise effects on sleep using high-resolution audio data.
+	\item Enhancing wearable signal analysis to detect subtle signs of sleep disturbance without EEG.
+	\item Establishing user profiling through standardized questionnaires to bridge EEG and wearable datasets.
+	\item Creating multimodal predictive models combining EEG and wearable data for robust sleep quality estimation.
+\end{itemize}
+
+Pursuing these directions will further the goal of building scalable, reliable systems to monitor and improve sleep health in everyday environments.
 
 \addchapter{Acknowledgements}
 I would like to give thanks specially to Prof. Pedro Garc\'ia L\'opez for all the guidance and time spent with the project and to the UOC and URV for the material shared without which I wouldn't have been able to write this study. I would like to thank Dra. Mirea Lecina for her assistance at understanding electroencephalograms. Additionally I would like to thank Daniel Alejandro Coll for his assistance.
@@ -688,6 +793,9 @@ Long short-term memory, Wikipedia, available at: https://en.wikipedia.org/wiki/L
 
 \bibitem{MLP}
 Multi Layer Perceptron, Wikipedia, available at: https://en.wikipedia.org/wiki/Multilayer\_perceptron
+
+\bibitem{efficiency}
+Sleep Efficiency, Wikipedia, avaliable at: https://en.wikipedia.org/wiki/Sleep\_efficiency
 
 \bibitem{who}
 Basner, M., \& McGuire, S. (2018). WHO environmental noise guidelines for the European region: A systematic review on environmental noise and effects on sleep. International Journal of Environmental Research and Public Health, 15(3), 519.

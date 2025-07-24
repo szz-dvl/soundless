@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2026/dev/Arch Linux)  (format=lualatex 2025.5.20)  24 JUL 2025 15:39
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2026/dev/Arch Linux)  (format=lualatex 2025.5.20)  24 JUL 2025 20:12
  restricted system commands enabled.
 **memoria.tex
 (./memoria.tex
@@ -571,43 +571,52 @@ warning  (pdf backend): ignoring duplicate destination with the name 'page.1'
 [1
 
 ]
-Overfull \hbox (9.73122pt too wide) in paragraph at lines 170--171
+LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 1
+75.
+ (/usr/share/texmf-dist/tex/latex/psnfss/ts1ppl.fd
+File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
+)
+
+[2
+
+]
+
+[3
+Missing character: There is no – (U+2013) in font pplr8t!
+Missing character: There is no – (U+2013) in font pplr8t!
+]
+Overfull \hbox (9.73122pt too wide) in paragraph at lines 193--194
 []\T1/ppl/m/n/10.95 We be-gin by work-ing with the Hu-man Sleep Project dataset [[]], de-vel-oped by Mas-sachusetts
  []
 
 
 
-[2
+[4
 
 
 Missing character: There is no ’ (U+2019) in font pplr8t!
 Missing character: There is no — (U+2014) in font pplr8t!
 Missing character: There is no — (U+2014) in font pplr8t!
 ]
-LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 1
-81.
- (/usr/share/texmf-dist/tex/latex/psnfss/ts1ppl.fd
-File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
-)
-
-[3]
-
-[4
-
-]
-Overfull \hbox (35.66017pt too wide) in paragraph at lines 199--200
-[]\T1/ppl/m/n/10.95 The long-term con-se-quences of chronic noise-induced sleep dis-rup-tion are also well-documented.
- []
-
-
 
 [5]
 
 [6
 
 ]
+Overfull \hbox (35.66017pt too wide) in paragraph at lines 222--223
+[]\T1/ppl/m/n/10.95 The long-term con-se-quences of chronic noise-induced sleep dis-rup-tion are also well-documented.
+ []
+
+
 
 [7]
+
+[8
+
+]
+
+[9]
 *geometry* verbose mode - [ newgeometry ] result:
 * driver: luatex
 * paper: <default>
@@ -641,272 +650,290 @@ Overfull \hbox (35.66017pt too wide) in paragraph at lines 199--200
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 
-Overfull \hbox (80.31444pt too wide) in paragraph at lines 260--284
+Overfull \hbox (80.31444pt too wide) in paragraph at lines 283--307
  [] 
  []
 
 
 
-[8
+[10
 
 ]
-
-[9
-
-]
-
-[10]
 
 [11
 
 ]
-<figs/fcn.png, id=167, 1201.48875pt x 3986.895pt>
+
+[12]
+
+[13
+
+]
+<figs/fcn.png, id=177, 1201.48875pt x 3986.895pt>
 File: figs/fcn.png Graphic file (type png)
 <use figs/fcn.png>
-Package luatex.def Info: figs/fcn.png  used on input line 364.
+Package luatex.def Info: figs/fcn.png  used on input line 387.
 (luatex.def)             Requested size: 120.15591pt x 398.71286pt.
 
 
-[12<./figs/fcn.png>]
+[14<./figs/fcn.png>]
 
-[13]
-<figs/fcn-lstm.png, id=186, 1201.48875pt x 2971.1pt>
+[15]
+<figs/fcn-lstm.png, id=196, 1201.48875pt x 2971.1pt>
 File: figs/fcn-lstm.png Graphic file (type png)
 <use figs/fcn-lstm.png>
-Package luatex.def Info: figs/fcn-lstm.png  used on input line 396.
+Package luatex.def Info: figs/fcn-lstm.png  used on input line 419.
 (luatex.def)             Requested size: 120.15591pt x 297.12741pt.
 
 
-[14<./figs/fcn-lstm.png>]
-<figs/mlp.png, id=193, 1437.37pt x 1616.0375pt>
+[16<./figs/fcn-lstm.png>]
+<figs/mlp.png, id=203, 1437.37pt x 1616.0375pt>
 File: figs/mlp.png Graphic file (type png)
 <use figs/mlp.png>
-Package luatex.def Info: figs/mlp.png  used on input line 418.
+Package luatex.def Info: figs/mlp.png  used on input line 441.
 (luatex.def)             Requested size: 287.4689pt x 323.20177pt.
 
 
-[15<./figs/mlp.png>]
+[17<./figs/mlp.png>]
 
-[16]
+[18]
 
-[17
+[19
 
 
 Missing character: There is no ’ (U+2019) in font pplr8t!
 ]
-<figs/cm.png, id=213, 1269.0612pt x 721.9773pt>
+
+[20
+
+]
+<figs/cm.png, id=226, 1269.0612pt x 721.9773pt>
 File: figs/cm.png Graphic file (type png)
 <use figs/cm.png>
-Package luatex.def Info: figs/cm.png  used on input line 478.
+Package luatex.def Info: figs/cm.png  used on input line 511.
 (luatex.def)             Requested size: 634.52905pt x 360.98776pt.
 
-Overfull \hbox (90.71341pt too wide) in paragraph at lines 478--479
+Overfull \hbox (90.71341pt too wide) in paragraph at lines 511--512
 []| [] 
  []
 
 
 
-[18
+[21]
+Overfull \hbox (5.39401pt too wide) in paragraph at lines 516--517
+[]\T1/ppl/m/n/10.95 The con-fu-sion ma-trix clearly il-lus-trates that the clas-
+si-fier strug-gles with the Sleep_stage_N1
+ []
 
-]
 
-[19<./figs/cm.png>]
-<figs/cm-da-max.png, id=227, 971.3088pt x 628.0263pt>
+
+[22<./figs/cm.png>]
+<figs/cm-da-max.png, id=237, 971.3088pt x 628.0263pt>
 File: figs/cm-da-max.png Graphic file (type png)
 <use figs/cm-da-max.png>
-Package luatex.def Info: figs/cm-da-max.png  used on input line 492.
+Package luatex.def Info: figs/cm-da-max.png  used on input line 529.
 (luatex.def)             Requested size: 485.65321pt x 314.01237pt.
 
-Overfull \hbox (55.64859pt too wide) in paragraph at lines 492--493
+Overfull \hbox (55.64859pt too wide) in paragraph at lines 529--530
  [][] 
  []
 
 
 
-[20<./figs/cm-da-max.png>]
-Overfull \hbox (0.3136pt too wide) in paragraph at lines 500--501
-[]\T1/ppl/m/n/10.95 In the next ap-proach I com-puted the mean of the el-e-ments
- for all classes, if Sleep_stage_N1
- []
-
-<figs/cm-da-mean.png, id=237, 1004.553pt x 654.7662pt>
+[23<./figs/cm-da-max.png>]
+<figs/cm-da-mean.png, id=246, 1004.553pt x 654.7662pt>
 File: figs/cm-da-mean.png Graphic file (type png)
 <use figs/cm-da-mean.png>
-Package luatex.def Info: figs/cm-da-mean.png  used on input line 504.
+Package luatex.def Info: figs/cm-da-mean.png  used on input line 540.
 (luatex.def)             Requested size: 502.27527pt x 327.3823pt.
 
-Overfull \hbox (72.27065pt too wide) in paragraph at lines 504--505
+Overfull \hbox (72.27065pt too wide) in paragraph at lines 540--541
  [][] 
  []
 
-<figs/cm-da-all.png, id=239, 1154.8746pt x 677.8926pt>
-File: figs/cm-da-all.png Graphic file (type png)
-<use figs/cm-da-all.png>
-Package luatex.def Info: figs/cm-da-all.png  used on input line 513.
-(luatex.def)             Requested size: 577.43588pt x 338.94547pt.
 
-Overfull \hbox (90.52576pt too wide) in paragraph at lines 513--514
- []| [] 
- []
-
-
-
-[21<./figs/cm-da-mean.png>]
-Overfull \hbox (12.4023pt too wide) in paragraph at lines 530--530
-[]\T1/ppl/m/n/10.95 Sleep_stage_N1/N2| 
- []
-
-
-
-[22<./figs/cm-da-all.png>]
-<figs/cm-clustering.png, id=255, 1105.731pt x 763.1712pt>
-File: figs/cm-clustering.png Graphic file (type png)
-<use figs/cm-clustering.png>
-Package luatex.def Info: figs/cm-clustering.png  used on input line 548.
-(luatex.def)             Requested size: 464.40385pt x 320.52972pt.
-
-Overfull \hbox (5.94649pt too wide) in paragraph at lines 548--549
- []| [] 
- []
-
-
-
-[23<./figs/cm-clustering.png>]
 
 [24]
+<figs/cm-da-all.png, id=253, 1154.8746pt x 677.8926pt>
+File: figs/cm-da-all.png Graphic file (type png)
+<use figs/cm-da-all.png>
+Package luatex.def Info: figs/cm-da-all.png  used on input line 551.
+(luatex.def)             Requested size: 577.43588pt x 338.94547pt.
 
-[25
-
-]
-
-[26
-Missing character: There is no – (U+2013) in font pplr8t!
-Missing character: There is no – (U+2013) in font pplr8t!
-]
-
-[27
-
-]
-<figs/silhouette.png, id=286, 1300.86pt x 505.89pt>
-File: figs/silhouette.png Graphic file (type png)
-<use figs/silhouette.png>
-Package luatex.def Info: figs/silhouette.png  used on input line 593.
-(luatex.def)             Requested size: 650.42842pt x 252.94437pt.
-
-Overfull \hbox (106.61278pt too wide) in paragraph at lines 593--594
+Overfull \hbox (90.52576pt too wide) in paragraph at lines 551--552
  []| [] 
  []
 
-<figs/se_clusters.png, id=287, 1495.989pt x 477.7047pt>
-File: figs/se_clusters.png Graphic file (type png)
-<use figs/se_clusters.png>
-Package luatex.def Info: figs/se_clusters.png  used on input line 604.
-(luatex.def)             Requested size: 747.99268pt x 238.85176pt.
 
 
-[28<./figs/silhouette.png>]
-Overfull \vbox (72.85233pt too high) has occurred while \output is active []
+[25
+Missing character: There is no ’ (U+2019) in font pplr8t!
+<./figs/cm-da-mean.png>]
+
+[26<./figs/cm-da-all.png>]
+<figs/cm-clustering.png, id=268, 1105.731pt x 763.1712pt>
+File: figs/cm-clustering.png Graphic file (type png)
+<use figs/cm-clustering.png>
+Package luatex.def Info: figs/cm-clustering.png  used on input line 588.
+(luatex.def)             Requested size: 464.40385pt x 320.52972pt.
+
+Overfull \hbox (5.94649pt too wide) in paragraph at lines 588--589
+ []| [] 
+ []
 
 
 
-[29<./figs/se_clusters.png>]
-<figs/sleep_percentages.png, id=302, 2774.4453pt x 1514.0565pt>
-File: figs/sleep_percentages.png Graphic file (type png)
-<use figs/sleep_percentages.png>
-Package luatex.def Info: figs/sleep_percentages.png  used on input line 616.
-(luatex.def)             Requested size: 832.34003pt x 454.22046pt.
+[27]
 
-Overfull \hbox (24.21584pt too wide) in paragraph at lines 616--617
-[][] 
+[28<./figs/cm-clustering.png>]
+
+[29
+
+]
+<figs/silhouette.png, id=290, 1300.86pt x 505.89pt>
+File: figs/silhouette.png Graphic file (type png)
+<use figs/silhouette.png>
+Package luatex.def Info: figs/silhouette.png  used on input line 616.
+(luatex.def)             Requested size: 650.42842pt x 252.94437pt.
+
+Overfull \hbox (106.61278pt too wide) in paragraph at lines 616--617
+ []| [] 
  []
 
 
 
 [30]
-Overfull \vbox (128.74693pt too high) has occurred while \output is active []
+<figs/se_clusters.png, id=296, 1937.5587pt x 603.4545pt>
+File: figs/se_clusters.png Graphic file (type png)
+<use figs/se_clusters.png>
+Package luatex.def Info: figs/se_clusters.png  used on input line 627.
+(luatex.def)             Requested size: 775.00977pt x 241.37752pt.
+
+
+[31<./figs/silhouette.png>]
+Overfull \vbox (99.86942pt too high) has occurred while \output is active []
 
 
 
-[31<./figs/sleep_percentages.png>]
-<figs/db_clusters.png, id=317, 1616.6799pt x 579.6054pt>
+[32<./figs/se_clusters.png>]
+<figs/sleep_percentages.png, id=310, 1754.7156pt x 1230.0354pt>
+File: figs/sleep_percentages.png Graphic file (type png)
+<use figs/sleep_percentages.png>
+Package luatex.def Info: figs/sleep_percentages.png  used on input line 653.
+(luatex.def)             Requested size: 526.41875pt x 369.01347pt.
+
+
+[33]
+
+[34<./figs/sleep_percentages.png>]
+Overfull \hbox (20.91844pt too wide) in paragraph at lines 678--679
+\T1/ppl/m/n/10.95 quar-tile im-plies that many in-di-vid-u-als in this group ach
+ieve even more restora-tive sleep. 
+ []
+
+<figs/db_clusters.png, id=325, 1568.259pt x 475.5366pt>
 File: figs/db_clusters.png Graphic file (type png)
 <use figs/db_clusters.png>
-Package luatex.def Info: figs/db_clusters.png  used on input line 632.
-(luatex.def)             Requested size: 808.33798pt x 289.80199pt.
+Package luatex.def Info: figs/db_clusters.png  used on input line 703.
+(luatex.def)             Requested size: 784.1276pt x 237.76772pt.
 
 
-[32]
-Overfull \vbox (133.19763pt too high) has occurred while \output is active []
-
-
-
-[33<./figs/db_clusters.png>]
-
-[34]
-
-[35
-
-]
+[35]
 
 [36]
-Overfull \hbox (10.10333pt too wide) in paragraph at lines 663--664
-[]\T1/ppl/m/n/10.95 Fur-ther steps from this study may in-clude grow-ing the Sou
-nd-less dataset, de-tect-ing arousals
+Overfull \vbox (108.98724pt too high) has occurred while \output is active []
+
+
+
+[37<./figs/db_clusters.png>]
+
+[38
+Missing character: There is no   (U+202F) in font pplr8t!
+Missing character: There is no   (U+202F) in font pplr8t!
+Missing character: There is no   (U+202F) in font pplr8t!
+Missing character: There is no   (U+202F) in font pplr8t!
+Missing character: There is no   (U+202F) in font pplr8t!
+Missing character: There is no   (U+202F) in font pplr8t!
+Missing character: There is no   (U+202F) in font pplr8t!
+]
+
+[39
+
+]
+Overfull \hbox (11.30815pt too wide) in paragraph at lines 740--741
+[]\T1/ppl/m/n/10.95 Out of the 362 Sound-less ses-sions eval-u-ated, 293 were ca
+t-e-go-rized into the worst-performing
  []
 
 
 
-[37
+[40]
+Overfull \hbox (4.65004pt too wide) in paragraph at lines 751--752
+[]\T1/ppl/m/n/10.95 An-other di-rec-tion for fu-ture work in-volves ex-pand-ing and en-rich-ing the Sound-less dataset.
+ []
+
+
+
+[41
 
 ]
+Overfull \hbox (0.6646pt too wide) in paragraph at lines 762--763
+[]\T1/ppl/m/n/10.95 Analysing frequency-specific noise ef-fects on sleep us-ing high-resolution au-dio data. 
+ []
 
-[38
+
+
+[42]
+
+[43
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 684--685
+Underfull \hbox (badness 10000) in paragraph at lines 789--790
 []\T1/ppl/m/n/10.95 Time se-ries clas-si-fi-ca-tion, avail-able at: https://kera
 s.io/ex-am-ples/time-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 687--688
+Underfull \hbox (badness 10000) in paragraph at lines 792--793
 []\T1/ppl/m/n/10.95 Long short-term mem-ory, Wikipedia, avail-able at:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 690--691
+Underfull \hbox (badness 10000) in paragraph at lines 795--796
 []\T1/ppl/m/n/10.95 Multi Layer Per-cep-tron, Wikipedia, avail-able at:
  []
 
 
 
-[39
+[44
 
 
-Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 ]
-Underfull \hbox (badness 6592) in paragraph at lines 738--739
+Underfull \hbox (badness 6592) in paragraph at lines 846--847
 []\T1/ppl/m/n/10.95 Zhiguang Wang, Weizhong Yan & Tim Oates. Time Se-ries Clas-s
 i-fi-ca-tion
  []
 
 
-Underfull \hbox (badness 2384) in paragraph at lines 738--739
+Underfull \hbox (badness 2384) in paragraph at lines 846--847
 \T1/ppl/m/n/10.95 from Scratch with Deep Neu-ral Net-works: A Strong Base-line. Avail-able at:
  []
 
 
 
-[40
+[45
 Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
 Missing character: There is no – (U+2013) in font pplr8t!
-] (./memoria.aux)
+Missing character: There is no – (U+2013) in font pplr8t!
+]
+
+[46] (./memoria.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -916,28 +943,29 @@ L3 programming layer <2025-01-18>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `memoria.out' has not changed.
-(rerunfilecheck)             Checksum: 41CE954DAD91F8618DB04470AA9F607D;2040.
+(rerunfilecheck)             Checksum: BA0E5826FC1ED84576EFEAA1201FAF97;2034.
 )
 
 Here is how much of LuaTeX's memory you used:
- 13103 strings out of 475506
+ 13111 strings out of 475506
  125056,794899 words of node,token memory allocated
- 3223 words of node memory still in use:
-   3 hlist, 1 vlist, 1 rule, 2 glue, 435 kern, 1 glyph, 163 attribute, 51 glue_s
-pec, 163 attribute_list, 1 write, 1 pdf_action nodes
-   avail lists: 2:482,3:424,4:189,5:140,6:141,7:6967,8:10,9:1180,10:12,11:646
- 35582 multiletter control sequences out of 65536+600000
+ 4153 words of node memory still in use:
+   3 hlist, 1 vlist, 1 rule, 2 glue, 597 kern, 1 glyph, 193 attribute, 51 glue_s
+pec, 193 attribute_list, 1 write, 1 pdf_action nodes
+   avail lists: 1:1,2:444,3:424,4:188,5:155,6:141,7:6967,8:10,9:1180,10:9,11:646
+
+ 35583 multiletter control sequences out of 65536+600000
  97 fonts using 6380511 bytes
- 86i,12n,115p,1068b,536s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 86i,12n,115p,839b,536s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb><
 /usr/share/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf-dist
 /fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on memoria.pdf (41 pages, 1117547 bytes).
+Output written on memoria.pdf (47 pages, 1105295 bytes).
 
-PDF statistics: 408 PDF objects out of 1000 (max. 8388607)
- 332 compressed objects within 4 object streams
- 105 named destinations out of 1000 (max. 131072)
+PDF statistics: 431 PDF objects out of 1000 (max. 8388607)
+ 349 compressed objects within 4 object streams
+ 112 named destinations out of 1000 (max. 131072)
  129 words of extra memory for PDF output out of 10000 (max. 100000000)
 
