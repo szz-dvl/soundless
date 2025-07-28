@@ -1,23 +1,19 @@
 
 \contentsline {section}{Abstract}{1}{chapter*.1}%
-\contentsline {section}{Introduction}{3}{chapter*.2}%
-\contentsline {section}{State of art}{5}{chapter*.3}%
-\contentsline {section}{Analisis}{7}{chapter*.4}%
-\contentsline {subsubsection}{Delta activity}{11}{table.caption.7}%
-\contentsline {subsubsection}{Theta activity}{11}{section*.8}%
-\contentsline {subsubsection}{Alpha activity}{11}{section*.9}%
-\contentsline {subsubsection}{Sigma activity}{12}{section*.10}%
-\contentsline {subsubsection}{Beta activity}{12}{section*.11}%
-\contentsline {section}{Design}{12}{table.caption.13}%
-\contentsline {subsection}{Fully Convolutional neural network (FCN)}{14}{chapter*.14}%
-\contentsline {subsubsection}{LSTM}{15}{figure.caption.16}%
-\contentsline {subsection}{Multi Layer Perceptron (MLP)}{17}{figure.caption.18}%
-\contentsline {section}{Implementation}{18}{figure.caption.20}%
-\contentsline {section}{Evaluation}{19}{chapter*.21}%
-\contentsline {subsection}{Data augmentation}{22}{figure.caption.24}%
-\contentsline {subsection}{Class clustering}{27}{figure.caption.28}%
-\contentsline {section}{Sleep Metrics}{28}{figure.caption.31}%
-\contentsline {section}{Conclusion}{38}{figure.caption.36}%
-\contentsline {section}{Future work}{40}{chapter*.37}%
-\contentsline {section}{Acknowledgements}{42}{chapter*.38}%
-\contentsline {section}{Bibliography}{43}{chapter*.39}%
+\contentsline {section}{Introduction}{2}{chapter*.2}%
+\contentsline {section}{Background}{4}{chapter*.3}%
+\contentsline {section}{State of art}{6}{chapter*.4}%
+\contentsline {section}{Analysis of the Human Sleep Project dataset}{8}{chapter*.5}%
+\contentsline {section}{Design of a neural network to classify sleep stages}{14}{table.caption.10}%
+\contentsline {subsection}{Fully Convolutional neural network (FCN)}{16}{chapter*.11}%
+\contentsline {subsubsection}{LSTM}{18}{figure.caption.13}%
+\contentsline {subsection}{Multi Layer Perceptron (MLP)}{19}{figure.caption.15}%
+\contentsline {subsection}{Implementation}{21}{figure.caption.17}%
+\contentsline {section}{Evaluation of the neural networks}{22}{section*.18}%
+\contentsline {subsection}{Data augmentation}{26}{figure.caption.21}%
+\contentsline {subsection}{Class clustering}{31}{figure.caption.25}%
+\contentsline {section}{Sleep metrics definition}{32}{figure.caption.28}%
+\contentsline {section}{Conclusion}{43}{figure.caption.33}%
+\contentsline {section}{Future work}{45}{chapter*.34}%
+\contentsline {section}{Acknowledgements}{47}{chapter*.35}%
+\contentsline {section}{Bibliography}{48}{chapter*.36}%

@@ -128,6 +128,10 @@ cluster_labels = clusterer.fit_predict(X)
 
 df["cluster"] = cluster_labels
 
+print(df.loc[df["cluster"] == 0].count())
+print(df.loc[df["cluster"] == 1].count())
+print(df.loc[df["cluster"] == 2].count())
+
 print("SE")
 print(df.loc[df["cluster"] == 0, "se"].mean())
 print(df.loc[df["cluster"] == 1, "se"].mean())

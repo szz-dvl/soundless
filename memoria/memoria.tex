@@ -164,12 +164,40 @@
 
 \tableofcontents
 \addchapter{Abstract}
+Sleep quality is a critical factor in overall health and well-being, and environmental noise is known to significantly disrupt sleep architecture. This study explores the impact of ambient noise on sleep efficiency and sleep stage distribution using a deep learning approach applied to electroencephalogram (EEG) data. We trained a multi-layer perceptron (MLP) model to classify sleep stages, achieving approximately 70\% validation accuracy on data from the Human Sleep Project. After identifying performance limitations, particularly in the accurate classification of the N1 stage, various oversampling techniques and class clustering strategies were evaluated to enhance model robustness.
 
+To investigate the relationship between environmental noise and sleep quality, we computed a set of sleep metrics for subjects in both the Human Sleep Project and the Soundless dataset—the latter of which includes ambient noise measurements recorded during sleep. Key metrics included sleep efficiency, the proportion of time spent in light, deep (N3), and REM sleep stages, and average environmental noise levels. Using these features, we applied KMeans clustering to group subjects into distinct sleep profiles. The analysis revealed a strong correlation between elevated nighttime noise levels (exceeding 40 dB) and poor sleep quality. Specifically, individuals exposed to higher noise levels demonstrated significantly lower sleep efficiency and reduced time spent in restorative sleep stages. These effects closely mirror those observed in subjects with diagnosed sleep pathologies, suggesting that chronic exposure to environmental noise may produce clinically relevant disruptions in sleep architecture.
+
+This work highlights the potential of combining EEG-based sleep stage classification with environmental data to assess the real-world effects of noise on sleep. It also establishes a foundation for future research into arousal detection and cross-modal sleep monitoring using wearable devices.
+
+\addchapter{Introduction}
+Sleep quality is a crucial factor in maintaining overall health. In today's world, where a significant portion of the population resides in densely populated urban areas (megalopolises), people are continuously exposed to noise pollution. This constant exposure to ambient noise -day and night- raises concerns about its potential impact on sleep \cite{halperin, muzet, pirrera, riedel, witte}. Investigating how environmental noise affects sleep quality is therefore a highly relevant topic. In this document, we present a study focused on this issue, primarily through the analysis of existing datasets.
+
+We begin by working with the Human Sleep Project dataset \cite{hsp}, developed by Massachusetts General Hospital, which includes around 25,000 electroencephalogram (EEG) recordings from subjects with various sleep pathologies. These recordings, stored in the .edf (European Data Format), often come with detailed annotations and information on the EEG channels used. The dataset has been widely studied by researchers across multiple disciplines. Leveraging this resource, we aim to develop an artificial intelligence-based solution capable of automatically annotating EEG recordings to assist in sleep quality analysis.
+
+Next, we introduce the Soundless \cite{soundless} dataset, part of a research project led by Universitat Rovira i Virgili in Tarragona, Spain. This project is designed to study the impact of environmental noise on sleep quality through the use of FitBit devices, which monitor participants vital signs during sleep, and a companion Android application that records ambient sound throughout the night. While the dataset currently includes data from approximately 40 participants, it provides valuable real-world insight into how different noise conditions may influence various stages of sleep. It also acknowledges that individuals may have different sensitivities to noise, and that certain noise frequencies might affect sleep differently across subjects.
+
+The objective of this work is to bridge the controlled, large-scale data of the Human Sleep Project with the real-world, noise-focused observations of the Soundless dataset. By connecting these two sources, we aim to extrapolate key metrics and draw meaningful conclusions about the relationship between environmental noise and sleep quality.
+
+The following pages present an initial approach to studying sleep quality by combining data-driven analysis with real-world noise exposure scenarios. The primary aim of this work is to explore how different stages of sleep are influenced by environmental noise, using a combination of two complementary datasets: the Human Sleep Project and the Soundless dataset. Through this exploratory study, we aim to build a foundation for further research into sleep quality assessment in urban and noise-rich environments.
+
+The main goals of this document are as follows:
+
+\begin{itemize}
+  \item Analyse and standardize the EEG data provided in the Human Sleep Project dataset in order to enable accurate and consistent classification of sleep stages across subjects. This involves developing a robust preprocessing pipeline capable of handling heterogeneous EEG configurations, aligning channel montages, and preparing the data for input into neural network models.
+  \item Design and develop a robust neural network architecture capable of accurately classifying the different sleep stages from electroencephalogram (EEG) recordings. This involves selecting appropriate model structures, optimizing training strategies, and handling the complexities of EEG time-series data to achieve reliable and generalizable sleep stage predictions across diverse subjects and recording conditions.
+  \item Define a set of metrics derived from the identified sleep stages to establish a meaningful connection between participants in the Soundless dataset and those in the Human Sleep Project. These metrics may include sleep stage duration, frequency of transitions between stages, interruptions, and overall sleep efficiency, among others. 
+  \item Draw data-driven conclusions about the quality of sleep in environments with varying levels of noise. By correlating ambient sound data with changes in sleep patterns, we aim to understand how specific noise characteristics (e.g., intensity, frequency, duration) may affect different individuals and sleep stages, ultimately influencing overall sleep quality.  
+\end{itemize}
+
+This preliminary study sets the groundwork for future research that could lead to better tools for monitoring and improving sleep in urban settings, potentially informing both clinical practice and consumer health applications.
+
+\addchapter{Background}
 The Soundless \cite{soundless} project carried out by the Universitat Rovira i Virgili (Tarragona, Spain) aims to be a citizen science platform to study how noise affect rest in different neighbourhoods of the city of Tarragona. 
 
 The soundless project gathered 40 neighbours of the city of Tarragona living in the neighbourhoods of El Serrallo and Barri del port an conducted a study on how the sleep is disturbed by train lines noise. Tarragona is a port city located in north-east Spain (Catalonia) by the Mediterranean Sea. A major problem is that railway tracks create a barrier between the city and the sea (beach, port). Apartment blocks are located just at 2-5 meters of distance from the tracks without any acoustic barriers.
 
-The first challenge of the Sounless project is to gather the data to conduct an study on sleep quality. To do so they used a FitBit (an intelligent bracelet) able to capture the vital sings of an individual, such as the heart rate, the oxygen saturation, etc. Once the data is gathered the next step is to detect an incidence in a reliable manner, here we define a sleep incident as when a person moves from a deep sleep phase to being completely awake due to excessive noise. To do so several algorithms are applied to the data in order to detect anomalies in sleep related to noise in the ambient. A first approach was to use direct mathematical correlation between hear rate and noise, some factors affected this measurement however:
+The first challenge of the Soundless project is to gather the data to conduct an study on sleep quality. To do so they used a FitBit (an intelligent bracelet) able to capture the vital sings of an individual, such as the heart rate, the oxygen saturation, etc. Once the data is gathered the next step is to detect an incidence in a reliable manner, here we define a sleep incident as when a person moves from a deep sleep phase to being completely awake due to excessive noise. To do so several algorithms are applied to the data in order to detect anomalies in sleep related to noise in the ambient. A first approach was to use direct mathematical correlation between hear rate and noise, some factors affected this measurement however:
 
 \begin{itemize}
 	\item Individual Variability: Participants exhibited diverse heart rate patterns and sensitivities to noise.
@@ -183,30 +211,9 @@ What leaded the soundless team to adopt z-scores algorithm. With this approach t
 
 Soundless study carry on trying to detect individuals with a higher sensitivity to noise in the ambient, having individuals with values close to 38 dB to have a disturbance and others that requires louder noises. Particularly, they show that 70.59\% of the times a sleep disturbance has been detected, it has occurred in people with a higher sensitivity to noise, in this case, a sensitivity less than 45 decibels. On the other hand, people with lower sensitivity to this type of situation have only registered 29.41\% of the sleep disturbances caused by noise. After the study on individual persons they examine general sensitivity to noise in the ambient, where they find that values between 40 and 50 dB are able to create incidences in the heart rate and in the sleep process of almost any individual.
 
-The study concludes that the night noise produced by freight trains in the seaside of Tarragona is far beyond legal limits (>45dB) –and up to 80dB– during all nights. Furthermore, they consistently detected the impact of noise in health variables like heart rates and sleep modes, which affected most users in the study during all nights. This disturbances during sleep are causing irregular heart rates, sudden awakenings, and noticeable impacts in sleep quality in the citizens.
+The study concludes that the night noise produced by freight trains in the seaside of Tarragona is far beyond legal limits (>45dB) -and up to 80dB- during all nights. Furthermore, they consistently detected the impact of noise in health variables like heart rates and sleep modes, which affected most users in the study during all nights. This disturbances during sleep are causing irregular heart rates, sudden awakenings, and noticeable impacts in sleep quality in the citizens.
 
 %With Soundless data, we can try to compare the users in HSP project and in Soundless dataset to see if noise is affecting the sleep quality of the subjects.
-
-\addchapter{Introduction}
-Sleep quality is a crucial factor in maintaining overall health. In today’s world, where a significant portion of the population resides in densely populated urban areas (megalopolises), people are continuously exposed to noise pollution. This constant exposure to ambient noise—day and night—raises concerns about its potential impact on sleep. Investigating how environmental noise affects sleep quality is therefore a highly relevant topic. In this document, we present a study focused on this issue, primarily through the analysis of existing datasets.
-
-We begin by working with the Human Sleep Project dataset \cite{hsp}, developed by Massachusetts General Hospital, which includes around 25,000 electroencephalogram (EEG) recordings from subjects with various sleep pathologies. These recordings, stored in the .edf (European Data Format), often come with detailed annotations and information on the EEG channels used. The dataset has been widely studied by researchers across multiple disciplines. Leveraging this resource, we aim to develop an artificial intelligence-based solution capable of automatically annotating EEG recordings to assist in sleep quality analysis.
-
-Next, we introduce the Soundless \cite{soundless} dataset, part of a research project led by Universitat Rovira i Virgili in Tarragona, Spain. This project is designed to study the impact of environmental noise on sleep quality through the use of FitBit devices, which monitor participants' vital signs during sleep, and a companion Android application that records ambient sound throughout the night. While the dataset currently includes data from approximately 40 participants, it provides valuable real-world insight into how different noise conditions may influence various stages of sleep. It also acknowledges that individuals may have different sensitivities to noise, and that certain noise frequencies might affect sleep differently across subjects.
-
-The objective of this work is to bridge the controlled, large-scale data of the Human Sleep Project with the real-world, noise-focused observations of the Soundless dataset. By connecting these two sources, we aim to extrapolate key metrics and draw meaningful conclusions about the relationship between environmental noise and sleep quality.
-
-The following pages present an initial approach to studying sleep quality by combining data-driven analysis with real-world noise exposure scenarios. The primary aim of this work is to explore how different stages of sleep are influenced by environmental noise, using a combination of two complementary datasets: the Human Sleep Project and the Soundless dataset. Through this exploratory study, we aim to build a foundation for further research into sleep quality assessment in urban and noise-rich environments.
-
-The main goals of this document are as follows:
-
-\begin{itemize}
-  \item Design a method for analysing sleep stages in subjects from the Human Sleep Project dataset. This includes processing and interpreting electroencephalogram (EEG) signals to identify key sleep phases such as REM, light sleep, and deep sleep, with a focus on creating a robust and scalable analysis pipeline.
-  \item Define a set of metrics derived from the identified sleep stages to establish a meaningful connection between participants in the Soundless dataset and those in the Human Sleep Project. These metrics may include sleep stage duration, frequency of transitions between stages, interruptions, and overall sleep efficiency, among others. 
-  \item Draw data-driven conclusions about the quality of sleep in environments with varying levels of noise. By correlating ambient sound data with changes in sleep patterns, we aim to understand how specific noise characteristics (e.g., intensity, frequency, duration) may affect different individuals and sleep stages, ultimately influencing overall sleep quality.  
-\end{itemize}
-
-This preliminary study sets the groundwork for future research that could lead to better tools for monitoring and improving sleep in urban settings, potentially informing both clinical practice and consumer health applications.
 
 \addchapter{State of art}
 The relationship between environmental noise and sleep quality has been the focus of extensive interdisciplinary research due to its profound implications for public health. Numerous studies have demonstrated that nocturnal noise exposure adversely affects both the physiological and psychological dimensions of sleep, including sleep architecture, duration, and subjective sleep quality.
@@ -223,14 +230,22 @@ The long-term consequences of chronic noise-induced sleep disruption are also we
 
 In sum, the current body of research provides robust evidence that environmental noise impairs sleep quality through both direct physiological mechanisms and mediated psychological pathways. While regulation and mitigation strategies have been proposed, further research is needed to explore personalized interventions and to better understand vulnerable populations.
 
-To the best of our knowledge, no prior research has established a relationship between the Human Sleep Project and the Soundless dataset. This study introduces a novel methodological approach aimed at bridging these two datasets, with the objective of advancing our understanding of how environmental noise influences sleep quality.
+The main contribution of this work is the integration of a clinical dataset with a real-world dataset, enabling a comparative analysis of sleep quality across controlled laboratory environments and everyday living conditions. By bridging these two domains, this study not only validates EEG-based sleep stage classification methods in heterogeneous settings but also highlights how environmental factors, such as ambient noise, can significantly influence sleep patterns. This dual perspective offers a more comprehensive understanding of sleep behaviour and paves the way for future studies that aim to evaluate sleep health in more ecologically valid scenarios.
 
-\addchapter{Analisis}
-A critical step in this study involves understanding and preprocessing the data from the Human Sleep Project. Given the scale and complexity of this dataset, careful examination is required before any meaningful analysis can be performed.
+\addchapter{Analysis of the Human Sleep Project dataset}
+A critical step in this study involves understanding and preprocessing the data from The Human Sleep Project, a rich and complex clinical dataset containing polysomnographic recordings, including electroencephalogram (EEG) signals, from subjects evaluated in sleep laboratories. Given the diversity of recording formats, channel configurations, and subject-specific variability, a thorough and systematic examination of the dataset is essential before performing any meaningful analysis or applying machine learning models.
 
-EEG montages are organized arrangements of channels, where each channel represents the potential difference between two electrodes, used to display and interpret scalp electrical activity. They are crucial for visualizing brain activity, enabling the appreciation of waveforms from different perspectives, aiding in lateralization and localization of potential sources, and facilitating artifact identification. 
+This chapter focuses on analysing the structure and content of the EEG recordings in the Human Sleep Project dataset, with the primary objective of developing a standardized pipeline that enables consistent and reliable classification of sleep stages across all subjects. Achieving this requires addressing several challenges, including aligning heterogeneous EEG montages, selecting and validating relevant channels, handling incomplete or inconsistent metadata, and preparing the signals for downstream tasks such as sleep stage classification or spectral analysis. Establishing this standardization framework is a crucial step for ensuring valid comparisons between recording sessions and for facilitating integration with real-world biometric data -such as that from the Soundless dataset- ultimately enabling broader generalization and interpretation of results.
 
-To study the Human Sleep Project dataset, the first task is to analyze its vast and highly heterogeneous structure. The dataset consists of over 25,000 electroencephalogram (EEG) recordings, each captured using different channel configurations. As a starting point, it is essential to understand the various EEG montages used across recordings and to develop a unified framework that allows consistent analysis across the dataset. Within the collection, there are 23 distinct montage configurations, each comprising the same number of channels but often differing in the specific channels included. To address this variability, I conducted an analysis of channel frequency across all configurations, aiming to identify a common subset that would enable a standardized and comprehensive study of the data.
+A key component of this standardization involves understanding EEG montages, which are structured configurations of electrode pairings. Each channel in a montage reflects the voltage difference between two electrodes positioned on the scalp. These configurations are fundamental to effective visualization and interpretation of brain activity. By arranging the electrodes spatially, montages provide multiple perspectives on neural dynamics, enabling clinicians and researchers to identify sleep patterns, detect abnormalities, and localize brain activity across hemispheres. Furthermore, well-defined montages aid in distinguishing genuine neural signals from artifacts, improving the accuracy and interpretability of EEG-based analyses.
+
+An example of a configuration with 23 channels may be:
+
+ABD, AIRFLOW, C3-M2, C4-M1, CFLOW, CHEST, CHIN1-CHIN2, CPRES, E1-M2, E2-M1, EKG, F3-M2, F4-M1, HR, IC, LAT, LEAK, O1-M2, O2-M1, PTAF, RAT, SNORE, SaO2
+
+For a comprehensive explanation of the different channels used in polysomnography, the reader is referred to Chapter 5 of the work cited in \cite{channels}.
+
+To study the Human Sleep Project dataset, the first task is to analyse its vast and highly heterogeneous structure. The dataset consists of over 25,000 electroencephalogram (EEG) recordings, each captured using different channel configurations or montages. As a starting point, it is essential to understand the various EEG montages used across recordings and to develop a unified framework that allows consistent analysis across the dataset. Within the collection, there are 23 distinct montage configurations, each comprising the same number of channels but often differing in the specific channels included. To address this variability, I conducted an analysis of channel frequency across all configurations, aiming to identify a common subset that would enable a standardized and comprehensive study of the data.
 
 The study yields the following results:
 
@@ -260,9 +275,46 @@ The study yields the following results:
 \label{tab1}
 \end{table}
 
-In table \ref{tab1} we can see the most common channels in the dataset, and the associated frequency of the channel across all the electroencephalograms in the dataset. With this information we can impose that our electroencephalograms have, at least, this channels and we must get a representation of around 71\% of the dataset. 
+In table \ref{tab1} we can see the most common channels in the dataset, and the associated frequency of the channel across all the electroencephalograms in the dataset. With this information we can impose that our electroencephalograms have, at least, these channels and we must get a representation of around 71\% of the dataset, since the least frequent channel, namely O1-M2, have a frequency of 70.73\% in the montages taken into account. 
 
-Going one step further we can impose channel equivalences. We define a channel equivalence as a pair of channels that, if exchanged between configurations, we obtain the same configuration. Studying the different configurations present in the dataset we obtain the following equivalences:
+Going one step further we can impose channel equivalences. We define a channel equivalence as a pair of channels that can be swapped between configurations, as an instance the following channel configurations have a channel equivalence in CZ-M1 and CZ-M2:
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{ |p{3cm}||p{3cm}| }
+ \hline
+ Configuration 1 & Configuration 2 \\
+ \hline
+ ABD & ABD \\ 
+ AIRFLOW & AIRFLOW \\  
+ C3-M2 & C3-M2 \\
+ C4-M1 & C4-M1 \\
+ CHEST & CHEST \\
+ CHIN1-CHIN3 & CHIN1-CHIN3 \\
+ \textbf{CZ-M1} & \textbf{CZ-M2} \\
+ E1-M2 & E1-M2 \\
+ E2-M1 & E2-M1 \\
+ EKG & EKG \\
+ F3-M2 & F3-M2 \\
+ F4-M1 & F4-M1 \\
+ HR & HR \\
+ IC & IC \\
+ LAT & LAT \\
+ O1-M2 & O1-M2 \\
+ O2-M1 & O2-M1 \\
+ PTAF & PTAF \\
+ RAT & RAT \\
+ SNORE & SNORE \\
+ SaO2 & SaO2 \\ 
+ \hline
+\end{tabular}
+\end{center}
+\caption{Channel equivalence example}
+\label{tab1}
+\end{table}
+
+
+Studying the different configurations present in the dataset we obtain the following equivalences:
 
 \newgeometry{left=1.5cm,bottom=1.5cm,top=0.5cm}
 \begin{minipage}{0.45\textwidth}
@@ -311,34 +363,21 @@ Going one step further we can impose channel equivalences. We define a channel e
 \end{minipage}%
 \restoregeometry
 
-In table \autoref{tab2} I summarize the frequencies obtained when aggregating the equivalences found by the code, after all we have 18 meaningful channels to study, however we need to take into account that most of them are not related to brain activity, so looking for brain activity on those channels will make no sense. However we can try to use the 18 channels to feed a neural network as they are, as a sequence of voltages per channel over time.
+Table \ref{tab2} summarizes the frequencies obtained when aggregating the channel equivalences identified by the code. In total, we retain 18 meaningful channels for analysis. However, it is important to note that many of these channels are not directly associated with brain activity and may not contribute usefully to interpreting neural dynamics. Despite this limitation, we can still consider using all 18 channels as raw input features for a neural network, treating them as sequences of voltage measurements over time.
 
-Power Spectral Density (PSD) analysis is a widely used quantitative EEG (qEEG) technique for examining the spectral composition of EEG signals during sleep. It provides valuable insights into various sleep stages and can aid in the identification of potential sleep disorders by measuring the distribution of power across different frequency bands within the EEG signal.
+A more traditional and interpretable approach for analyzing EEG data, particularly in sleep research, is Power Spectral Density (PSD) analysis. PSD is a widely adopted technique in quantitative EEG (qEEG) that enables the examination of the spectral composition of EEG signals by measuring the distribution of power across frequency bands. This method is particularly valuable for studying sleep stages and identifying potential sleep disorders. In the context of sleep research, only specific frequency bands are typically linked to meaningful brain activity. These include:
 
-\addsubsection{Delta activity}
-Delta brainwaves, also known as delta activity, are the slowest brainwaves, typically between 0.5 and 4.5 Hz. They are primarily associated with deep, dreamless sleep, where the body is in a state of complete relaxation and the mind is minimally active. Delta waves are also observed in newborns, and can be induced in a waking state by experienced meditators.
+\begin{itemize}
+	\item Delta (0.5 - 4.5 Hz): The slowest brainwaves, delta activity dominates during deep, dreamless sleep (especially Stage N3). These high-amplitude waves are associated with restorative processes such as tissue repair, hormone release, and long-term memory consolidation. Delta waves are also seen in infants and experienced meditators.
+	\item Theta (4.5 - 8.5 Hz): Theta activity is linked to drowsiness, light sleep, deep meditation, and creative insight. These waves appear prominently during REM sleep and are thought to support memory processing and emotional regulation. Abnormalities in theta activity have been associated with several neuropsychological disorders.
+	\item Alpha (8.5 - 11.5 Hz): Alpha waves correspond to a relaxed but alert state, often observed when subjects are awake with eyes closed. Predominantly seen over the occipital cortex, alpha rhythms reflect restful wakefulness and are sensitive to visual and cognitive stimuli.
+	\item Sigma (11.5 - 15.5 Hz): Sigma activity, particularly sleep spindles, is characteristic of Stage N2 sleep. These transient oscillations are believed to play a role in sleep stability and memory consolidation. In infants, sigma activity is associated with local brain maturation and psycho-motor development.
+	\item Beta (15.5 - 30 Hz): Beta waves are associated with active thinking, attention, and alertness. While typical during wakefulness, excessive beta activity has been linked to anxiety and insomnia, whereas diminished beta power may indicate cognitive under-arousal or attentional difficulties.
+\end{itemize}
 
-They usually show a high amplitude and are most prevalent during deep sleep stages (3), where the brain is essentially shut down for repair and regeneration. Delta waves are linked to various restorative processes, including tissue repair, muscle growth, and hormone release.They are also involved in transferring information from the hippo campus to the neocortex, aiding in long-term memory storage.
+Motivated by findings in recent literature \cite{PSD}, PSD analysis was applied to the EEG recordings in order to extract the power spectrum for each channel. This resulted in a feature vector for each subject, quantifying the signal power within each physiologically relevant frequency band. However, a closer inspection of the full set of EEG channels revealed that several were suboptimal for capturing brain-related spectral features. As a result, the initial list of channels was refined and reduced to a smaller, more representative subset better suited for neurophysiological analysis.
 
-\addsubsection{Theta activity}
-Theta brainwaves, characterized by frequencies between 4.5-8.5 Hz, are associated with states of relaxation, deep meditation, and creativity. They are often observed during sleep, particularly during dream sleep, and are also linked to states of daydreaming and focused attention. Theta activity is thought to play a role in processing information, making memories, and facilitating intuitive insights. 
-
-Disrupted or divergent theta activity has been linked to various mental health conditions.
-
-\addsubsection{Alpha activity}
-Alpha brainwaves, with a frequency of 8.5-11.5 Hz, are associated with a relaxed, awake state, often observed during activities like daydreaming or meditation. They indicate the brain is active but not overly focused, promoting feelings of calmness and ease. 
-
-Alpha activity is typically strongest over the posterior areas of the head, particularly the occipital cortex. Alpha waves can be influenced by various factors, including sensory stimuli, mental activities, and even the position of the eyes (they are often more prominent with eyes closed). 
-
-\addsubsection{Sigma activity}
-Sigma activity, also known as sigma power or spindle activity, refers to brainwave activity in the frequency range of 11.5-15.5 Hz, a key component of non-REM sleep. These brainwaves are characterized by transient oscillations and are often associated with sleep-dependent memory consolidation and sleep stability. In infants, sigma activity is linked to psycho motor development and local brain maturation.
-
-\addsubsection{Beta activity}
-Beta activity in the brain refers to a range of brainwave frequencies, typically between 15.5 and 30 Hz, associated with alert, focused, and active mental states. These brainwaves are commonly present during waking hours and when engaged in tasks requiring concentration, problem-solving, or decision-making.
-
-An excessive beta activity can be associated with symptoms of brain over-arousal, such as anxiety, obsessiveness, and sleep difficulties, while a deficient beta activity may be linked to difficulties concentrating, problem-solving, and overall brain under-arousal.
-
-Motivated by findings from recent literature \cite{PSD}, we can apply PSD analysis to extract the frequency spectrum from the EEG recordings, resulting in a feature vector that quantifies the power observed in each channel across frequency bands associated with brain activity. However, upon closer examination, it became evident that the set of EEG channels initially considered was not optimal for detecting brain-related spectral features. Therefore, the list of channels used in the analysis was refined and reduced to a smaller, more representative subset. The selected channels used for PSD analysis are as follows:
+The final set of selected channels used for PSD analysis is presented below.
 
 \begin{table}[H]
 \begin{center}
@@ -360,10 +399,18 @@ Motivated by findings from recent literature \cite{PSD}, we can apply PSD analys
 \label{tab3}
 \end{table}
 
-\addchapter{Design}
-In order to establish a meaningful relationship between the Human Sleep Project dataset and the Soundless dataset, it is essential to standardize the analysis of the Human Sleep Project data. This can be achieved by predicting the sleep stage of a subject at each moment within their electroencephalogram (EEG) recording. Once sleep stages are accurately classified, relevant sleep metrics can be computed, enabling comparisons between the two datasets.
+\addchapter{Design of a neural network to classify sleep stages}
+In this chapter, we introduce several neural network architectures that have been evaluated for the task of classifying sleep stages using EEG recordings. The goal is to explore different modeling strategies that can capture the complex spatial and temporal characteristics of EEG signals. We begin by presenting a Fully Convolutional Network (FCN), which relies exclusively on convolutional layers to extract spatial features directly from raw EEG signals. FCNs are efficient and effective for processing time-series data and have demonstrated strong performance in various biomedical signal classification tasks.
 
-To perform this classification, a neural network presents itself as a suitable tool due to its capacity to model complex patterns in time-series data. The goal is to classify each segment of the EEG into one of the following sleep stages:
+Next, we describe a hybrid architecture that integrates convolutional layers with a Long Short-Term Memory (LSTM) network. In this model, convolutional layers are first used to extract local patterns and features from the input signal, which are then passed to an LSTM module designed to model temporal dependencies across time. This hybrid approach leverages the strengths of both CNNs (for spatial representation) and LSTMs (for sequential modeling), making it particularly suitable for the dynamic structure of sleep stages.
+
+Finally, we present a Multilayer Perceptron (MLP) architecture, which serves as a simpler baseline. The MLP operates on preprocessed or feature-engineered input vectors and consists of multiple dense layers with non-linear activations. While less sophisticated in terms of capturing temporal dynamics, the MLP can still provide valuable insights into the classification task when appropriate features are used.
+
+Together, these neural network architectures -namely, Fully Convolutional Networks (FCNs), hybrid CNN-LSTM models, and Multilayer Perceptrons (MLPs)- enable a comparative analysis of different modeling paradigms for classifying sleep stages from EEG recordings. By evaluating their performance on a common task, we can identify which approach best captures the temporal and spectral characteristics of sleep-related brain activity.
+
+Establishing a meaningful relationship between the Human Sleep Project (a clinical dataset) and the Soundless dataset (a real-world, ambient noise and biometric signal dataset) requires a standardized method for analysing the EEG data from the Human Sleep Project. A critical step in this process is the automatic classification of sleep stages throughout each EEG recording. By accurately labeling every moment in the EEG timeline with its corresponding sleep stage, we are able to extract consistent and interpretable sleep metrics, such as total sleep time, time spent in deep or REM sleep, and overall sleep efficiency. These metrics serve as the foundation for comparative analysis across datasets.
+
+To perform this task, deep learning -particularly neural networks- offers a powerful framework due to its ability to model complex, nonlinear patterns in time-series signals like EEG. The goal is to segment the EEG recordings and classify each segment into one of the standard sleep stages, typically defined as:
 
 \begin{itemize}
   \item \textbf{Sleep\_stage\_W:} This stage indicates that the subject is awake.
@@ -373,14 +420,14 @@ To perform this classification, a neural network presents itself as a suitable t
   \item \textbf{Sleep\_stage\_R:} This stage indicates that the subject is in REM (Rapid Eye Movement) stage.
 \end{itemize}
 
-As stated in previous sections, the initial approach adopted was to analyze the electroencephalograms in their original form, treating them as sequences of voltage measurements recorded over time for each channel. To this end, I employed a fully convolutional neural network (FCN), which is particularly well-suited for modeling temporal dynamics and spatial relationships present within multi-channel EEG data.
+\addsection{Fully Convolutional neural network (FCN)}
+As stated in previous sections, the initial approach adopted was to analyse the electroencephalograms in their original form, treating them as sequences of voltage measurements recorded over time for each channel. To this end, I employed a fully convolutional neural network (FCN), which is particularly well-suited for modeling temporal dynamics and spatial relationships present within multi-channel EEG data.
 
 The choice of an FCN was motivated by its ability to efficiently extract features from time-series data without relying on traditional recurrent architectures. This approach leverages convolutional filters to capture both short-term fluctuations and longer-term dependencies within the signal, thereby enabling a comprehensive analysis of the electroencephalogram's intrinsic structure. Furthermore, FCNs have been demonstrated to perform robustly in similar biomedical applications, making them an attractive option for tasks such as sleep stage classification and signal anomaly detection.
 
-By processing the EEG recordings in their raw format, this method allows for an end-to-end feature extraction and classification framework, whereby the network learns to identify subtle patterns associated with different sleep stages directly from the voltage sequences. The following sections detail the network architecture, the training regimen, and the evaluation metrics used to assess the performance of this approach in analyzing and classifying the EEG data.
+By processing the EEG recordings in their raw format, this method allows for an end-to-end feature extraction and classification framework, whereby the network learns to identify subtle patterns associated with different sleep stages directly from the voltage sequences. This section detail the network architecture, the training regimen, and the evaluation metrics used to assess the performance of this approach in analysing and classifying the EEG data.
 
-\addsection{Fully Convolutional neural network (FCN)}
-Based on the paper Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline \cite{FCN} and the related work found at \cite{keras-ts} I build a fully convolutional network for time series classification, the architecture is as follows:
+Based on the paper Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline \cite{FCN} and the related work found at \cite{keras-ts} the fully convolutional network for time series classification built is the following:
 
 \begin{figure}[H]
 \centering
@@ -419,7 +466,7 @@ The architecture proposed is as follows:
 \includegraphics[scale=.1, angle=90]{figs/fcn-lstm.png}
 \caption{CN-LSTM architecture}
 \label{fig2}
-\end{figure}
+\end{figure}We define a channel equivalence as a pair of channels that can be swapped between configurations, as an instance the following channel confi
 
 The input layer remains unchanged, with a shape of (6001, 18), corresponding to 30-second EEG segments sampled at 200 Hz across 18 channels. The network begins with an initial 1D convolutional layer consisting of 64 filters and a kernel size of 3, which is effective for capturing local temporal patterns in the data. This is followed by a normalization layer, which helps stabilize the learning process, and a ReLU activation function to introduce non-linearity. A pooling layer is then applied to downsample the feature maps and reduce computational complexity.
 
@@ -453,25 +500,37 @@ The optimizer selected for training the MLP is Adam, initialized with a learning
 
 The hyper parameters, including the number of neurons and the learning rate for this network, were optimized using Keras Tuner. Multi-Layer Perceptrons are highly sensitive to data scaling, as they typically assume input features are centered around zero with a standard deviation of one. To meet this assumption, the data preprocessing pipeline first normalizes the samples to have zero mean and unit variance, followed by scaling each sample using a MinMaxScaler. This two-step scaling process significantly improved the stability of the network during training and led to a notable increase in classification accuracy.
 
-\addchapter{Implementation}
-This section provides an overview of the technologies and tools used to implement the methodology described above. Given the size and complexity of the dataset, comprising over 25,000 files, each averaging approximately 500 MB, the neural network training process is non-trivial. It involves multiple stages: first, downloading the data; second, preprocessing and aggregating the data; and finally, training the neural network models.
+\addsection{Implementation}
+This section provides a comprehensive overview of the technologies, tools, and software infrastructure employed to implement the methodology outlined in this work. Given the scale and complexity of the Human Sleep Project dataset -which consists of more than 25,000 files, each averaging around 500 MB- the overall pipeline from data acquisition to neural network training is both data-intensive and computationally demanding. The entire process is divided into several key stages: data acquisition, preprocessing and aggregation, and neural network model training and evaluation.
 
-The entire implementation is developed in Python, a widely-used programming language for artificial intelligence and machine learning tasks. Python’s rich ecosystem of libraries, including Keras, TensorFlow, and scikit-learn, are leveraged extensively throughout this project.
+The entire implementation is carried out in Python, a widely adopted programming language in the fields of artificial intelligence, data science, and neuroscience. Python's extensive ecosystem of scientific and machine learning libraries makes it an ideal choice for managing a project of this scale.
 
-For the data acquisition phase, the boto3 library is utilized to interface with AWS S3 storage services, from which the dataset files are downloaded.
+For data acquisition, the boto3 library is used to interface with Amazon Web Services (AWS) S3 storage, which hosts the Human Sleep Project dataset. This library provides a programmatic way to download and manage large volumes of data directly from cloud storage, handling network resilience and parallel downloads where possible.
 
-Data preprocessing is facilitated by the MNE library, which is specifically designed for handling electrophysiological data formats such as .edf files. MNE enables efficient extraction of EEG epochs corresponding to specific annotations and the computation of Power Spectral Densities (PSDs) for each event.
+During the data preprocessing stage, the MNE library plays a central role. Designed specifically for working with electrophysiological data (EEG, MEG, etc.), MNE allows efficient parsing and manipulation of .edf files (European Data Format), which is the standard format used in polysomnography. MNE facilitates channel selection, signal filtering, event segmentation, annotation parsing, and feature extraction such as Power Spectral Density (PSD) computations. PSDs are especially important in this context, as they provide frequency-domain representations that are informative for distinguishing between sleep stages.
 
-To manage and organize the processed data, a PostgreSQL relational database is employed. Preprocessed data is aggregated into batches and stored within this database, allowing the neural network training routines to efficiently access and load data in manageable chunks.
+To manage the growing volume of processed data, a PostgreSQL relational database is used. This database stores metadata, signal-derived features, and aggregated sleep session information. It also provides a structured and queryable interface that allows the training pipeline to dynamically load only the data required for a given training iteration or experiment. This separation of raw and derived data ensures both scalability and reproducibility of the experiments.
 
-Finally, the neural networks themselves are implemented using Keras, a high-level deep learning library that abstracts the complexities of model creation and training, enabling rapid prototyping and experimentation.
+The machine learning models are implemented using Keras, a high-level API for building and training deep learning models, built on top of TensorFlow. Keras offers flexibility and modularity, allowing quick experimentation with different neural architectures such as Fully Convolutional Networks (FCNs), hybrid CNN-LSTM models, and Multilayer Perceptrons (MLPs). Additionally, scikit-learn is used for preprocessing utilities, metric evaluations, and auxiliary classification tasks where needed.
 
-\addchapter{Evaluation}
-Among the three approaches presented in the Design chapter, namely the Fully Convolutional Network (FCN), the FCN combined with a Long Short-Term Memory (LSTM) layer, and the Multi-Layer Perceptron (MLP), only the MLP architecture produced meaningful results. Despite efforts to enhance performance, the FCN, even when augmented with an LSTM layer to better capture temporal dependencies, consistently yielded poor classification outcomes. Specifically, the best validation accuracy achieved by this hybrid architecture hovered around 45\%, which, although better than random guessing in a five-class setting, remains insufficient for reliable sleep stage classification.
+Model training is further supported by GPU acceleration, made possible via TensorFlow’s compatibility with CUDA-enabled hardware. This significantly reduces training time, particularly for LSTM-based architectures that process long sequences of EEG data.
+
+In summary, the project relies on a robust software stack combining cloud computing, signal processing, database management, and deep learning. This integrated environment allows for the processing of vast electrophysiological datasets and the training of advanced models to classify sleep stages and investigate the impact of environmental noise on sleep quality.
+
+\addchapter{Evaluation of the neural networks}
+To investigate how environmental noise affects sleep quality, this study integrates two complementary datasets: a clinical dataset -The Human Sleep Project- which contains high-quality electroencephalogram (EEG) recordings gathered in controlled laboratory conditions, and a real-world dataset -Soundless- which includes biometric signals and ambient noise recordings collected from subjects in their natural sleep environments.
+
+The first step in the analysis involves classifying EEG sleep stages using machine learning techniques. Accurate identification of stages such as Wake, N1, N2, N3, and REM enables the computation of meaningful sleep metrics, including sleep efficiency (the ratio of total sleep time to time in bed) and the percentage of time spent in different sleep stages (light, deep, and REM sleep).
+
+To further understand the structure and quality of sleep, Power Spectral Density (PSD) analysis is applied to the EEG data. PSD quantifies the power of brain activity across various frequency bands (delta, theta, alpha, sigma, and beta), which are associated with different cognitive and physiological functions during sleep. This spectral information provides additional insight into the depth and restorative value of sleep, beyond simple stage classification.
+
+By comparing these metrics across the two datasets, we aim to assess how environmental noise influences sleep quality. Specifically, the analysis seeks to determine whether individuals exposed to higher levels of ambient noise show patterns consistent with sleep fragmentation or degradation, such as reduced deep sleep or impaired REM sleep. This comparative approach helps bridge the gap between controlled clinical findings and real-world sleep behaviour, offering evidence on how everyday noise exposure may contribute to sleep disturbances comparable to those caused by clinical sleep disorders. 
+
+Among the three approaches presented in the previous chapters, namely the Fully Convolutional Network (FCN), the FCN combined with a Long Short-Term Memory (LSTM) layer, and the Multi-Layer Perceptron (MLP), only the MLP architecture produced meaningful results. Despite efforts to enhance performance, the FCN, even when augmented with an LSTM layer to better capture temporal dependencies, consistently yielded poor classification outcomes. Specifically, the best validation accuracy achieved by this hybrid architecture hovered around 45\%, which, although better than random guessing in a five-class setting, remains insufficient for reliable sleep stage classification.
 
 These results suggest that the convolutional and recurrent models struggled to generalize well on the available data, potentially due to factors such as high variability in EEG channel configurations, noise in the recordings, or insufficient temporal context learned by the network. In contrast, the MLP, trained on well-structured and aggregated frequency-domain features obtained through PSD analysis, demonstrated a more stable and effective learning process.
 
-Given this outcome, the focus of this section will be on analyzing the results obtained using the MLP model. We will explore its classification performance in detail, including accuracy, confusion matrix, and other relevant evaluation metrics, to assess its effectiveness in predicting sleep stages from EEG-derived features.
+Given this outcome, the focus of this section will be on analysing the results obtained using the MLP model. We will explore its classification performance in detail, including accuracy, confusion matrix, and other relevant evaluation metrics, to assess its effectiveness in predicting sleep stages from EEG-derived features.
 
 The Multi-Layer Perceptron (MLP) model was trained on data from 1,437 subjects, each contributing an average of approximately 850 annotated events, resulting in a total of over 1.2 million events used during the training phase. The model achieved a validation accuracy of nearly 70\%, indicating a strong ability to generalize to unseen data within the validation set.
 
@@ -533,7 +592,7 @@ The confusion matrix obtained for this approach is the following:
 
 As shown in Figure \ref{fig5}, the classification performance for Sleep\_stage\_N1 improves following the application of oversampling; however, this enhancement comes at the expense of reduced accuracy in some of the other classes. While this trade-off is not ideal, it is worth noting that all classes except Sleep\_stage\_W maintain classification accuracies above 50\%, indicating a generally acceptable level of performance across the majority of sleep stages.
 
-In the following approach, a simple class balancing strategy was employed to address the issue of class imbalance observed in the dataset. Specifically, the mean number of samples across all sleep stage classes was computed to serve as a reference threshold. If the number of samples in Sleep\_stage\_N1 fell below this average, the class was oversampled, through synthetic data generation, until it reached the same number of instances as the calculated mean. This method aims to equalize class representation, thereby reducing model bias toward majority classes and improving the classifier's ability to learn from underrepresented sleep stages. The confusion matrix obtained is the following:
+In the following approach, a simple class balancing strategy was employed to address the issue of class imbalance observed in the dataset. Specifically, the mean number of samples across all sleep stage classes was computed to serve as a reference threshold. If the number of samples in Sleep\_stage\_N1 fell below this average, the class was oversampled, through synthetic data generation, until it reached the same number of instances as the calculated mean. This method aims to equalize class representation, thereby reducing model bias toward majority classes and improving the classifier's ability to learn from under-represented sleep stages. The confusion matrix obtained is the following:
 
 \begin{figure}[H]
 \centering
@@ -592,7 +651,15 @@ And the confusion matrix obtained is:
 
 This time, the results are considerably more robust, enabling reliable classification of the different sleep stages. In particular, the model demonstrates strong capability in distinguishing between awake and asleep states. With this improved level of accuracy, we are now well-positioned to proceed with our primary objective: establishing meaningful connections between the Human Sleep Project dataset and the Soundless dataset.
 
-\addchapter{Sleep Metrics}
+\addchapter{Sleep metrics definition}
+In this chapter, we will introduce and define a set of quantitative sleep metrics that are commonly used in sleep research to evaluate the structure and quality of sleep. These metrics include, but are not limited to, sleep efficiency, time spent in each sleep stage (N1, N2, N3, REM, Wake), and percentage distributions of sleep stages across the night. By standardizing these measures, we aim to establish a common framework for assessing sleep across different data sources.
+
+With these metrics defined, the second objective of this chapter is to bridge the gap between the two datasets used in this study: the Human Sleep Project, which provides high-resolution clinical EEG recordings annotated by sleep experts, and the Soundless dataset, which offers real-world biometric and environmental data (such as ambient noise levels) collected through wearable devices.
+
+To connect these two datasets meaningfully, we will map equivalent metrics derived from each source, using the sleep stage predictions from EEG to compute clinical-grade metrics in the Human Sleep Project, and approximating similar indicators using available sensor data in the Soundless dataset. This comparison enables us to investigate how sleep characteristics observed under controlled laboratory conditions correspond to those recorded in everyday environments, and ultimately explore how external factors -such as environmental noise- affect sleep quality and architecture across contexts.
+
+This integrative analysis sets the foundation for drawing broader conclusions about sleep behaviour and disturbances, leveraging the strengths of both clinical and ecological datasets.
+
 When investigating sensitivity to external stimuli during sleep, it is often beneficial to rely on well-established metrics to ensure consistency and comparability with existing research. One of the most widely used and informative metrics is sleep efficiency \cite{efficiency}, which is defined as follows:
 
 \[ SE = TST / TIB \]
@@ -632,9 +699,9 @@ With this information, we proceed with our study by performing KMeans clustering
 As shown in Figure \ref{fig10}, we can clearly distinguish three distinct user profiles based on sleep efficiency:
 
 \begin{itemize}
-	\item Cluster 1 exhibits a low sleep efficiency, with a median around 0.54 and a lower quartile near 0.13. This suggests that subjects in this cluster experience significant sleep disturbances or fragmentation, pointing to severe difficulties maintaining sleep.
-	\item Cluster 2 shows a median sleep efficiency of approximately 0.90, indicating generally good sleep quality. However, the presence of numerous outliers below the lower quartile (around 0.75) suggests that some subjects in this group still experience poor sleep episodes, potentially intermittently.
-	\item Cluster 3 presents a median sleep efficiency around 0.87, also reflecting good sleep quality. Notably, this cluster contains no significant outliers, and its lower quartile of approximately 0.65 is relatively acceptable, indicating more consistent sleep patterns across subjects.
+	\item Cluster 1, with 1723 sessions in total, exhibits a low sleep efficiency, with a median around 0.54 and a lower quartile near 0.13. This suggests that subjects in this cluster experience significant sleep disturbances or fragmentation, pointing to severe difficulties maintaining sleep.
+	\item Cluster 2, with 5240 sessions in total, shows a median sleep efficiency of approximately 0.90, indicating generally good sleep quality. However, the presence of numerous outliers below the lower quartile (around 0.75) suggests that some subjects in this group still experience poor sleep episodes, potentially intermittently.
+	\item Cluster 3, with 5113 sessions in total, presents a median sleep efficiency around 0.87, also reflecting good sleep quality. Notably, this cluster contains no significant outliers, and its lower quartile of approximately 0.65 is relatively acceptable, indicating more consistent sleep patterns across subjects.
 \end{itemize}
 
 Regarding the distribution of Soundless sessions across clusters:
@@ -716,9 +783,9 @@ These findings support the hypothesis that ambient noise not only impacts overal
 In summary, the study presents the following conclusions:
 
 \begin{itemize}
-	\item Individuals exposed to elevated night time noise levels tend to have reduced sleep efficiency.
-	\item Noise exposure negatively affects the proportion of time spent in restorative sleep stages, such as deep sleep (N3) and REM.
-	\item The impact of chronic noise exposure on sleep architecture can mimic the effects of clinical sleep disorders.
+	\item Individuals exposed to elevated night time noise levels tend to exhibit significantly reduced sleep efficiency. In particular, approximately 81\% of the sessions in the Soundless dataset (293 out of 362) are classified within the worst-performing sleep cluster. This cluster is characterized by a median sleep efficiency of just 55\%, indicating that a large portion of these individuals struggle not only to maintain continuous sleep but also to reach restorative stages such as deep and REM sleep. These findings underscore the substantial impact of environmental noise on overall sleep quality. 
+	\item Noise exposure has a detrimental effect on the proportion of time individuals spend in restorative sleep stages, particularly deep sleep (N3) and REM. Analysis of the Soundless dataset reveals that the majority of subjects exposed to night time environmental noise spend over 70\% of their total sleep time in lighter sleep stages (N1 and N2). This suggests that these individuals experience significant difficulty transitioning into deeper, more restorative stages of sleep, which are essential for physical and cognitive recovery. The persistent lack of deep and REM sleep may contribute to long-term health issues, reduced sleep quality, and overall decreased well-being.
+	\item The impact of chronic noise exposure on sleep architecture can closely resemble the effects typically observed in clinical sleep disorders. When users from the Soundless dataset are compared to those in the Human Sleep Project dataset, the majority are classified into the first cluster -identified as the worst-performing group in terms of sleep quality. This cluster, while the least populated in the clinical dataset with 1723 subjects, is characterized by low sleep efficiency and reduced time spent in restorative sleep stages (deep and REM sleep). The alignment of most Soundless users with this cluster suggests that prolonged exposure to night time noise may lead to sleep patterns that are comparable to those seen in individuals with diagnosed sleep pathologies.
 \end{itemize}
 
 \addchapter{Conclusion}
@@ -730,16 +797,16 @@ The Human Sleep Project dataset, used extensively in this study, includes EEG da
 
 In a perfect experimental set-up, we would be able to design a controlled study where subjects are deliberately exposed to sounds of varying frequencies and amplitudes, allowing for precise measurement of thresholds at which sleep quality deteriorates. While such an ideal dataset is currently unavailable, the real-world data from the Human Sleep Project has allowed us to take a valuable first step in understanding how noise impacts sleep quality in more naturalistic conditions.
 
-Turning to the Soundless dataset, which comprises data collected from real-world environments with varying noise levels, our findings are particularly compelling. The analysis revealed that noise is a significant factor influencing both sleep efficiency and sleep architecture. Individuals exposed to higher levels of ambient noise, particularly above 45 dB, consistently displayed:
+Turning to the Soundless dataset, which comprises data collected from real-world environments with varying noise levels, our findings are particularly compelling. The analysis revealed that noise is a significant factor influencing both sleep efficiency and sleep architecture. Individuals exposed to higher levels of ambient noise, particularly above 40 dB, consistently displayed:
 
 \begin{itemize}
-	\item Lower sleep efficiency (i.e., spending less of their time in bed actually sleeping),
-	\item Reduced time spent in deep sleep (N3) and REM sleep, which are both critical for cognitive and physical restoration.
+	\item Lower sleep efficiency (i.e., spending less of their time in bed actually sleeping). Most of the Soundless subjects (an 81\%) are classified into the worst-performing cluster, despite it being the least populated overall. This indicates a strong association between night time noise exposure and poor sleep quality. The overrepresentation of Soundless subjects in this low-efficiency cluster suggests that environmental noise may significantly degrade sleep architecture, potentially producing effects comparable to those observed in clinical sleep disorders.
+	\item Soundless subjects exhibit a marked reduction in time spent in deep sleep (N3) and REM sleep -both essential for cognitive and physical restoration. In fact, 84\% of the individuals in the Soundless dataset spend more than 70\% of their total sleep time in light sleep stages, indicating a significant disruption in the natural progression of sleep architecture.   
 \end{itemize}
 
-Out of the 362 Soundless sessions evaluated, 293 were categorized into the worst-performing cluster, marked by low sleep efficiency and minimal time spent in the restorative stages of sleep. In contrast, only 14 sessions fell into the best-performing cluster, where participants demonstrated healthy proportions of deep and REM sleep alongside higher sleep efficiency. This imbalance strongly suggests that noise exposure is not only prevalent but also detrimental to the quality of sleep for the majority of Soundless users.
+Out of the 362 Soundless sessions evaluated, 293 were classified into the worst-performing cluster -despite it being the least populated overall, comprising only 14\% of the total sample. This group is characterized by low sleep efficiency and minimal time spent in restorative sleep stages. In contrast, just 55 sessions fell into the "best-performing" cluster, marked by healthy levels of deep and REM sleep and higher sleep efficiency. This stark imbalance strongly indicates that night time noise exposure is both widespread and significantly detrimental to sleep quality among Soundless users.
 
-From this, we can conclude that environmental noise is a determining factor in sleep degradation. Prolonged or frequent exposure to sound levels exceeding 45 dB appears sufficient to prevent individuals from achieving healthy sleep, both in quantity and quality. More alarmingly, the data indicates that individuals exposed to chronic night time noise may exhibit worse sleep patterns than those suffering from clinical sleep disorders, such as insomnia or chronic pain. In other words, noise pollution, often overlooked as a minor inconvenience, may pose a serious threat to public health by inducing sleep patterns consistent with medical pathology.
+From this, we can conclude that environmental noise is a determining factor in sleep degradation. Prolonged or frequent exposure to sound levels exceeding 40 dB appears sufficient to prevent individuals from achieving healthy sleep, both in quantity and quality. More alarmingly, the data indicates that individuals exposed to chronic night time noise may exhibit worse sleep patterns than those suffering from clinical sleep disorders, such as insomnia or chronic pain. In other words, noise pollution, often overlooked as a minor inconvenience, may pose a serious threat to public health by inducing sleep patterns consistent with medical pathology.
 
 This study not only highlights the importance of protecting sleep environments from ambient noise but also opens the door to future research aimed at further quantifying the relationship between sound and sleep, potentially leading to the development of noise mitigation strategies, personalized sleep health tools, and policy recommendations for urban sound management.
 
@@ -797,6 +864,9 @@ Multi Layer Perceptron, Wikipedia, available at: https://en.wikipedia.org/wiki/M
 \bibitem{efficiency}
 Sleep Efficiency, Wikipedia, avaliable at: https://en.wikipedia.org/wiki/Sleep\_efficiency
 
+\bibitem{channels}
+Clinical Polysomnography, Clinical Gate, available at: https://clinicalgate.com/clinical-polysomnography/
+
 \bibitem{who}
 Basner, M., \& McGuire, S. (2018). WHO environmental noise guidelines for the European region: A systematic review on environmental noise and effects on sleep. International Journal of Environmental Research and Public Health, 15(3), 519.
 
@@ -837,16 +907,16 @@ Witte, M., Winkler, A., \& Hage, S. R. (2021). Nocturnal noise exposure and cogn
 Hrayr P. Attarian \& Nidhi S. Undevia. Atlas of Electroencephalography in Sleep Medicine. 
 
 \bibitem{keras}
-Suvaditya M. Electroencephalogram Signal Classification for action identification. Available at: \href{https://keras.io/examples/timeseries/eeg_signal_classification/}{https://keras.io/examples/timeseries/eeg\_signal\_classification/}
+Suvaditya M. Electroencephalogram Signal Classification for action identification. Available at: https://keras.io/examples/timeseries/eeg\_signal\_classification/
 
 \bibitem{mne}
-Alexandre Gramfort, Stanislas Chambon \& Joan Massich. Sleep stage classification from polysomnography (PSG) data. Available at: \href{https://mne.tools/stable/auto_tutorials/clinical/60_sleep.html}{https://mne.tools/stable/auto\_tutorials/clinical/60\_sleep.html}
+Alexandre Gramfort, Stanislas Chambon \& Joan Massich. Sleep stage classification from polysomnography (PSG) data. Available at: https://mne.tools/stable/auto\_tutorials/clinical/60\_sleep.html
 
 \bibitem{timeseries}
-Zhiguang Wang, Weizhong Yan \& Tim Oates. Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline. Available at: \href{https://arxiv.org/abs/1611.06455}{https://arxiv.org/abs/1611.06455}
+Zhiguang Wang, Weizhong Yan \& Tim Oates. Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline. Available at: https://arxiv.org/abs/1611.06455
 
 \bibitem{mlp}
-Jiacheng Hou, Zhenjie Song \& Ercan Engin Kuruoglu. BrainNetMLP: An Efficient and Effective Baseline for Functional Brain Network Classification. Available at: \href{https://arxiv.org/pdf/2505.11538}{https://arxiv.org/pdf/2505.11538}
+Jiacheng Hou, Zhenjie Song \& Ercan Engin Kuruoglu. BrainNetMLP: An Efficient and Effective Baseline for Functional Brain Network Classification. Available at: https://arxiv.org/pdf/2505.11538
 
 \end{thebibliography}
 \end{document}
