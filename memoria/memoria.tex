@@ -66,8 +66,8 @@
 \newcommand\shortlorem{Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.}
 
 \newcommand{\addchapter}[1]{
-	\addcontentsline{toc}{section}{#1}
-	\chapter*{#1}
+	%\addcontentsline{toc}{section}{#1}
+	\chapter{#1}
 }
 
 \newcommand{\addsection}[1]{
@@ -184,10 +184,10 @@ The following pages present an initial approach to studying sleep quality by com
 The main goals of this document are as follows:
 
 \begin{itemize}
-  \item Analyse and standardize the EEG data provided in the Human Sleep Project dataset in order to enable accurate and consistent classification of sleep stages across subjects. This involves developing a robust preprocessing pipeline capable of handling heterogeneous EEG configurations, aligning channel montages, and preparing the data for input into neural network models.
-  \item Design and develop a robust neural network architecture capable of accurately classifying the different sleep stages from electroencephalogram (EEG) recordings. This involves selecting appropriate model structures, optimizing training strategies, and handling the complexities of EEG time-series data to achieve reliable and generalizable sleep stage predictions across diverse subjects and recording conditions.
-  \item Define a set of metrics derived from the identified sleep stages to establish a meaningful connection between participants in the Soundless dataset and those in the Human Sleep Project. These metrics may include sleep stage duration, frequency of transitions between stages, interruptions, and overall sleep efficiency, among others. 
-  \item Draw data-driven conclusions about the quality of sleep in environments with varying levels of noise. By correlating ambient sound data with changes in sleep patterns, we aim to understand how specific noise characteristics (e.g., intensity, frequency, duration) may affect different individuals and sleep stages, ultimately influencing overall sleep quality.  
+  \item In chapter 5, we focus on the analysis and standardization of EEG data from the Human Sleep Project dataset to support accurate and consistent classification of sleep stages across subjects. This requires the development of a robust preprocessing pipeline capable of handling heterogeneous EEG configurations, aligning channel montages, and preparing the data for input into neural network models.
+  \item In chapters 6 and 7 we design and develop a robust neural network architecture capable of accurately classifying the different sleep stages from electroencephalogram (EEG) recordings. This involves selecting appropriate model structures, optimizing training strategies, and handling the complexities of EEG time-series data to achieve reliable and generalizable sleep stage predictions across diverse subjects and recording conditions.
+  \item In chapter 8, we define a set of metrics derived from the identified sleep stages to establish a meaningful connection between participants in the Soundless dataset and those in the Human Sleep Project. These metrics may include sleep stage duration, frequency of transitions between stages, interruptions, and overall sleep efficiency, among others. 
+  \item Finally, in chapter 9 we draw data-driven conclusions about the quality of sleep in environments with varying levels of noise. By correlating ambient sound data with changes in sleep patterns, we aim to understand how noise may affect different individuals and sleep stages, ultimately influencing overall sleep quality.  
 \end{itemize}
 
 This preliminary study sets the groundwork for future research that could lead to better tools for monitoring and improving sleep in urban settings, potentially informing both clinical practice and consumer health applications.
@@ -517,7 +517,7 @@ Model training is further supported by GPU acceleration, made possible via Tenso
 
 In summary, the project relies on a robust software stack combining cloud computing, signal processing, database management, and deep learning. This integrated environment allows for the processing of vast electrophysiological datasets and the training of advanced models to classify sleep stages and investigate the impact of environmental noise on sleep quality.
 
-\addchapter{Evaluation of the neural networks}
+\addchapter{Neural networks validation}
 To investigate how environmental noise affects sleep quality, this study integrates two complementary datasets: a clinical dataset -The Human Sleep Project- which contains high-quality electroencephalogram (EEG) recordings gathered in controlled laboratory conditions, and a real-world dataset -Soundless- which includes biometric signals and ambient noise recordings collected from subjects in their natural sleep environments.
 
 The first step in the analysis involves classifying EEG sleep stages using machine learning techniques. Accurate identification of stages such as Wake, N1, N2, N3, and REM enables the computation of meaningful sleep metrics, including sleep efficiency (the ratio of total sleep time to time in bed) and the percentage of time spent in different sleep stages (light, deep, and REM sleep).
@@ -651,7 +651,7 @@ And the confusion matrix obtained is:
 
 This time, the results are considerably more robust, enabling reliable classification of the different sleep stages. In particular, the model demonstrates strong capability in distinguishing between awake and asleep states. With this improved level of accuracy, we are now well-positioned to proceed with our primary objective: establishing meaningful connections between the Human Sleep Project dataset and the Soundless dataset.
 
-\addchapter{Sleep metrics definition}
+\addchapter{Sleep metrics}
 In this chapter, we will introduce and define a set of quantitative sleep metrics that are commonly used in sleep research to evaluate the structure and quality of sleep. These metrics include, but are not limited to, sleep efficiency, time spent in each sleep stage (N1, N2, N3, REM, Wake), and percentage distributions of sleep stages across the night. By standardizing these measures, we aim to establish a common framework for assessing sleep across different data sources.
 
 With these metrics defined, the second objective of this chapter is to bridge the gap between the two datasets used in this study: the Human Sleep Project, which provides high-resolution clinical EEG recordings annotated by sleep experts, and the Soundless dataset, which offers real-world biometric and environmental data (such as ambient noise levels) collected through wearable devices.
@@ -838,7 +838,7 @@ Pursuing these directions will further the goal of building scalable, reliable s
 I would like to give thanks specially to Prof. Pedro Garc\'ia L\'opez for all the guidance and time spent with the project and to the UOC and URV for the material shared without which I wouldn't have been able to write this study. I would like to thank Dra. Mirea Lecina for her assistance at understanding electroencephalograms. Additionally I would like to thank Daniel Alejandro Coll for his assistance.
 
 
-\addcontentsline{toc}{section}{Bibliography}
+\addcontentsline{toc}{chapter}{Bibliography}
 \begin{thebibliography}{9}
 \bibitem{soundless}
 Soundless, available at: https://soundless.app

@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2026/dev/Arch Linux)  (format=lualatex 2025.5.20)  28 JUL 2025 17:57
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2026/dev/Arch Linux)  (format=lualatex 2025.4.13)  30 JUL 2025 14:07
  restricted system commands enabled.
 **memoria.tex
 (./memoria.tex
@@ -574,12 +574,16 @@ warning  (pdf backend): ignoring duplicate destination with the name 'page.1'
 [1
 
 ]
+Chapter 1.
+
 
 [2
 
 
 Missing character: There is no — (U+2014) in font pplr8t!
 ]
+Chapter 2.
+
 Overfull \hbox (9.73122pt too wide) in paragraph at lines 176--177
 []\T1/ppl/m/n/10.95 We be-gin by work-ing with the Hu-man Sleep Project dataset [[]], de-vel-oped by Mas-sachusetts
  []
@@ -596,12 +600,16 @@ File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 )
 
 [4]
+Chapter 3.
+
 
 [5
 
 ]
 
 [6]
+Chapter 4.
+
 
 [7
 
@@ -613,6 +621,8 @@ Overfull \hbox (35.66017pt too wide) in paragraph at lines 229--230
 
 
 [8]
+Chapter 5.
+
 
 [9
 
@@ -674,13 +684,10 @@ Overfull \hbox (80.31444pt too wide) in paragraph at lines 335--359
 ]
 
 [14]
+Chapter 6.
+
 Overfull \hbox (14.22003pt too wide) in paragraph at lines 409--410
 []\T1/ppl/m/n/10.95 To-gether, these neu-ral net-work ar-chi-tec-tures -namely, Fully Con-vo-lu-tional Net-works (FCNs),
- []
-
-
-Overfull \hbox (5.59152pt too wide) in paragraph at lines 411--412
-[]\T1/ppl/m/n/10.95 Es-tab-lish-ing a mean-ing-ful re-la-tion-ship be-tween the Hu-man Sleep Project (a clin-i-cal dataset)
  []
 
 
@@ -688,9 +695,22 @@ Overfull \hbox (5.59152pt too wide) in paragraph at lines 411--412
 [15
 
 ]
+Overfull \hbox (5.59152pt too wide) in paragraph at lines 411--412
+[]\T1/ppl/m/n/10.95 Es-tab-lish-ing a mean-ing-ful re-la-tion-ship be-tween the Hu-man Sleep Project (a clin-i-cal dataset)
+ []
+
+
 Overfull \hbox (1.0257pt too wide) in paragraph at lines 413--414
 []\T1/ppl/m/n/10.95 To per-form this task, deep learn-ing -particularly neu-ral networks- of-fers a pow-er-ful frame-
  []
+
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 423.
+
+
+Package hyperref Warning: The anchor of a bookmark and its parent's must not
+(hyperref)                be the same. Added a new anchor on input line 423.
 
 
 
@@ -703,17 +723,17 @@ Package luatex.def Info: figs/fcn.png  used on input line 434.
 
 
 [17<./figs/fcn.png>]
-<figs/fcn-lstm.png, id=207, 1201.48875pt x 2971.1pt>
+
+[18]
+<figs/fcn-lstm.png, id=215, 1201.48875pt x 2971.1pt>
 File: figs/fcn-lstm.png Graphic file (type png)
 <use figs/fcn-lstm.png>
 Package luatex.def Info: figs/fcn-lstm.png  used on input line 466.
 (luatex.def)             Requested size: 120.15591pt x 297.12741pt.
 
 
-[18]
-
 [19<./figs/fcn-lstm.png>]
-<figs/mlp.png, id=225, 1437.37pt x 1616.0375pt>
+<figs/mlp.png, id=222, 1437.37pt x 1616.0375pt>
 File: figs/mlp.png Graphic file (type png)
 <use figs/mlp.png>
 Package luatex.def Info: figs/mlp.png  used on input line 488.
@@ -727,6 +747,8 @@ Package luatex.def Info: figs/mlp.png  used on input line 488.
 [22
 Missing character: There is no ’ (U+2019) in font pplr8t!
 ]
+Chapter 7.
+
 Overfull \hbox (3.42079pt too wide) in paragraph at lines 521--522
 \T1/ppl/m/n/10.95 am-bi-ent noise record-ings col-lected from sub-jects in their
  nat-u-ral sleep en-vi-ron-ments. 
@@ -739,7 +761,7 @@ Overfull \hbox (3.42079pt too wide) in paragraph at lines 521--522
 ]
 
 [24]
-<figs/cm.png, id=250, 1269.0612pt x 721.9773pt>
+<figs/cm.png, id=249, 1269.0612pt x 721.9773pt>
 File: figs/cm.png Graphic file (type png)
 <use figs/cm.png>
 Package luatex.def Info: figs/cm.png  used on input line 570.
@@ -756,6 +778,10 @@ Overfull \hbox (5.39401pt too wide) in paragraph at lines 575--576
 []\T1/ppl/m/n/10.95 The con-fu-sion ma-trix clearly il-lus-trates that the clas-
 si-fier strug-gles with the Sleep_stage_N1
  []
+
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 577.
 
 
 
@@ -818,6 +844,8 @@ Overfull \hbox (5.94649pt too wide) in paragraph at lines 647--648
 [31]
 
 [32<./figs/cm-clustering.png>]
+Chapter 8.
+
 Overfull \hbox (41.15408pt too wide) in paragraph at lines 661--662
 \T1/ppl/m/n/10.95 be-haviour and dis-tur-bances, lever-ag-ing the strengths of 
 both clin-i-cal and eco-log-i-cal datasets. 
@@ -895,12 +923,16 @@ Missing character: There is no   (U+202F) in font pplr8t!
 ]
 
 [43]
+Chapter 9.
+
 
 [44
 
 ]
 
 [45]
+Chapter 10.
+
 Overfull \hbox (4.65004pt too wide) in paragraph at lines 818--819
 []\T1/ppl/m/n/10.95 An-other di-rec-tion for fu-ture work in-volves ex-pand-ing and en-rich-ing the Sound-less dataset.
  []
@@ -917,6 +949,8 @@ Overfull \hbox (0.6646pt too wide) in paragraph at lines 829--830
 
 
 [47]
+Chapter 11.
+
 
 [48
 
@@ -982,16 +1016,16 @@ L3 programming layer <2025-01-18>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `memoria.out' has not changed.
-(rerunfilecheck)             Checksum: AC563C08C21CC716122BCBD3C6B3AD6D;2772.
+(rerunfilecheck)             Checksum: 28F3A426419B72E6D089BBBCA4546C70;2622.
 )
 
 Here is how much of LuaTeX's memory you used:
- 13116 strings out of 475506
+ 13117 strings out of 475506
  125056,794899 words of node,token memory allocated
- 4778 words of node memory still in use:
-   3 hlist, 1 vlist, 1 rule, 2 glue, 708 kern, 1 glyph, 212 attribute, 51 glue_s
+ 4763 words of node memory still in use:
+   3 hlist, 1 vlist, 1 rule, 2 glue, 705 kern, 1 glyph, 212 attribute, 51 glue_s
 pec, 212 attribute_list, 1 write nodes
-   avail lists: 2:422,3:424,4:156,5:167,6:142,7:7596,8:10,9:1180,10:10,11:649
+   avail lists: 2:422,3:424,4:108,5:167,6:142,7:7599,8:10,9:1180,10:10,11:649
  35585 multiletter control sequences out of 65536+600000
  97 fonts using 6380511 bytes
  86i,12n,115p,1046b,536s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1000,10 +1034,10 @@ type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb><
 /usr/share/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf-dist
 /fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on memoria.pdf (52 pages, 1120558 bytes).
+Output written on memoria.pdf (52 pages, 1121472 bytes).
 
-PDF statistics: 447 PDF objects out of 1000 (max. 8388607)
- 360 compressed objects within 4 object streams
- 115 named destinations out of 1000 (max. 131072)
+PDF statistics: 448 PDF objects out of 1000 (max. 8388607)
+ 361 compressed objects within 4 object streams
+ 116 named destinations out of 1000 (max. 131072)
  137 words of extra memory for PDF output out of 10000 (max. 100000000)
 
